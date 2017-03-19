@@ -4,11 +4,6 @@
 #include <FL/Fl_Widget.H>
 
 /**
- * Browser event handler
- */
-void browser_callback(Fl_Widget* browser, void*);
-
-/**
  * Canvas event handler
  */
 void canvas_callback(Fl_Widget* canvas, void*);

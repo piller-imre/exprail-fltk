@@ -32,6 +32,7 @@ void Editor::createExpressionWindow()
 
     _browser = new Fl_Browser(10, 50, 200, 340);
 
+    _browser->type(Fl_Browser::VERTICAL);
     _browser->callback(browser_event_callback);
 
     _expressionWindow->end();
@@ -41,6 +42,36 @@ void Editor::createCanvas()
 {
     _canvas = new Fl_Double_Window(600, 400, "Graph");
     _canvas->resizable(_canvas);
+}
+
+void Editor::addExpression(const std::string& expressionName)
+{
+    _browser->add(expressionName.c_str());
+}
+
+void Editor::removeSelectedExpression()
+{
+    int selectedLine = _browser->value();
+    if (selectedLine > 0) {
+        // TODO: Add confirmation window!
+        _browser->remove(selectedLine);
+    }
+}
+
+void Editor::moveSelectedExpressionUp()
+{
+    int selectedLine = _browser->value();
+    if (selectedLine > 1) {
+        _browser->move(selectedLine, selectedLine - 1);
+    }
+}
+
+void Editor::moveSelectedExpressionDown()
+{
+    int selectedLine = _browser->value();
+    if (selectedLine > 0) {
+        _browser->move(selectedLine, selectedLine + 1);
+    }
 }
 
 int Editor::run()

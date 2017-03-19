@@ -8,6 +8,8 @@
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Window.H>
 
+#include <string>
+
 /**
  * Expression editor
  */
@@ -34,6 +36,26 @@ public:
      * Create new canvas window.
      */
     void createCanvas();
+
+    /**
+     * Add new expression.
+     */
+    void addExpression(const std::string& expressionName);
+
+    /**
+     * Remove the selected expression.
+     */
+    void removeSelectedExpression();
+
+    /**
+     * Move the selected expression up in the list.
+     */
+    void moveSelectedExpressionUp();
+
+    /**
+     * Move the selected expression down in the list.
+     */
+    void moveSelectedExpressionDown();
 
     /**
      * Run the editor event loop.
