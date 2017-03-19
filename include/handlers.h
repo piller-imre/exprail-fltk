@@ -31,7 +31,7 @@ void move_expression_down_callback(Fl_Widget* button, void*);
 /**
  * Browser event handler
  */
-void browser_event_callback(Fl_Widget* button, void*);
+void browser_event_callback(Fl_Widget* widget, void*);
 
 #endif /* HANDLERS */
 

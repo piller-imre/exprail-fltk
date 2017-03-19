@@ -43,6 +43,11 @@ public:
     void addExpression(const std::string& expressionName);
 
     /**
+     * Rename the selected expression.
+     */
+    void renameSelectedExpression(const std::string& expressionName);
+
+    /**
      * Remove the selected expression.
      */
     void removeSelectedExpression();

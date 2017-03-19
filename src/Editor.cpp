@@ -49,6 +49,14 @@ void Editor::addExpression(const std::string& expressionName)
     _browser->add(expressionName.c_str());
 }
 
+void Editor::renameSelectedExpression(const std::string& expressionName)
+{
+    int selectedLine = _browser->value();
+    if (selectedLine > 0) {
+        // ...
+    }
+}
+
 void Editor::removeSelectedExpression()
 {
     int selectedLine = _browser->value();

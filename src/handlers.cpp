@@ -13,6 +13,7 @@ void canvas_callback(Fl_Widget* canvas, void*)
 void add_expression_callback(Fl_Widget* button, void*)
 {
     const char* result = fl_input("Add new expression", "");
+    // TODO: Check that the new name is valid!
     editor.addExpression(result);
 }
 
@@ -31,7 +32,15 @@ void move_expression_down_callback(Fl_Widget* button, void*)
     editor.moveSelectedExpressionDown();
 }
 
-void browser_event_callback(Fl_Widget* button, void*)
+void browser_event_callback(Fl_Widget* widget, void*)
 {
+    Fl_Browser* browser = (Fl_Browser*)widget;
+    int selectedLine = browser->value();
+    if (selectedLine > 0 && Fl::event_clicks()) {
+        const char* name = fl_input("New name of the expression", browser->text(selectedLine));
+        // TODO: Check that the name is valid!
+        browser->text(selectedLine, name);
+        editor.renameSelectedExpression(name);
+    }
 }
 
