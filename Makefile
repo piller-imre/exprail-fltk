@@ -4,6 +4,7 @@ CFLAGS = -Iinclude -I../src -g -O2 -Wall
 LDFLAGS = -lfltk -lfltk_images
 
 SOURCES = \
+	src/handlers.cpp \
 	src/Editor.cpp \
     src/main.cpp
 

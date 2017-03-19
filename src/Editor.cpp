@@ -1,37 +1,12 @@
 #include "Editor.h"
 
-void browser_callback(Fl_Widget* widget, void*)
-{
-}
+#include "handlers.h"
 
-void canvas_callback(Fl_Widget* canvas, void*)
-{
-}
-
-void add_expression_callback(Fl_Widget* button, void*)
-{
-}
-
-void remove_expression_callback(Fl_Widget* button, void*)
-{
-}
-
-void move_expression_up_callback(Fl_Widget* button, void*)
-{
-}
-
-void move_expression_down_callback(Fl_Widget* button, void*)
-{
-}
-
-void browser_event_callback(Fl_Widget* button, void*)
-{
-}
 
 Editor::Editor()
 {
-	createExpressionWindow();
-	createCanvas();
+    createExpressionWindow();
+    createCanvas();
 }
 
 Editor::~Editor()
@@ -40,7 +15,7 @@ Editor::~Editor()
 
 void Editor::createExpressionWindow()
 {
-	_expressionWindow = new Fl_Window(220, 400, "Expressions");
+    _expressionWindow = new Fl_Window(220, 400, "Expressions");
     _expressionWindow->resizable(_expressionWindow);
 
     _expressionWindow->begin();
@@ -64,14 +39,14 @@ void Editor::createExpressionWindow()
 
 void Editor::createCanvas()
 {
-	_canvas = new Fl_Double_Window(600, 400, "Graph");
+    _canvas = new Fl_Double_Window(600, 400, "Graph");
     _canvas->resizable(_canvas);
 }
 
 int Editor::run()
 {
-	_expressionWindow->show();
-	_canvas->show();
+    _expressionWindow->show();
+    _canvas->show();
 
     return Fl::run();
 }
