@@ -2,6 +2,8 @@
 
 #include <FL/Fl.H>
 
+#include <FL/fl_draw.H>
+
 // DEBUG
 #include <iostream>
 using namespace std;
@@ -12,11 +14,19 @@ Canvas::Canvas(int width, int height, const char* title)
 {
     color(FL_WHITE);
     resizable(this);
+    loadNodeImages();
 }
 
 void Canvas::draw()
 {
     Fl_Double_Window::draw();
+    drawMenuBar();
+}
+
+void Canvas::drawMenuBar() const
+{
+    fl_rectf(0, 0, 384, 32, FL_GRAY);
+    _nodeImages->draw(0, 0);
 }
 
 int Canvas::handle(int event)
@@ -55,5 +65,10 @@ void Canvas::getMouseEventData(int* button, int* mouseX, int* mouseY) const
     *button = Fl::event_button();
     *mouseX = Fl::event_x();
     *mouseY = Fl::event_y();
+}
+
+void Canvas::loadNodeImages()
+{
+    _nodeImages = new Fl_PNG_Image("/tmp/nodes.png");
 }
 

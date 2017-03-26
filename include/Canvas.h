@@ -2,6 +2,7 @@
 #define CANVAS
 
 #include <FL/Fl_Double_Window.H>
+#include <FL/Fl_PNG_Image.H>
 
 // TODO: Use the mouse wheel!
 
@@ -38,6 +39,21 @@ private:
      * Get the mouse position.
      */
     void getMouseEventData(int* button, int* mouseX, int* mouseY) const;
+
+    /**
+     * Load node images from nodes.png file.
+     */
+    void loadNodeImages();
+
+    /**
+     * Draw the menu bar.
+     */
+    void drawMenuBar() const;
+
+    /**
+     * Node images
+     */
+	Fl_PNG_Image* _nodeImages;
 };
 
 #endif /* CANVAS */
