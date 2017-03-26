@@ -5,6 +5,7 @@ LDFLAGS = -lfltk -lfltk_images
 
 SOURCES = \
 	src/handlers.cpp \
+	src/Canvas.cpp \
 	src/Editor.cpp \
     src/main.cpp
 

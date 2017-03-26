@@ -5,10 +5,11 @@
 
 #include <FL/Fl_Browser.H>
 #include <FL/Fl_Button.H>
-#include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Window.H>
 
 #include <string>
+
+#include "Canvas.h"
 
 /**
  * Expression editor
@@ -90,7 +91,7 @@ private:
     /**
      * Graph editor canvas
      */
-    Fl_Double_Window* _canvas;
+    Canvas* _canvas;
 };
 
 #endif /* EDITOR */

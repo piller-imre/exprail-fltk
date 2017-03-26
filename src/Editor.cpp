@@ -40,8 +40,7 @@ void Editor::createExpressionWindow()
 
 void Editor::createCanvas()
 {
-    _canvas = new Fl_Double_Window(600, 400, "Graph");
-    _canvas->resizable(_canvas);
+    _canvas = new Canvas(600, 400, "Graph");
 }
 
 void Editor::addExpression(const std::string& expressionName)
