@@ -1,5 +1,5 @@
-#ifndef NODE
-#define NODE
+#ifndef NODE_H
+#define NODE_H
 
 #include <string>
 
@@ -88,5 +88,5 @@ private:
     int _y;
 };
 
-#endif /* NODE */
+#endif /* NODE_H */
 

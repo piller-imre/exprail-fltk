@@ -1,5 +1,5 @@
-#ifndef EDITOR
-#define EDITOR
+#ifndef EDITOR_H
+#define EDITOR_H
 
 #include <FL/Fl.H>
 
@@ -94,5 +94,5 @@ private:
     Canvas* _canvas;
 };
 
-#endif /* EDITOR */
+#endif /* EDITOR_H */
 

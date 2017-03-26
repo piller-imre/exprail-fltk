@@ -1,5 +1,5 @@
-#ifndef CANVAS
-#define CANVAS
+#ifndef CANVAS_H
+#define CANVAS_H
 
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_PNG_Image.H>
@@ -56,5 +56,5 @@ private:
 	Fl_PNG_Image* _nodeImages;
 };
 
-#endif /* CANVAS */
+#endif /* CANVAS_H */
 

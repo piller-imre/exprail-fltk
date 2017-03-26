@@ -1,5 +1,5 @@
-#ifndef HANDLERS
-#define HANDLERS
+#ifndef HANDLERS_H
+#define HANDLERS_H
 
 #include <FL/Fl_Widget.H>
 
@@ -33,5 +33,5 @@ void move_expression_down_callback(Fl_Widget* button, void*);
  */
 void browser_event_callback(Fl_Widget* widget, void*);
 
-#endif /* HANDLERS */
+#endif /* HANDLERS_H */
 
