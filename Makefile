@@ -7,6 +7,7 @@ SOURCES = \
 	src/handlers.cpp \
 	src/Canvas.cpp \
 	src/Editor.cpp \
+	src/Node.cpp \
     src/main.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
