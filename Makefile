@@ -9,6 +9,8 @@ SOURCES = \
 	src/Editor.cpp \
 	src/Expression.cpp \
 	src/Node.cpp \
+	src/operations/Operation.cpp \
+	src/operations/CreateNodeOperation.cpp \
     src/main.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)

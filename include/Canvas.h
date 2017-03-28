@@ -6,6 +6,7 @@
 
 #include "Expression.h"
 #include "Node.h"
+#include "operations/Operation.h"
 
 // TODO: Use the mouse wheel!
 
@@ -44,9 +45,9 @@ private:
     bool isMouseEvent(int event) const;
 
     /**
-     * Get the mouse position.
+     * Get the mouse button and position.
      */
-    void getMouseEventData(int* button, int* mouseX, int* mouseY) const;
+    void getMouseEventData(MouseButton* mouseButton, int* mouseX, int* mouseY) const;
 
     /**
      * Load node images from nodes.png file.
@@ -82,6 +83,11 @@ private:
      * The edited expression
      */
     Expression* _expression;
+
+    /**
+     * The current operation
+     */
+    Operation* _operation;
 };
 
 #endif /* CANVAS_H */

@@ -1,7 +1,8 @@
 #include "Canvas.h"
 
-#include <FL/Fl.H>
+#include "operations/CreateNodeOperation.h"
 
+#include <FL/Fl.H>
 #include <FL/fl_draw.H>
 
 #include <cassert>
@@ -17,7 +18,10 @@ Canvas::Canvas(int width, int height, const char* title)
     color(FL_WHITE);
     resizable(this);
     loadNodeImages();
-    _expression = nullptr;
+
+    // _expression = nullptr;
+    _expression = new Expression();
+    _operation = new Operation(_expression);
 }
 
 void Canvas::draw()
@@ -53,7 +57,6 @@ void Canvas::drawNodes() const
     for (const Node& node : nodes) {
         drawNode(node);
     }
-    // Node node(NodeType::EXPRESSION, "Works!", 50, 200);
 }
 
 void Canvas::drawNode(const Node& node) const
@@ -66,22 +69,37 @@ void Canvas::drawNode(const Node& node) const
 
 int Canvas::handle(int event)
 {
-    int button;
+    MouseButton mouseButton;
     int mouseX, mouseY;
 
+    mouseButton = MouseButton::LEFT;
     if (isMouseEvent(event)) {
-        getMouseEventData(&button, &mouseX, &mouseY);
-        cout << "Button " << button << " at (" << mouseX << ", " << mouseY << ")" << endl;
+        getMouseEventData(&mouseButton, &mouseX, &mouseY);
+    }
+    else {
+        mouseX = 0;
+        mouseY = 0;
     }
 
     switch (event) {
     case FL_PUSH:
+        if (mouseX < 384 && mouseY < 32) {
+            NodeType nodeType = static_cast<NodeType>(mouseX / 32);
+            _operation = new CreateNodeOperation(_expression, nodeType);
+        }
+        else {
+            _operation->pressMouse(mouseButton, mouseX, mouseY);
+        }
         break;
     case FL_DRAG:
+        _operation->dragMouse(mouseButton, mouseX, mouseY);
         break;
     case FL_RELEASE:
+        _operation->releaseMouse(mouseButton, mouseX, mouseY);
+        redraw();
         break;
     case FL_MOVE:
+        _operation->moveMouse(mouseX, mouseY);
         break;
     }
     return 1;
@@ -95,9 +113,18 @@ bool Canvas::isMouseEvent(int event) const
         || event == FL_MOVE;
 }
 
-void Canvas::getMouseEventData(int* button, int* mouseX, int* mouseY) const
+void Canvas::getMouseEventData(MouseButton* mouseButton, int* mouseX, int* mouseY) const
 {
-    *button = Fl::event_button();
+    int button = Fl::event_button();
+    if (button == FL_LEFT_MOUSE) {
+        *mouseButton = MouseButton::LEFT;
+    }
+    else if (button == FL_RIGHT_MOUSE) {
+        *mouseButton = MouseButton::RIGHT;
+    }
+    else if (button == FL_MIDDLE_MOUSE) {
+        *mouseButton = MouseButton::MIDDLE;
+    }
     *mouseX = Fl::event_x();
     *mouseY = Fl::event_y();
 }
