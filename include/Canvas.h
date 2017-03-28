@@ -4,6 +4,9 @@
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_PNG_Image.H>
 
+#include "Expression.h"
+#include "Node.h"
+
 // TODO: Use the mouse wheel!
 
 /**
@@ -22,6 +25,11 @@ public:
      * Draw the expression graph.
      */
 	virtual void draw();
+
+    /**
+     * Set the editable expression.
+     */
+    void setExpression(Expression* expression);
 
     /**
      * Handle the events.
@@ -51,9 +59,29 @@ private:
     void drawMenuBar() const;
 
     /**
+     * Draw the selected expression.
+     */
+    void drawExpression() const;
+
+    /**
+     * Draw the nodes of the selected expression.
+     */
+    void drawNodes() const;
+
+    /**
+     * Draw node
+     */
+    void drawNode(const Node& node) const;
+
+    /**
      * Node images
      */
 	Fl_PNG_Image* _nodeImages;
+
+    /**
+     * The edited expression
+     */
+    Expression* _expression;
 };
 
 #endif /* CANVAS_H */

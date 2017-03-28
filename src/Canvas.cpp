@@ -4,6 +4,8 @@
 
 #include <FL/fl_draw.H>
 
+#include <cassert>
+
 // DEBUG
 #include <iostream>
 using namespace std;
@@ -15,18 +17,51 @@ Canvas::Canvas(int width, int height, const char* title)
     color(FL_WHITE);
     resizable(this);
     loadNodeImages();
+    _expression = nullptr;
 }
 
 void Canvas::draw()
 {
     Fl_Double_Window::draw();
+    drawExpression();
     drawMenuBar();
+}
+
+void Canvas::setExpression(Expression* expression)
+{
+    _expression = expression;
 }
 
 void Canvas::drawMenuBar() const
 {
     fl_rectf(0, 0, 384, 32, FL_GRAY);
     _nodeImages->draw(0, 0);
+}
+
+void Canvas::drawExpression() const
+{
+    if (_expression != nullptr) {
+        // drawEdges();
+        drawNodes();
+    }
+}
+
+void Canvas::drawNodes() const
+{
+    assert(_expression != nullptr);
+    const std::vector<Node>& nodes = _expression->getNodes();
+    for (const Node& node : nodes) {
+        drawNode(node);
+    }
+    // Node node(NodeType::EXPRESSION, "Works!", 50, 200);
+}
+
+void Canvas::drawNode(const Node& node) const
+{
+    int x = node.getX() - 16;
+    int y = node.getY() - 16;
+    int cx = static_cast<int>(node.getType()) * 32;
+    _nodeImages->draw(x, y, 32, 32, cx, 0);
 }
 
 int Canvas::handle(int event)

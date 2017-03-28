@@ -24,6 +24,11 @@ public:
     void addNode(const Node& node);
 
     /**
+     * Get the nodes of the expression.
+     */
+    const std::vector<Node>& getNodes() const;
+
+    /**
      * Add new edge from node a to node b.
      */
     void addEdge(Node* a, Node* b);
