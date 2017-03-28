@@ -57,6 +57,11 @@ protected:
      * The edited expression
      */
     Expression* _expression;
+
+    /**
+     * Sign that wether the operation has completed or not.
+     */
+    bool _isCompleted;
 };
 
 #endif /* OPERATION_H */

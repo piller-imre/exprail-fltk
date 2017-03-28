@@ -3,6 +3,7 @@
 Operation::Operation(Expression* expression)
 {
     _expression = expression;
+    _isCompleted = false;
 }
 
 void Operation::pressMouse(MouseButton button, int x, int y)
@@ -23,6 +24,6 @@ void Operation::dragMouse(MouseButton button, int x, int y)
 
 bool Operation::isCompleted() const
 {
-    return true;
+    return _isCompleted;
 }
 

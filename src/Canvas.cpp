@@ -102,6 +102,9 @@ int Canvas::handle(int event)
         _operation->moveMouse(mouseX, mouseY);
         break;
     }
+    if (_operation->isCompleted()) {
+        _operation = new Operation(_expression);
+    }
     return 1;
 }
 
