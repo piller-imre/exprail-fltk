@@ -72,7 +72,7 @@ public:
     /**
      * Check that the point is collided by the node icon.
      */
-    bool hasCollision(int x, int y);
+    bool hasCollision(int x, int y) const;
 
 private:
 

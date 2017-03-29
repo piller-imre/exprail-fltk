@@ -43,7 +43,7 @@ void Node::move(int x, int y)
     _y = y;
 }
 
-bool Node::hasCollision(int x, int y)
+bool Node::hasCollision(int x, int y) const
 {
     // TODO: Use rounded area!
     if (x >= _x - 16 && x < _x + 16 && y >= _y - 16 && y < _y + 16) {

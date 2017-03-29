@@ -3,6 +3,7 @@
 
 #include "Node.h"
 
+#include <memory>
 #include <vector>
 #include <utility>
 
@@ -26,12 +27,12 @@ public:
     /**
      * Get the nodes of the expression.
      */
-    const std::vector<Node>& getNodes() const;
+    const std::vector<std::unique_ptr<Node>>& getNodes() const;
 
     /**
-     * Add new edge from node a to node b.
+     * Add new edge from the source to the target node.
      */
-    void addEdge(Node* a, Node* b);
+    void addEdge(Node* source, Node* target);
 
     /**
      * Get the edges of the expression.
@@ -48,7 +49,7 @@ private:
     /**
      * Nodes of the graph
      */
-    std::vector<Node> _nodes;
+    std::vector<std::unique_ptr<Node>> _nodes;
 
     /**
      * Edges

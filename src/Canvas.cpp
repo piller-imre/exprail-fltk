@@ -69,9 +69,9 @@ void Canvas::drawEdges() const
 void Canvas::drawNodes() const
 {
     assert(_expression != nullptr);
-    const std::vector<Node>& nodes = _expression->getNodes();
-    for (const Node& node : nodes) {
-        drawNode(node);
+    const std::vector<std::unique_ptr<Node>>& nodes = _expression->getNodes();
+    for (const std::unique_ptr<Node>& node : nodes) {
+        drawNode(*node);
     }
 }
 

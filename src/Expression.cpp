@@ -6,17 +6,17 @@ Expression::Expression()
 
 void Expression::addNode(const Node& node)
 {
-    _nodes.push_back(node);
+    _nodes.push_back(std::unique_ptr<Node>(new Node(node)));
 }
 
-const std::vector<Node>& Expression::getNodes() const
+const std::vector<std::unique_ptr<Node>>& Expression::getNodes() const
 {
     return _nodes;
 }
 
-void Expression::addEdge(Node* a, Node* b)
+void Expression::addEdge(Node* source, Node* target)
 {
-    std::pair<Node*, Node*> edge(a, b);
+    std::pair<Node*, Node*> edge(source, target);
     _edges.push_back(edge);
 }
 
@@ -27,9 +27,9 @@ const std::vector<std::pair<Node*, Node*>>& Expression::getEdges() const
 
 Node* Expression::searchFocusedNode(int x, int y)
 {
-    for (Node& node : _nodes) {
-        if (node.hasCollision(x, y)) {
-            return &node;
+    for (const std::unique_ptr<Node>& node : _nodes) {
+        if (node->hasCollision(x, y)) {
+            return node.get();
         }
     }
     return nullptr;
