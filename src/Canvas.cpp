@@ -107,8 +107,10 @@ void Canvas::drawNode(const Node& node) const
 
 int Canvas::handle(int event)
 {
+    // TODO: Make proper deallocation when changing operation for avoiding memory leak!
     MouseButton mouseButton;
     int mouseX, mouseY;
+    int key;
 
     mouseButton = MouseButton::LEFT;
     if (isMouseEvent(event)) {
@@ -140,6 +142,33 @@ int Canvas::handle(int event)
         break;
     case FL_MOVE:
         _operation->moveMouse(mouseX, mouseY);
+        break;
+    case FL_KEYDOWN:
+        key = Fl::event_key();
+        switch (key) {
+        case 'w':
+            // TODO: Remove the selected node!
+            break;
+        case 'e':
+            // TODO: Toggle the selected edge!
+            break;
+        case 'r':
+            break;
+        case 's':
+            _operation = new SelectNodeOperation(_expression);
+            break;
+        case 'd':
+            // TODO: Move the offset of the expression!
+            break;
+        case 'f':
+            _operation = new SelectEdgeOperation(_expression);
+            break;
+        }
+        break;
+    case FL_KEYUP:
+        break;
+    default:
+        // cout << "event: " << event << endl;
         break;
     }
     if (_operation->isCompleted()) {
