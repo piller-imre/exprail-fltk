@@ -34,6 +34,11 @@ public:
     void addEdge(Node* a, Node* b);
 
     /**
+     * Get the edges of the expression.
+     */
+    const std::vector<std::pair<Node*, Node*>>& getEdges() const;
+
+    /**
      * Search the focused node.
      */
     Node* searchFocusedNode(int x, int y);

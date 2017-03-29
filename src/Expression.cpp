@@ -20,6 +20,11 @@ void Expression::addEdge(Node* a, Node* b)
     _edges.push_back(edge);
 }
 
+const std::vector<std::pair<Node*, Node*>>& Expression::getEdges() const
+{
+    return _edges;
+}
+
 Node* Expression::searchFocusedNode(int x, int y)
 {
     for (Node& node : _nodes) {

@@ -2,6 +2,7 @@
 
 #include "operations/CreateNodeOperation.h"
 #include "operations/SelectNodeOperation.h"
+#include "operations/SelectEdgeOperation.h"
 
 #include <FL/Fl.H>
 #include <FL/fl_draw.H>
@@ -46,8 +47,22 @@ void Canvas::drawMenuBar() const
 void Canvas::drawExpression() const
 {
     if (_expression != nullptr) {
-        // drawEdges();
+        drawEdges();
         drawNodes();
+    }
+}
+
+void Canvas::drawEdges() const
+{
+    assert(_expression != nullptr);
+    const std::vector<std::pair<Node*, Node*>> edges = _expression->getEdges();
+    fl_color(255, 0, 0);
+    for (const std::pair<Node*, Node*>& edge : edges) {
+        const Node* source = edge.first;
+        const Node* target= edge.second;
+        assert(source != nullptr);
+        assert(target != nullptr);
+        fl_line(source->getX(), source->getY(), target->getX(), target->getY());
     }
 }
 

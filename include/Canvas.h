@@ -65,6 +65,11 @@ private:
     void drawExpression() const;
 
     /**
+     * Draw the edges of the expression graph.
+     */
+    void drawEdges() const;
+
+    /**
      * Draw the nodes of the selected expression.
      */
     void drawNodes() const;
