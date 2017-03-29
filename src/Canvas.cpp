@@ -66,6 +66,8 @@ void Canvas::drawNode(const Node& node) const
     int y = node.getY() - 16;
     int cx = static_cast<int>(node.getType()) * 32;
     _nodeImages->draw(x, y, 32, 32, cx, 0);
+    fl_color(50, 50, 200);
+    fl_draw(node.getValue().c_str(), node.getX() - 24, node.getY() + 28);
 }
 
 int Canvas::handle(int event)
