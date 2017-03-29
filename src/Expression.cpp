@@ -20,3 +20,13 @@ void Expression::addEdge(Node* a, Node* b)
     _edges.push_back(edge);
 }
 
+Node* Expression::searchFocusedNode(int x, int y)
+{
+    for (Node& node : _nodes) {
+        if (node.hasCollision(x, y)) {
+            return &node;
+        }
+    }
+    return nullptr;
+}
+

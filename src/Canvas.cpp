@@ -1,6 +1,7 @@
 #include "Canvas.h"
 
 #include "operations/CreateNodeOperation.h"
+#include "operations/SelectNodeOperation.h"
 
 #include <FL/Fl.H>
 #include <FL/fl_draw.H>
@@ -21,7 +22,7 @@ Canvas::Canvas(int width, int height, const char* title)
 
     // _expression = nullptr;
     _expression = new Expression();
-    _operation = new Operation(_expression);
+    _operation = new SelectNodeOperation(_expression);
 }
 
 void Canvas::draw()
@@ -90,9 +91,11 @@ int Canvas::handle(int event)
         else {
             _operation->pressMouse(mouseButton, mouseX, mouseY);
         }
+        redraw();
         break;
     case FL_DRAG:
         _operation->dragMouse(mouseButton, mouseX, mouseY);
+        redraw();
         break;
     case FL_RELEASE:
         _operation->releaseMouse(mouseButton, mouseX, mouseY);
@@ -103,7 +106,7 @@ int Canvas::handle(int event)
         break;
     }
     if (_operation->isCompleted()) {
-        _operation = new Operation(_expression);
+        _operation = new SelectNodeOperation(_expression);
     }
     return 1;
 }

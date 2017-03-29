@@ -69,6 +69,11 @@ public:
      */
     void move(int x, int y);
 
+    /**
+     * Check that the point is collided by the node icon.
+     */
+    bool hasCollision(int x, int y);
+
 private:
 
     /**

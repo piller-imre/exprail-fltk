@@ -33,6 +33,11 @@ public:
      */
     void addEdge(Node* a, Node* b);
 
+    /**
+     * Search the focused node.
+     */
+    Node* searchFocusedNode(int x, int y);
+
 private:
 
     /**

@@ -11,6 +11,7 @@ SOURCES = \
 	src/Node.cpp \
 	src/operations/Operation.cpp \
 	src/operations/CreateNodeOperation.cpp \
+	src/operations/SelectNodeOperation.cpp \
     src/main.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
