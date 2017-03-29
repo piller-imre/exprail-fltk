@@ -8,6 +8,7 @@ SOURCES = \
 	src/Canvas.cpp \
 	src/Editor.cpp \
 	src/Expression.cpp \
+	src/Graph.cpp \
 	src/Node.cpp \
 	src/operations/Operation.cpp \
 	src/operations/CreateNodeOperation.cpp \
