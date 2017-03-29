@@ -13,10 +13,10 @@ const std::vector<std::unique_ptr<Node>>& Graph::getNodes() const
 void Graph::addEdge(Node* source, Node* target)
 {
     std::pair<Node*, Node*> edge(source, target);
-    _edges.push_back(edge);
+    _edges.insert(edge);
 }
 
-const std::vector<std::pair<Node*, Node*>>& Graph::getEdges() const
+const std::set<std::pair<Node*, Node*>>& Graph::getEdges() const
 {
     return _edges;
 }

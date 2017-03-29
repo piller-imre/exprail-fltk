@@ -47,7 +47,13 @@ void Expression::moveSelectedNode(int x, int y)
 void Expression::toggleSelectedEdge()
 {
     if (_sourceNode != nullptr && _targetNode != nullptr) {
-        // TODO: Toggle the selected edge!
+        std::pair<Node*, Node*> edge(_sourceNode, _targetNode);
+        if (_edges.find(edge) == _edges.end()) {
+            _edges.insert(edge);
+        }
+        else {
+            _edges.erase(edge);
+        }
     }
 }
 

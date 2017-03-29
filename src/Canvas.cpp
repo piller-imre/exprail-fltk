@@ -75,7 +75,7 @@ void Canvas::drawIndicators() const
 void Canvas::drawEdges() const
 {
     assert(_expression != nullptr);
-    const std::vector<std::pair<Node*, Node*>> edges = _expression->getEdges();
+    const std::set<std::pair<Node*, Node*>> edges = _expression->getEdges();
     fl_color(255, 0, 0);
     for (const std::pair<Node*, Node*>& edge : edges) {
         const Node* source = edge.first;
@@ -150,9 +150,10 @@ int Canvas::handle(int event)
             // TODO: Remove the selected node!
             break;
         case 'e':
-            // TODO: Toggle the selected edge!
+            // TODO: Rename the selected node!
             break;
         case 'r':
+            // TODO: Change the type of the selected node!
             break;
         case 's':
             _operation = new SelectNodeOperation(_expression);

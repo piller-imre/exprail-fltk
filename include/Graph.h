@@ -4,11 +4,12 @@
 #include "Node.h"
 
 #include <memory>
+#include <set>
 #include <vector>
 #include <utility>
 
 /**
- * General purpose graph class.
+ * General purpose graph class
  */
 class Graph
 {
@@ -32,7 +33,7 @@ public:
     /**
      * Get the edges of the expression.
      */
-    const std::vector<std::pair<Node*, Node*>>& getEdges() const;
+    const std::set<std::pair<Node*, Node*>>& getEdges() const;
 
 protected:
 
@@ -44,7 +45,7 @@ protected:
     /**
      * Edges of the graph
      */
-    std::vector<std::pair<Node*, Node*>> _edges;
+    std::set<std::pair<Node*, Node*>> _edges;
 };
 
 #endif /* GRAPH_H */
