@@ -24,13 +24,6 @@ public:
      * Drag the selected node
      */
     virtual void dragMouse(MouseButton button, int x, int y);
-
-private:
-
-    /**
-     * Selected node
-     */
-    Node* _selectedNode;
 };
 
 #endif /* SELECT_NODE_OPERATION_H */

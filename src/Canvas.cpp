@@ -47,8 +47,28 @@ void Canvas::drawMenuBar() const
 void Canvas::drawExpression() const
 {
     if (_expression != nullptr) {
+        drawIndicators();
         drawEdges();
         drawNodes();
+    }
+}
+
+void Canvas::drawIndicators() const
+{
+    const Node* selectedNode = _expression->getSelectedNode();
+    if (selectedNode != nullptr) {
+        fl_color(240, 200, 0);
+        fl_arc(selectedNode->getX() - 20, selectedNode->getY() - 20, 40, 40, 0, 360);
+    }
+    const Node* sourceNode = _expression->getSourceNode();
+    if (sourceNode != nullptr) {
+        fl_color(255, 0, 0);
+        fl_arc(sourceNode->getX() - 20, sourceNode->getY() - 20, 40, 40, 0, 360);
+    }
+    const Node* targetNode = _expression->getTargetNode();
+    if (targetNode != nullptr) {
+        fl_color(0, 255, 0);
+        fl_arc(targetNode->getX() - 20, targetNode->getY() - 20, 40, 40, 0, 360);
     }
 }
 

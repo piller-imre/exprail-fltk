@@ -65,6 +65,11 @@ private:
     void drawExpression() const;
 
     /**
+     * Draw the indicators.
+     */
+    void drawIndicators() const;
+
+    /**
      * Draw the edges of the expression graph.
      */
     void drawEdges() const;

@@ -16,9 +16,66 @@ public:
     Expression();
 
     /**
+     * Use the focused node as selected node.
+     */
+    void useFocusedAsSelected(int x, int y);
+
+    /**
+     * Use the focused node as source node.
+     */
+    void useFocusedAsSource(int x, int y);
+
+    /**
+     * Use the focused node as target node.
+     */
+    void useFocusedAsTarget(int x, int y);
+
+    /**
+     * Get the selected node.
+     */
+    const Node* getSelectedNode() const;
+
+    /**
+     * Get the source node.
+     */
+    const Node* getSourceNode() const;
+
+    /**
+     * Get the target node.
+     */
+    const Node* getTargetNode() const;
+
+    /**
+     * Move the selected node to the given position.
+     */
+    void moveSelectedNode(int x, int y);
+
+    /**
+     * Toggle the edge between the source and target nodes.
+     */
+    void toggleSelectedEdge();
+
+private:
+
+    /**
      * Search the focused node.
      */
     Node* searchFocusedNode(int x, int y);
+
+    /**
+     * The selected node
+     */
+    Node* _selectedNode;
+
+    /**
+     * The source node of the edge selection
+     */
+    Node* _sourceNode;
+
+    /**
+     * The target node of the edge selection
+     */
+    Node* _targetNode;
 };
 
 #endif /* EXPRESSION_H */
