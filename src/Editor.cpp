@@ -2,6 +2,9 @@
 
 #include "handlers.h"
 
+#include "FL/fl_ask.H"
+
+#include <cassert>
 
 Editor::Editor()
 {
@@ -45,14 +48,25 @@ void Editor::createCanvas()
 
 void Editor::addExpression(const std::string& expressionName)
 {
-    _browser->add(expressionName.c_str());
+    if (isValidExpressionName(expressionName)) {
+        _expressions[expressionName] = Expression();
+        _browser->add(expressionName.c_str());
+    }
 }
 
-void Editor::renameSelectedExpression(const std::string& expressionName)
+void Editor::selectExpression(const std::string& expressionName)
 {
-    int selectedLine = _browser->value();
-    if (selectedLine > 0) {
-        // ...
+    assert(_expressions.find(expressionName) != _expressions.end());
+    _canvas->setExpression(&_expressions[expressionName]);
+    _canvas->redraw();
+}
+
+void Editor::renameExpression(const std::string& oldName, const std::string& newName)
+{
+    if (isValidExpressionName(newName)) {
+        _expressions[newName] = _expressions[oldName];
+        _expressions.erase(oldName);
+        _canvas->setExpression(&_expressions[newName]);
     }
 }
 
@@ -87,5 +101,18 @@ int Editor::run()
     _canvas->show();
 
     return Fl::run();
+}
+
+bool Editor::isValidExpressionName(const std::string& name) const
+{
+    if (name.empty()) {
+        fl_message("The expression name cannot be empty!");
+        return false;
+    }
+    else if (_expressions.find(name) != _expressions.end()) {
+        fl_message("The expression name already in use!");
+        return false;
+    }
+    return true;
 }
 

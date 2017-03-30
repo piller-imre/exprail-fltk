@@ -16,6 +16,11 @@ public:
     Expression();
 
     /**
+     * Copy expression on assignment.
+     */
+    Expression& operator=(const Expression& other);
+
+    /**
      * Select the type
      */
     void selectNodeType(NodeType nodeType);

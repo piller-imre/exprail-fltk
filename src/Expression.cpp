@@ -7,6 +7,34 @@ Expression::Expression()
     _targetNode = nullptr;
 }
 
+Expression& Expression::operator=(const Expression& other)
+{
+    if (&other != this) {
+        if (other._selectedNode != nullptr) {
+            int selectedIndex = other.calcNodeIndex(other._selectedNode);
+            _selectedNode = _nodes[selectedIndex].get();
+        }
+        else {
+            _selectedNode = nullptr;
+        }
+        if (other._sourceNode != nullptr) {
+            int sourceIndex = other.calcNodeIndex(other._sourceNode);
+            _sourceNode = _nodes[sourceIndex].get();
+        }
+        else {
+            _sourceNode = nullptr;
+        }
+        if (other._targetNode != nullptr) {
+            int targetIndex = other.calcNodeIndex(other._targetNode);
+            _targetNode = _nodes[targetIndex].get();
+        }
+        else {
+            _targetNode = nullptr;
+        }
+    }
+    return *this;
+}
+
 void Expression::selectNodeType(NodeType nodeType)
 {
     _selectedNodeType = nodeType;

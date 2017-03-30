@@ -16,6 +16,11 @@ class Graph
 public:
 
     /**
+     * Copy the content of the graph on assignment.
+     */
+    Graph& operator=(const Graph& other);
+
+    /**
      * Add new node to the expression.
      */
     void addNode(const Node& node);
@@ -36,6 +41,11 @@ public:
     const std::set<std::pair<Node*, Node*>>& getEdges() const;
 
 protected:
+
+    /**
+     * Calculate the index of the node in the _nodes vector.
+     */
+    int calcNodeIndex(const Node* node) const;
 
     /**
      * Nodes of the graph

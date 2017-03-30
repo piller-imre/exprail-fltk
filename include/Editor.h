@@ -7,6 +7,7 @@
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Window.H>
 
+#include <map>
 #include <string>
 
 #include "Canvas.h"
@@ -44,9 +45,14 @@ public:
     void addExpression(const std::string& expressionName);
 
     /**
-     * Rename the selected expression.
+     * Select the expression.
      */
-    void renameSelectedExpression(const std::string& expressionName);
+    void selectExpression(const std::string& expressionName);
+
+    /**
+     * Rename the expression from old name to new name.
+     */
+    void renameExpression(const std::string& oldName, const std::string& newName);
 
     /**
      * Remove the selected expression.
@@ -71,6 +77,11 @@ public:
 private:
 
     /**
+     * Check that the expression name is valid.
+     */
+    bool isValidExpressionName(const std::string& name) const;
+
+    /**
      * Expression browser window
      */
     Fl_Window* _expressionWindow;
@@ -92,6 +103,11 @@ private:
      * Graph editor canvas
      */
     Canvas* _canvas;
+
+    /**
+     * The expressions of the grammar
+     */
+    std::map<std::string, Expression> _expressions;
 };
 
 #endif /* EDITOR_H */

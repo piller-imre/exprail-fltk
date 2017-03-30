@@ -7,11 +7,6 @@
 
 #include <cassert>
 
-// DEBUG
-#include <iostream>
-using namespace std;
-//
-
 Canvas::Canvas(int width, int height, const char* title)
 		: Fl_Double_Window(width, height, title)
 {
@@ -20,8 +15,8 @@ Canvas::Canvas(int width, int height, const char* title)
     loadNodeImages();
 
     // _expression = nullptr;
-    _expression = new Expression();
-    _operation = OperationFactory::create(OperationType::SELECT_NODE, _expression);
+    Expression* expression = new Expression();
+    setExpression(expression);
 }
 
 void Canvas::draw()
@@ -33,7 +28,9 @@ void Canvas::draw()
 
 void Canvas::setExpression(Expression* expression)
 {
+    assert(expression != nullptr);
     _expression = expression;
+    _operation = OperationFactory::create(OperationType::SELECT_NODE, _expression);
 }
 
 void Canvas::drawMenuBar() const
