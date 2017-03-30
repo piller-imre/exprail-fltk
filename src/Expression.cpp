@@ -7,6 +7,23 @@ Expression::Expression()
     _targetNode = nullptr;
 }
 
+void Expression::selectNodeType(NodeType nodeType)
+{
+    _selectedNodeType = nodeType;
+}
+
+NodeType Expression::getSelectedNodeType() const
+{
+    return _selectedNodeType;
+}
+
+void Expression::createNewNode(int x, int y)
+{
+    Node node(_selectedNodeType, "new", x, y);
+    addNode(node);
+    useFocusedAsSelected(x, y);
+}
+
 void Expression::useFocusedAsSelected(int x, int y)
 {
     _selectedNode = searchFocusedNode(x, y);

@@ -1,8 +1,6 @@
 #include "Canvas.h"
 
-#include "operations/CreateNodeOperation.h"
-#include "operations/SelectNodeOperation.h"
-#include "operations/SelectEdgeOperation.h"
+#include "operations/OperationFactory.h"
 
 #include <FL/Fl.H>
 #include <FL/fl_draw.H>
@@ -23,7 +21,7 @@ Canvas::Canvas(int width, int height, const char* title)
 
     // _expression = nullptr;
     _expression = new Expression();
-    _operation = new SelectNodeOperation(_expression);
+    _operation = OperationFactory::create(OperationType::SELECT_NODE, _expression);
 }
 
 void Canvas::draw()
@@ -108,98 +106,13 @@ void Canvas::drawNode(const Node& node) const
 int Canvas::handle(int event)
 {
     // TODO: Make proper deallocation when changing operation for avoiding memory leak!
-    MouseButton mouseButton;
-    int mouseX, mouseY;
-    int key;
-
-    mouseButton = MouseButton::LEFT;
-    if (isMouseEvent(event)) {
-        getMouseEventData(&mouseButton, &mouseX, &mouseY);
+    _operation->handleEvent(event);
+    if (_operation->needChangeOperation()) {
+        OperationType operationType = _operation->getNextOperationType();
+        _operation = OperationFactory::create(operationType, _expression);
     }
-    else {
-        mouseX = 0;
-        mouseY = 0;
-    }
-
-    switch (event) {
-    case FL_PUSH:
-        if (mouseX < 384 && mouseY < 32) {
-            NodeType nodeType = static_cast<NodeType>(mouseX / 32);
-            _operation = new CreateNodeOperation(_expression, nodeType);
-        }
-        else {
-            _operation->pressMouse(mouseButton, mouseX, mouseY);
-        }
-        redraw();
-        break;
-    case FL_DRAG:
-        _operation->dragMouse(mouseButton, mouseX, mouseY);
-        redraw();
-        break;
-    case FL_RELEASE:
-        _operation->releaseMouse(mouseButton, mouseX, mouseY);
-        redraw();
-        break;
-    case FL_MOVE:
-        _operation->moveMouse(mouseX, mouseY);
-        break;
-    case FL_KEYDOWN:
-        key = Fl::event_key();
-        switch (key) {
-        case 'w':
-            // TODO: Remove the selected node!
-            break;
-        case 'e':
-            // TODO: Rename the selected node!
-            break;
-        case 'r':
-            // TODO: Change the type of the selected node!
-            break;
-        case 's':
-            _operation = new SelectNodeOperation(_expression);
-            break;
-        case 'd':
-            // TODO: Move the offset of the expression!
-            break;
-        case 'f':
-            _operation = new SelectEdgeOperation(_expression);
-            break;
-        }
-        break;
-    case FL_KEYUP:
-        break;
-    default:
-        // cout << "event: " << event << endl;
-        break;
-    }
-    if (_operation->isCompleted()) {
-        _operation = new SelectNodeOperation(_expression);
-    }
+    redraw();
     return 1;
-}
-
-bool Canvas::isMouseEvent(int event) const
-{
-    return event == FL_PUSH
-        || event == FL_DRAG
-        || event == FL_RELEASE
-        || event == FL_MOVE;
-}
-
-void Canvas::getMouseEventData(MouseButton* mouseButton, int* mouseX, int* mouseY) const
-{
-    int button = Fl::event_button();
-    if (button == FL_LEFT_MOUSE) {
-        *mouseButton = MouseButton::LEFT;
-    }
-    else if (button == FL_RIGHT_MOUSE) {
-        *mouseButton = MouseButton::RIGHT;
-    }
-    else if (button == FL_MIDDLE_MOUSE) {
-        *mouseButton = MouseButton::MIDDLE;
-    }
-    *mouseX = Fl::event_x();
-    *mouseY = Fl::event_y();
 }
 
 void Canvas::loadNodeImages()

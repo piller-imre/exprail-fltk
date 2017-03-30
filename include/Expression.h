@@ -16,6 +16,21 @@ public:
     Expression();
 
     /**
+     * Select the type
+     */
+    void selectNodeType(NodeType nodeType);
+
+    /**
+     * Get the selected type
+     */
+    NodeType getSelectedNodeType() const;
+
+    /**
+     * Create new node at the given position.
+     */
+    void createNewNode(int x, int y);
+
+    /**
      * Use the focused node as selected node.
      */
     void useFocusedAsSelected(int x, int y);
@@ -61,6 +76,11 @@ private:
      * Search the focused node.
      */
     Node* searchFocusedNode(int x, int y);
+
+    /**
+     * Selected type for new node creation
+     */
+    NodeType _selectedNodeType;
 
     /**
      * The selected node

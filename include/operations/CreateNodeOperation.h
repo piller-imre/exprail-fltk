@@ -11,21 +11,14 @@ class CreateNodeOperation : public Operation
 public:
 
     /**
-     * Construct a new operation with the given node type.
+     * Construct a new operation.
      */
-    CreateNodeOperation(Expression* expression, NodeType nodeType);
+    CreateNodeOperation(Expression* expression);
 
     /**
      * Create a new node on mouse button release.
      */
     virtual void releaseMouse(MouseButton button, int x, int y);
-
-private:
-
-    /**
-     * The type of the created node
-     */
-    NodeType _nodeType;
 };
 
 #endif /* CREATE_NODE_OPERATION_H */

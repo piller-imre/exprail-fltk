@@ -7,7 +7,15 @@ SelectNodeOperation::SelectNodeOperation(Expression* expression)
 
 void SelectNodeOperation::pressMouse(MouseButton button, int x, int y)
 {
-    _expression->useFocusedAsSelected(x, y);
+
+    if (x < 384 && y < 32) {
+        NodeType nodeType = static_cast<NodeType>(x / 32);
+        _expression->selectNodeType(nodeType);
+        _nextOperationType = OperationType::CREATE_NODE;
+    }
+    else {
+        _expression->useFocusedAsSelected(x, y);
+    }
 }
 
 void SelectNodeOperation::dragMouse(MouseButton button, int x, int y)

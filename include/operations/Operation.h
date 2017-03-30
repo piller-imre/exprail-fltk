@@ -4,6 +4,19 @@
 #include "Expression.h"
 #include "Node.h"
 
+// TODO: Use the mouse wheel!
+
+/**
+ * Operation types
+ */
+enum class OperationType
+{
+    NONE,
+    CREATE_NODE,
+    SELECT_NODE,
+    SELECT_EDGE
+};
+
 /**
  * Mouse buttons
  */
@@ -27,31 +40,51 @@ public:
     Operation(Expression* expression);
 
     /**
-     * Press down a mouse button.
+     * Handle mouse and keyboard events.
+     */
+    void handleEvent(int event);
+
+    /**
+     * Check that the changing of operation is necessary.
+     */
+    bool needChangeOperation() const;
+
+    /**
+     * Get the type of the next operation.
+     */
+    OperationType getNextOperationType() const;
+
+protected:
+
+    /**
+     * Handle mouse button press event.
      */
     virtual void pressMouse(MouseButton button, int x, int y);
 
     /**
-     * Release up a mouse button.
+     * Handle mouse button release event.
      */
     virtual void releaseMouse(MouseButton button, int x, int y);
 
     /**
-     * Move the mouse.
+     * Handle mouse move event.
      */
     virtual void moveMouse(int x, int y);
 
     /**
-     * Drag the mouse.
+     * Handle mouse drag event.
      */
     virtual void dragMouse(MouseButton button, int x, int y);
 
     /**
-     * Check that the operation has completed.
+     * Handle key press event.
      */
-    virtual bool isCompleted() const;
+    virtual void pressKey(int key);
 
-protected:
+    /**
+     * Handle key release event.
+     */
+    virtual void releaseKey(int key);
 
     /**
      * The edited expression
@@ -59,9 +92,21 @@ protected:
     Expression* _expression;
 
     /**
-     * Sign that wether the operation has completed or not.
+     * The type of the next operation
      */
-    bool _isCompleted;
+    OperationType _nextOperationType;
+
+private:
+
+    /**
+     * Get the mouse button and position.
+     */
+    void getMouseEventData(MouseButton* mouseButton, int* mouseX, int* mouseY) const;
+
+    /**
+     * Get the key code of keyboard event.
+     */
+    void getKeyEventData(int* key) const;
 };
 
 #endif /* OPERATION_H */

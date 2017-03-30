@@ -8,8 +8,6 @@
 #include "Node.h"
 #include "operations/Operation.h"
 
-// TODO: Use the mouse wheel!
-
 /**
  * Canvas for draw end editing the expression graphs.
  */
@@ -38,16 +36,6 @@ public:
 	virtual int handle(int event);
 
 private:
-
-    /**
-     * Check that the event is a mouse event.
-     */
-    bool isMouseEvent(int event) const;
-
-    /**
-     * Get the mouse button and position.
-     */
-    void getMouseEventData(MouseButton* mouseButton, int* mouseX, int* mouseY) const;
 
     /**
      * Load node images from nodes.png file.

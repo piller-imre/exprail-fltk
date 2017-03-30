@@ -1,15 +1,13 @@
 #include "operations/CreateNodeOperation.h"
 
-CreateNodeOperation::CreateNodeOperation(Expression* expression, NodeType nodeType)
+CreateNodeOperation::CreateNodeOperation(Expression* expression)
     : Operation(expression)
 {
-    _nodeType = nodeType;
 }
 
 void CreateNodeOperation::releaseMouse(MouseButton button, int x, int y)
 {
-    Node node(_nodeType, "new", x, y);
-    _expression->addNode(node);
-    _isCompleted = true;
+    _expression->createNewNode(x, y);
+    _nextOperationType = OperationType::SELECT_NODE;
 }
 
