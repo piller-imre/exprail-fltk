@@ -14,9 +14,8 @@ Canvas::Canvas(int width, int height, const char* title)
     resizable(this);
     loadNodeImages();
 
-    // _expression = nullptr;
-    Expression* expression = new Expression();
-    setExpression(expression);
+    _expression = nullptr;
+    _operation = OperationFactory::create(OperationType::NONE, nullptr);
 }
 
 void Canvas::draw()

@@ -8,7 +8,7 @@ Operation* OperationFactory::create(OperationType operationType, Expression* exp
 {
     switch (operationType) {
     case OperationType::NONE:
-        break;
+        return new Operation(expression);
     case OperationType::CREATE_NODE:
         return new CreateNodeOperation(expression);
     case OperationType::SELECT_NODE:

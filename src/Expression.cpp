@@ -9,6 +9,7 @@ Expression::Expression()
 
 Expression& Expression::operator=(const Expression& other)
 {
+    Graph::operator=(other);
     if (&other != this) {
         if (other._selectedNode != nullptr) {
             int selectedIndex = other.calcNodeIndex(other._selectedNode);
