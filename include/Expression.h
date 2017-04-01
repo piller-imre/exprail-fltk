@@ -85,6 +85,21 @@ public:
      */
     void toggleSelectedEdge();
 
+    /**
+     * Shift the offset of the node positions.
+     */
+    void shiftOffset(int dx, int dy);
+
+    /**
+     * Get the x coordinate of the offset.
+     */
+    int getOffsetX() const;
+
+    /**
+     * Get the y coordinate of the offset.
+     */
+    int getOffsetY() const;
+
 private:
 
     /**
@@ -111,6 +126,12 @@ private:
      * The target node of the edge selection
      */
     Node* _targetNode;
+
+    /**
+     * Offset of the node positions
+     */
+    int _offsetX;
+    int _offsetY;
 };
 
 #endif /* EXPRESSION_H */

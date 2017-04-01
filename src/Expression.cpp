@@ -5,6 +5,8 @@ Expression::Expression()
     _selectedNode = nullptr;
     _sourceNode = nullptr;
     _targetNode = nullptr;
+    _offsetX = 0;
+    _offsetY = 0;
 }
 
 Expression& Expression::operator=(const Expression& other)
@@ -48,7 +50,7 @@ NodeType Expression::getSelectedNodeType() const
 
 void Expression::createNewNode(int x, int y)
 {
-    Node node(_selectedNodeType, "", x, y);
+    Node node(_selectedNodeType, "", x - _offsetX, y - _offsetY);
     addNode(node);
     useFocusedAsSelected(x, y);
 }
@@ -86,7 +88,7 @@ const Node* Expression::getTargetNode() const
 void Expression::moveSelectedNode(int x, int y)
 {
     if (_selectedNode != nullptr) {
-        _selectedNode->move(x, y);
+        _selectedNode->move(x - _offsetX, y - _offsetY);
     }
 }
 
@@ -127,10 +129,26 @@ void Expression::toggleSelectedEdge()
     }
 }
 
+void Expression::shiftOffset(int dx, int dy)
+{
+    _offsetX += dx;
+    _offsetY += dy;
+}
+
+int Expression::getOffsetX() const
+{
+    return _offsetX;
+}
+
+int Expression::getOffsetY() const
+{
+    return _offsetY;
+}
+
 Node* Expression::searchFocusedNode(int x, int y)
 {
     for (const std::unique_ptr<Node>& node : _nodes) {
-        if (node->hasCollision(x, y)) {
+        if (node->hasCollision(x - _offsetX, y - _offsetY)) {
             return node.get();
         }
     }

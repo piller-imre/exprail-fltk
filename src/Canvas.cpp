@@ -49,20 +49,41 @@ void Canvas::drawExpression() const
 
 void Canvas::drawIndicators() const
 {
+    indicateSelectedNode();
+    indicateSourceNode();
+    indicateTargetNode();
+}
+
+void Canvas::indicateSelectedNode() const
+{
     const Node* selectedNode = _expression->getSelectedNode();
     if (selectedNode != nullptr) {
+        int nodeX = selectedNode->getX() + _expression->getOffsetX();
+        int nodeY = selectedNode->getY() + _expression->getOffsetY();
         fl_color(240, 200, 0);
-        fl_arc(selectedNode->getX() - 20, selectedNode->getY() - 20, 40, 40, 0, 360);
+        fl_arc(nodeX - 20, nodeY - 20, 40, 40, 0, 360);
     }
+}
+
+void Canvas::indicateSourceNode() const
+{
     const Node* sourceNode = _expression->getSourceNode();
     if (sourceNode != nullptr) {
+        int nodeX = sourceNode->getX() + _expression->getOffsetX();
+        int nodeY = sourceNode->getY() + _expression->getOffsetY();
         fl_color(255, 0, 0);
-        fl_arc(sourceNode->getX() - 20, sourceNode->getY() - 20, 40, 40, 0, 360);
+        fl_arc(nodeX - 20, nodeY - 20, 40, 40, 0, 360);
     }
+}
+
+void Canvas::indicateTargetNode() const
+{
     const Node* targetNode = _expression->getTargetNode();
     if (targetNode != nullptr) {
+        int nodeX = targetNode->getX() + _expression->getOffsetX();
+        int nodeY = targetNode->getY() + _expression->getOffsetY();
         fl_color(0, 255, 0);
-        fl_arc(targetNode->getX() - 20, targetNode->getY() - 20, 40, 40, 0, 360);
+        fl_arc(nodeX - 20, nodeY - 20, 40, 40, 0, 360);
     }
 }
 
@@ -76,7 +97,11 @@ void Canvas::drawEdges() const
         const Node* target= edge.second;
         assert(source != nullptr);
         assert(target != nullptr);
-        fl_line(source->getX(), source->getY(), target->getX(), target->getY());
+        int sourceX = source->getX() + _expression->getOffsetX();
+        int sourceY = source->getY() + _expression->getOffsetY();
+        int targetX = target->getX() + _expression->getOffsetX();
+        int targetY = target->getY() + _expression->getOffsetY();
+        fl_line(sourceX, sourceY, targetX, targetY);
     }
 }
 
@@ -91,12 +116,12 @@ void Canvas::drawNodes() const
 
 void Canvas::drawNode(const Node& node) const
 {
-    int x = node.getX() - 16;
-    int y = node.getY() - 16;
+    int nodeX = node.getX() + _expression->getOffsetX();
+    int nodeY = node.getY() + _expression->getOffsetY();
     int cx = static_cast<int>(node.getType()) * 32;
-    _nodeImages->draw(x, y, 32, 32, cx, 0);
+    _nodeImages->draw(nodeX - 16, nodeY - 16, 32, 32, cx, 0);
     fl_color(50, 50, 200);
-    fl_draw(node.getValue().c_str(), node.getX() - 24, node.getY() + 28);
+    fl_draw(node.getValue().c_str(), nodeX - 24, nodeY + 28);
 }
 
 int Canvas::handle(int event)

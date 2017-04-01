@@ -58,6 +58,21 @@ private:
     void drawIndicators() const;
 
     /**
+     * Indicate the selected node.
+     */
+    void indicateSelectedNode() const;
+
+    /**
+     * Indicate the source node.
+     */
+    void indicateSourceNode() const;
+
+    /**
+     * Indicate the target node.
+     */
+    void indicateTargetNode() const;
+
+    /**
      * Draw the edges of the expression graph.
      */
     void drawEdges() const;
