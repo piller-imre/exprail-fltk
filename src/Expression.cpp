@@ -90,6 +90,13 @@ void Expression::moveSelectedNode(int x, int y)
     }
 }
 
+void Expression::setSelectedNodeValue(const std::string& value)
+{
+    if (_selectedNode != nullptr) {
+        _selectedNode->setValue(value);
+    }
+}
+
 void Expression::toggleSelectedEdge()
 {
     if (_sourceNode != nullptr && _targetNode != nullptr) {

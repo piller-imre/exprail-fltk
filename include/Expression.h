@@ -71,6 +71,11 @@ public:
     void moveSelectedNode(int x, int y);
 
     /**
+     * Set the value of the selected node.
+     */
+    void setSelectedNodeValue(const std::string& value);
+
+    /**
      * Toggle the edge between the source and target nodes.
      */
     void toggleSelectedEdge();

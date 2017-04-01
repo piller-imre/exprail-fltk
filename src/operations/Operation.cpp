@@ -1,6 +1,7 @@
 #include "operations/Operation.h"
 
 #include <FL/Fl.H>
+#include <FL/Fl_File_Chooser.H>
 
 Operation::Operation(Expression* expression)
 {
@@ -75,7 +76,22 @@ void Operation::dragMouse(MouseButton button, int x, int y)
 
 void Operation::pressKey(int key)
 {
+    const char* value;
+    const Node* selectedNode;
+
     switch (key) {
+    case 'w':
+        // TODO: Remove the selected node!
+        break;
+    case 'e':
+        selectedNode = _expression->getSelectedNode();
+        if (selectedNode != nullptr) {
+            value = fl_input("The new value of the node", selectedNode->getValue().c_str());
+            if (value != nullptr) {
+                _expression->setSelectedNodeValue(value);
+            }
+        }
+        break;
     case 'r':
         // TODO: Change the type of the selected node!
         break;
