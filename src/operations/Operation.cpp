@@ -76,21 +76,12 @@ void Operation::dragMouse(MouseButton button, int x, int y)
 
 void Operation::pressKey(int key)
 {
-    const char* value;
-    const Node* selectedNode;
-
     switch (key) {
     case 'w':
-        // TODO: Remove the selected node!
+        removeSelectedNode();
         break;
     case 'e':
-        selectedNode = _expression->getSelectedNode();
-        if (selectedNode != nullptr) {
-            value = fl_input("The new value of the node", selectedNode->getValue().c_str());
-            if (value != nullptr) {
-                _expression->setSelectedNodeValue(value);
-            }
-        }
+        renameSelectedNode();
         break;
     case 'r':
         // TODO: Change the type of the selected node!
@@ -133,5 +124,33 @@ void Operation::getMouseEventData(MouseButton* mouseButton, int* mouseX, int* mo
 void Operation::getKeyEventData(int* key) const
 {
     *key = Fl::event_key();
+}
+
+void Operation::removeSelectedNode()
+{
+    const Node* selectedNode;
+    int response;
+
+    selectedNode = _expression->getSelectedNode();
+    if (selectedNode != nullptr) {
+        response = fl_choice("Do you want to remove the selected node?", "Remove", "Cancel", 0);
+        if (response == 0) {
+            _expression->removeSelectedNode();
+        }
+    }
+}
+
+void Operation::renameSelectedNode()
+{
+    const Node* selectedNode;
+    const char* value;
+
+    selectedNode = _expression->getSelectedNode();
+    if (selectedNode != nullptr) {
+        value = fl_input("The new value of the node", selectedNode->getValue().c_str());
+        if (value != nullptr) {
+            _expression->setSelectedNodeValue(value);
+        }
+    }
 }
 

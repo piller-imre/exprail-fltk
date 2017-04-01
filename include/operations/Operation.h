@@ -107,6 +107,16 @@ private:
      * Get the key code of keyboard event.
      */
     void getKeyEventData(int* key) const;
+
+    /**
+     * Remove the selected node.
+     */
+    void removeSelectedNode();
+
+    /**
+     * Rename the selected node.
+     */
+    void renameSelectedNode();
 };
 
 #endif /* OPERATION_H */

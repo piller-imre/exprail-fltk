@@ -48,7 +48,7 @@ NodeType Expression::getSelectedNodeType() const
 
 void Expression::createNewNode(int x, int y)
 {
-    Node node(_selectedNodeType, "new", x, y);
+    Node node(_selectedNodeType, "", x, y);
     addNode(node);
     useFocusedAsSelected(x, y);
 }
@@ -94,6 +94,23 @@ void Expression::setSelectedNodeValue(const std::string& value)
 {
     if (_selectedNode != nullptr) {
         _selectedNode->setValue(value);
+    }
+}
+
+void Expression::removeSelectedNode()
+{
+    if (_selectedNode != nullptr) {
+        int index = calcNodeIndex(_selectedNode);    
+        _nodes.erase(_nodes.begin() + index);
+        for (auto it = _edges.begin(); it != _edges.end();) {
+            if (it->first == _selectedNode || it->second == _selectedNode) {
+                it = _edges.erase(it);
+            }
+            else {
+                ++it;
+            }
+        }
+        _selectedNode = nullptr;
     }
 }
 

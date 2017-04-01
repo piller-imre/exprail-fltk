@@ -76,6 +76,11 @@ public:
     void setSelectedNodeValue(const std::string& value);
 
     /**
+     * Remove the selected node.
+     */
+    void removeSelectedNode();
+
+    /**
      * Toggle the edge between the source and target nodes.
      */
     void toggleSelectedEdge();
