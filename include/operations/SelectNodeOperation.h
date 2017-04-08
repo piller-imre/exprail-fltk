@@ -18,12 +18,12 @@ public:
     /**
      * Select a node or deselect the selected one.
      */
-    virtual void pressMouse(MouseButton button, const Point& position);
+    virtual void pressMouse(MouseButton button, const Point& position) override;
 
     /**
      * Drag the selected node
      */
-    virtual void dragMouse(MouseButton button, const Point& position);
+    virtual void dragMouse(MouseButton button, const Point& position) override;
 
 private:
 

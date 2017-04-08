@@ -86,14 +86,14 @@ public:
     void toggleSelectedEdge();
 
     /**
-     * Shift the offset of the node positions.
+     * Shift the origin of the expression graph.
      */
-    void shiftOffset(const Point& delta);
+    void shiftOrigin(const Point& delta);
 
     /**
-     * Get the offset.
+     * Get the origin of the expression graph.
      */
-    Point getOffset() const;
+    Point getOrigin() const;
 
 private:
 
@@ -123,9 +123,9 @@ private:
     Node* _targetNode;
 
     /**
-     * Offset of the node positions
+     * Origin of the expression graph own coordinate system
      */
-    Point _offset;
+    Point _origin;
 };
 
 #endif /* EXPRESSION_H */

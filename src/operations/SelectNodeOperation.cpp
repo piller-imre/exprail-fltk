@@ -31,7 +31,7 @@ void SelectNodeOperation::dragMouse(MouseButton button, const Point& position)
     }
     else {
         Point delta = position - _prevPosition;
-        _expression->shiftOffset(delta);
+        _expression->shiftOrigin(delta);
         _prevPosition = position;
     }
 }

@@ -38,7 +38,7 @@ void Canvas::drawMenuBar() const
 void Canvas::drawExpression()
 {
     if (_expression != nullptr) {
-        drawer.setOrigin(_expression->getOffset());
+        drawer.setOrigin(_expression->getOrigin());
         drawIndicators();
         drawEdges();
         drawNodes();
