@@ -43,9 +43,19 @@ public:
     void drawRectangle(int x, int y, int width, int height) const;
 
     /**
+     * Draw filled rectangle.
+     */
+    void fillRectangle(int x, int y, int width, int height) const;
+
+    /**
      * Draw a circle.
      */
-    void drawCricle(int x, int y, int radius) const;
+    void drawCircle(int x, int y, int radius) const;
+
+    /**
+     * Draw the icon image.
+     */
+    void drawIconImage(int x, int y) const;
 
     /**
      * Draw icon at the given position.

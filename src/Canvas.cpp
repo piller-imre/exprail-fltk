@@ -2,9 +2,6 @@
 
 #include "operations/OperationFactory.h"
 
-#include <FL/Fl.H>
-#include <FL/fl_draw.H>
-
 #include <cassert>
 
 Canvas::Canvas(int width, int height, const char* title)
@@ -12,7 +9,6 @@ Canvas::Canvas(int width, int height, const char* title)
 {
     color(FL_WHITE);
     resizable(this);
-    loadNodeImages();
 
     _expression = nullptr;
     _operation = OperationFactory::create(OperationType::NONE, nullptr);
@@ -34,16 +30,19 @@ void Canvas::setExpression(Expression* expression)
 
 void Canvas::drawMenuBar() const
 {
-    fl_rectf(0, 0, 384, 32, FL_GRAY);
-    _nodeImages->draw(0, 0);
+    drawer.setColor(200, 200, 200);
+    drawer.fillRectangle(0, 0, 384, 32);
+    drawer.drawIconImage(0, 0);
 }
 
-void Canvas::drawExpression() const
+void Canvas::drawExpression()
 {
     if (_expression != nullptr) {
+        drawer.setOrigin(_expression->getOffsetX(), _expression->getOffsetY());
         drawIndicators();
         drawEdges();
         drawNodes();
+        drawer.setOrigin(0, 0);
     }
 }
 
@@ -58,10 +57,8 @@ void Canvas::indicateSelectedNode() const
 {
     const Node* selectedNode = _expression->getSelectedNode();
     if (selectedNode != nullptr) {
-        int nodeX = selectedNode->getX() + _expression->getOffsetX();
-        int nodeY = selectedNode->getY() + _expression->getOffsetY();
-        fl_color(240, 200, 0);
-        fl_arc(nodeX - 20, nodeY - 20, 40, 40, 0, 360);
+        drawer.setColor(240, 200, 0);
+        drawer.drawCircle(selectedNode->getX(), selectedNode->getY(), 40);
     }
 }
 
@@ -69,10 +66,8 @@ void Canvas::indicateSourceNode() const
 {
     const Node* sourceNode = _expression->getSourceNode();
     if (sourceNode != nullptr) {
-        int nodeX = sourceNode->getX() + _expression->getOffsetX();
-        int nodeY = sourceNode->getY() + _expression->getOffsetY();
-        fl_color(255, 0, 0);
-        fl_arc(nodeX - 20, nodeY - 20, 40, 40, 0, 360);
+        drawer.setColor(255, 0, 0);
+        drawer.drawCircle(sourceNode->getX(), sourceNode->getY(), 40);
     }
 }
 
@@ -80,10 +75,8 @@ void Canvas::indicateTargetNode() const
 {
     const Node* targetNode = _expression->getTargetNode();
     if (targetNode != nullptr) {
-        int nodeX = targetNode->getX() + _expression->getOffsetX();
-        int nodeY = targetNode->getY() + _expression->getOffsetY();
-        fl_color(0, 255, 0);
-        fl_arc(nodeX - 20, nodeY - 20, 40, 40, 0, 360);
+        drawer.setColor(0, 255, 0);
+        drawer.drawCircle(targetNode->getX(), targetNode->getY(), 40);
     }
 }
 
@@ -91,17 +84,13 @@ void Canvas::drawEdges() const
 {
     assert(_expression != nullptr);
     const std::set<std::pair<Node*, Node*>> edges = _expression->getEdges();
-    fl_color(255, 0, 0);
+    drawer.setColor(255, 0, 0);
     for (const std::pair<Node*, Node*>& edge : edges) {
         const Node* source = edge.first;
         const Node* target= edge.second;
         assert(source != nullptr);
         assert(target != nullptr);
-        int sourceX = source->getX() + _expression->getOffsetX();
-        int sourceY = source->getY() + _expression->getOffsetY();
-        int targetX = target->getX() + _expression->getOffsetX();
-        int targetY = target->getY() + _expression->getOffsetY();
-        fl_line(sourceX, sourceY, targetX, targetY);
+        drawer.drawLine(source->getX(), source->getY(), target->getX(), target->getY());
     }
 }
 
@@ -116,12 +105,9 @@ void Canvas::drawNodes() const
 
 void Canvas::drawNode(const Node& node) const
 {
-    int nodeX = node.getX() + _expression->getOffsetX();
-    int nodeY = node.getY() + _expression->getOffsetY();
-    int cx = static_cast<int>(node.getType()) * 32;
-    _nodeImages->draw(nodeX - 16, nodeY - 16, 32, 32, cx, 0);
-    fl_color(50, 50, 200);
-    fl_draw(node.getValue().c_str(), nodeX - 24, nodeY + 28);
+    drawer.drawIcon(static_cast<int>(node.getType()), node.getX() - 16, node.getY() - 16);
+    drawer.setColor(50, 50, 200);
+    drawer.drawText(node.getValue(), node.getX() - 24, node.getY() + 28);
 }
 
 int Canvas::handle(int event)
@@ -134,10 +120,5 @@ int Canvas::handle(int event)
     }
     redraw();
     return 1;
-}
-
-void Canvas::loadNodeImages()
-{
-    _nodeImages = new Fl_PNG_Image("/tmp/nodes.png");
 }
 

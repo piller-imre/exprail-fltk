@@ -1,12 +1,12 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
-#include <FL/Fl_Double_Window.H>
-#include <FL/Fl_PNG_Image.H>
-
+#include "Drawer.h"
 #include "Expression.h"
 #include "Node.h"
 #include "operations/Operation.h"
+
+#include <FL/Fl_Double_Window.H>
 
 /**
  * Canvas for draw end editing the expression graphs.
@@ -38,11 +38,6 @@ public:
 private:
 
     /**
-     * Load node images from nodes.png file.
-     */
-    void loadNodeImages();
-
-    /**
      * Draw the menu bar.
      */
     void drawMenuBar() const;
@@ -50,7 +45,7 @@ private:
     /**
      * Draw the selected expression.
      */
-    void drawExpression() const;
+    void drawExpression();
 
     /**
      * Draw the indicators.
@@ -88,9 +83,9 @@ private:
     void drawNode(const Node& node) const;
 
     /**
-     * Node images
+     * Drawer
      */
-	Fl_PNG_Image* _nodeImages;
+	Drawer drawer;
 
     /**
      * The edited expression

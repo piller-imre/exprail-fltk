@@ -33,10 +33,20 @@ void Drawer::drawRectangle(int x, int y, int width, int height) const
     fl_rect(_x + x, _y + y, width, height);
 }
 
-void Drawer::drawCricle(int x, int y, int radius) const
+void Drawer::fillRectangle(int x, int y, int width, int height) const
+{
+    fl_rectf(_x + x, _y + y, width, height);
+}
+
+void Drawer::drawCircle(int x, int y, int radius) const
 {
     int diameter = 2 * radius;
     fl_arc(_x + x - radius, _y + y - radius, diameter, diameter, 0, 360); 
+}
+
+void Drawer::drawIconImage(int x, int y) const
+{
+    _iconImage->draw(_x + x, _y + y);
 }
 
 void Drawer::drawIcon(int index, int x, int y) const
