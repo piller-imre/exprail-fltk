@@ -18,7 +18,7 @@ public:
     /**
      * Create a new node on mouse button release.
      */
-    virtual void releaseMouse(MouseButton button, int x, int y);
+    virtual void releaseMouse(MouseButton button, const Point& position);
 };
 
 #endif /* CREATE_NODE_OPERATION_H */

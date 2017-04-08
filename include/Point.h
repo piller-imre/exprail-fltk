@@ -6,6 +6,13 @@
  */
 class Point
 {
+public:
+
+    /**
+     * Construct zero point.
+     */
+    Point();
+
     /**
      * Construct new point.
      */
@@ -30,6 +37,26 @@ class Point
      * Set the y coordinate.
      */
     void setY(int y);
+
+    /**
+     * Add points by coordinates.
+     */
+    Point operator+(const Point& point) const;
+
+    /**
+     * Shift the point with the given delta.
+     */
+    Point& operator+=(const Point& delta);
+
+    /**
+     * Subtract points by coordinates.
+     */
+    Point operator-(const Point& point) const;
+
+    /**
+     * Shift the point with the given delta with opposite direction.
+     */
+    Point& operator-=(const Point& delta);
 
 private:
 

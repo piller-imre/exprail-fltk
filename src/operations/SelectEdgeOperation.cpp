@@ -5,14 +5,14 @@ SelectEdgeOperation::SelectEdgeOperation(Expression* expression)
 {
 }
 
-void SelectEdgeOperation::pressMouse(MouseButton button, int x, int y)
+void SelectEdgeOperation::pressMouse(MouseButton button, const Point& position)
 {
     switch (button) {
     case MouseButton::LEFT:
-        _expression->useFocusedAsSource(x, y);
+        _expression->useFocusedAsSource(position);
         break;
     case MouseButton::RIGHT:
-        _expression->useFocusedAsTarget(x, y);
+        _expression->useFocusedAsTarget(position);
         break;
     case MouseButton::MIDDLE:
         _expression->toggleSelectedEdge();

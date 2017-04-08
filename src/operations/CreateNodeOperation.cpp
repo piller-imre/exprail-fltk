@@ -5,9 +5,9 @@ CreateNodeOperation::CreateNodeOperation(Expression* expression)
 {
 }
 
-void CreateNodeOperation::releaseMouse(MouseButton button, int x, int y)
+void CreateNodeOperation::releaseMouse(MouseButton button, const Point& position)
 {
-    _expression->createNewNode(x, y);
+    _expression->createNewNode(position);
     _nextOperationType = OperationType::SELECT_NODE;
 }
 

@@ -33,22 +33,22 @@ public:
     /**
      * Create new node at the given position.
      */
-    void createNewNode(int x, int y);
+    void createNewNode(const Point& position);
 
     /**
      * Use the focused node as selected node.
      */
-    void useFocusedAsSelected(int x, int y);
+    void useFocusedAsSelected(const Point& position);
 
     /**
      * Use the focused node as source node.
      */
-    void useFocusedAsSource(int x, int y);
+    void useFocusedAsSource(const Point& position);
 
     /**
      * Use the focused node as target node.
      */
-    void useFocusedAsTarget(int x, int y);
+    void useFocusedAsTarget(const Point& position);
 
     /**
      * Get the selected node.
@@ -68,7 +68,7 @@ public:
     /**
      * Move the selected node to the given position.
      */
-    void moveSelectedNode(int x, int y);
+    void moveSelectedNode(const Point& position);
 
     /**
      * Set the value of the selected node.
@@ -88,24 +88,19 @@ public:
     /**
      * Shift the offset of the node positions.
      */
-    void shiftOffset(int dx, int dy);
+    void shiftOffset(const Point& delta);
 
     /**
-     * Get the x coordinate of the offset.
+     * Get the offset.
      */
-    int getOffsetX() const;
-
-    /**
-     * Get the y coordinate of the offset.
-     */
-    int getOffsetY() const;
+    Point getOffset() const;
 
 private:
 
     /**
      * Search the focused node.
      */
-    Node* searchFocusedNode(int x, int y);
+    Node* searchFocusedNode(const Point& position);
 
     /**
      * Selected type for new node creation
@@ -130,8 +125,7 @@ private:
     /**
      * Offset of the node positions
      */
-    int _offsetX;
-    int _offsetY;
+    Point _offset;
 };
 
 #endif /* EXPRESSION_H */

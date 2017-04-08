@@ -59,22 +59,22 @@ protected:
     /**
      * Handle mouse button press event.
      */
-    virtual void pressMouse(MouseButton button, int x, int y);
+    virtual void pressMouse(MouseButton button, const Point& position);
 
     /**
      * Handle mouse button release event.
      */
-    virtual void releaseMouse(MouseButton button, int x, int y);
+    virtual void releaseMouse(MouseButton button, const Point& position);
 
     /**
      * Handle mouse move event.
      */
-    virtual void moveMouse(int x, int y);
+    virtual void moveMouse(const Point& position);
 
     /**
      * Handle mouse drag event.
      */
-    virtual void dragMouse(MouseButton button, int x, int y);
+    virtual void dragMouse(MouseButton button, const Point& position);
 
     /**
      * Handle key press event.
@@ -101,12 +101,12 @@ private:
     /**
      * Get the mouse button and position.
      */
-    void getMouseEventData(MouseButton* mouseButton, int* mouseX, int* mouseY) const;
+    void getMouseEventData(MouseButton& mouseButton, Point& position) const;
 
     /**
      * Get the key code of keyboard event.
      */
-    void getKeyEventData(int* key) const;
+    void getKeyEventData(int& key) const;
 
     /**
      * Remove the selected node.

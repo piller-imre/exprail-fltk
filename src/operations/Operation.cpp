@@ -11,33 +11,33 @@ Operation::Operation(Expression* expression)
 
 void Operation::handleEvent(int event)
 {
-    MouseButton mouseButton;
-    int mouseX, mouseY;
+    MouseButton button;
+    Point position;
     int key;
 
     switch (event) {
     case FL_PUSH:
-        getMouseEventData(&mouseButton, &mouseX, &mouseY);
-        pressMouse(mouseButton, mouseX, mouseY);
+        getMouseEventData(button, position);
+        pressMouse(button, position);
         break;
     case FL_RELEASE:
-        getMouseEventData(&mouseButton, &mouseX, &mouseY);
-        releaseMouse(mouseButton, mouseX, mouseY);
+        getMouseEventData(button, position);
+        releaseMouse(button, position);
         break;
     case FL_MOVE:
-        getMouseEventData(&mouseButton, &mouseX, &mouseY);
-        moveMouse(mouseX, mouseY);
+        getMouseEventData(button, position);
+        moveMouse(position);
         break;
     case FL_DRAG:
-        getMouseEventData(&mouseButton, &mouseX, &mouseY);
-        dragMouse(mouseButton, mouseX, mouseY);
+        getMouseEventData(button, position);
+        dragMouse(button, position);
         break;
     case FL_KEYDOWN:
-        getKeyEventData(&key);
+        getKeyEventData(key);
         pressKey(key);
         break;
     case FL_KEYUP:
-        getKeyEventData(&key);
+        getKeyEventData(key);
         releaseKey(key);
         break;
     }
@@ -58,19 +58,19 @@ OperationType Operation::getNextOperationType() const
     return _nextOperationType;
 }
 
-void Operation::pressMouse(MouseButton button, int x, int y)
+void Operation::pressMouse(MouseButton button, const Point& position)
 {
 }
 
-void Operation::releaseMouse(MouseButton button, int x, int y)
+void Operation::releaseMouse(MouseButton button, const Point& position)
 {
 }
 
-void Operation::moveMouse(int x, int y)
+void Operation::moveMouse(const Point& position)
 {
 }
 
-void Operation::dragMouse(MouseButton button, int x, int y)
+void Operation::dragMouse(MouseButton button, const Point& position)
 {
 }
 
@@ -102,28 +102,28 @@ void Operation::releaseKey(int key)
 {
 }
 
-void Operation::getMouseEventData(MouseButton* mouseButton, int* mouseX, int* mouseY) const
+void Operation::getMouseEventData(MouseButton& button, Point& position) const
 {
-    int button = Fl::event_button();
-    if (button == FL_LEFT_MOUSE) {
-        *mouseButton = MouseButton::LEFT;
+    int index = Fl::event_button();
+    if (index == FL_LEFT_MOUSE) {
+        button = MouseButton::LEFT;
     }
-    else if (button == FL_RIGHT_MOUSE) {
-        *mouseButton = MouseButton::RIGHT;
+    else if (index == FL_RIGHT_MOUSE) {
+        button = MouseButton::RIGHT;
     }
-    else if (button == FL_MIDDLE_MOUSE) {
-        *mouseButton = MouseButton::MIDDLE;
+    else if (index == FL_MIDDLE_MOUSE) {
+        button = MouseButton::MIDDLE;
     }
     else {
-        *mouseButton = MouseButton::LEFT;
+        button = MouseButton::LEFT;
     }
-    *mouseX = Fl::event_x();
-    *mouseY = Fl::event_y();
+    position.setX(Fl::event_x());
+    position.setY(Fl::event_y());
 }
 
-void Operation::getKeyEventData(int* key) const
+void Operation::getKeyEventData(int& key) const
 {
-    *key = Fl::event_key();
+    key = Fl::event_key();
 }
 
 void Operation::removeSelectedNode()

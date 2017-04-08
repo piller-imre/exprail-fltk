@@ -1,10 +1,10 @@
 #include "Node.h"
 
-Node::Node(NodeType type, const std::string& value, int x, int y)
+Node::Node(NodeType type, const std::string& value, const Point& position)
 {
     setType(type);
     setValue(value);
-    move(x, y);
+    setPosition(position);
 }
 
 NodeType Node::getType() const
@@ -27,26 +27,24 @@ void Node::setValue(const std::string& value)
     _value = value;
 }
 
-int Node::getX() const
+Point Node::getPosition() const
 {
-    return _x;
+    return _position;
 }
 
-int Node::getY() const
+void Node::setPosition(const Point& position)
 {
-    return _y;
+    _position = position;
 }
 
-void Node::move(int x, int y)
-{
-    _x = x;
-    _y = y;
-}
-
-bool Node::hasCollision(int x, int y) const
+bool Node::hasCollision(const Point& point) const
 {
     // TODO: Use rounded area!
-    if (x >= _x - 16 && x < _x + 16 && y >= _y - 16 && y < _y + 16) {
+    if (point.getX() >= _position.getX() - 16
+        && point.getX() < _position.getX() + 16
+        && point.getY() >= _position.getY() - 16
+        && point.getY() < _position.getY() + 16
+    ) {
         return true;
     }
     return false;

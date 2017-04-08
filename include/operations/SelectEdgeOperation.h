@@ -18,7 +18,7 @@ public:
     /**
      * Select the source/target nodes and toggle the edge.
      */
-    virtual void pressMouse(MouseButton button, int x, int y);
+    virtual void pressMouse(MouseButton button, const Point& position);
 };
 
 #endif /* SELECT_EDGE_OPERATION_H */

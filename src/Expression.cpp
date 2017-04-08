@@ -5,8 +5,7 @@ Expression::Expression()
     _selectedNode = nullptr;
     _sourceNode = nullptr;
     _targetNode = nullptr;
-    _offsetX = 0;
-    _offsetY = 0;
+    _offset = Point(0, 0);
 }
 
 Expression& Expression::operator=(const Expression& other)
@@ -48,26 +47,26 @@ NodeType Expression::getSelectedNodeType() const
     return _selectedNodeType;
 }
 
-void Expression::createNewNode(int x, int y)
+void Expression::createNewNode(const Point& position)
 {
-    Node node(_selectedNodeType, "", x - _offsetX, y - _offsetY);
+    Node node(_selectedNodeType, "", position - _offset);
     addNode(node);
-    useFocusedAsSelected(x, y);
+    useFocusedAsSelected(position);
 }
 
-void Expression::useFocusedAsSelected(int x, int y)
+void Expression::useFocusedAsSelected(const Point& position)
 {
-    _selectedNode = searchFocusedNode(x, y);
+    _selectedNode = searchFocusedNode(position);
 }
 
-void Expression::useFocusedAsSource(int x, int y)
+void Expression::useFocusedAsSource(const Point& position)
 {
-    _sourceNode = searchFocusedNode(x, y);
+    _sourceNode = searchFocusedNode(position);
 }
 
-void Expression::useFocusedAsTarget(int x, int y)
+void Expression::useFocusedAsTarget(const Point& position)
 {
-    _targetNode = searchFocusedNode(x, y);
+    _targetNode = searchFocusedNode(position);
 }
 
 const Node* Expression::getSelectedNode() const
@@ -85,10 +84,10 @@ const Node* Expression::getTargetNode() const
     return _targetNode;
 }
 
-void Expression::moveSelectedNode(int x, int y)
+void Expression::moveSelectedNode(const Point& position)
 {
     if (_selectedNode != nullptr) {
-        _selectedNode->move(x - _offsetX, y - _offsetY);
+        _selectedNode->setPosition(position - _offset);
     }
 }
 
@@ -129,26 +128,20 @@ void Expression::toggleSelectedEdge()
     }
 }
 
-void Expression::shiftOffset(int dx, int dy)
+void Expression::shiftOffset(const Point& delta)
 {
-    _offsetX += dx;
-    _offsetY += dy;
+    _offset += delta;
 }
 
-int Expression::getOffsetX() const
+Point Expression::getOffset() const
 {
-    return _offsetX;
+    return _offset;
 }
 
-int Expression::getOffsetY() const
-{
-    return _offsetY;
-}
-
-Node* Expression::searchFocusedNode(int x, int y)
+Node* Expression::searchFocusedNode(const Point& position)
 {
     for (const std::unique_ptr<Node>& node : _nodes) {
-        if (node->hasCollision(x - _offsetX, y - _offsetY)) {
+        if (node->hasCollision(position - _offset)) {
             return node.get();
         }
     }

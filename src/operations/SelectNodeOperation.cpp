@@ -3,40 +3,36 @@
 SelectNodeOperation::SelectNodeOperation(Expression* expression)
     : Operation(expression)
 {
-    _prevX = 0;
-    _prevY = 0;
+    _prevPosition = Point(0, 0);
 }
 
-void SelectNodeOperation::pressMouse(MouseButton button, int x, int y)
+void SelectNodeOperation::pressMouse(MouseButton button, const Point& position)
 {
     if (button == MouseButton::LEFT) {
-        if (x < 384 && y < 32) {
-            NodeType nodeType = static_cast<NodeType>(x / 32);
+        if (position.getX() < 384 && position.getY() < 32) {
+            NodeType nodeType = static_cast<NodeType>(position.getX() / 32);
             _expression->selectNodeType(nodeType);
             _nextOperationType = OperationType::CREATE_NODE;
         }
         else {
-            _expression->useFocusedAsSelected(x, y);
+            _expression->useFocusedAsSelected(position);
         }
     }
     else {
-        _prevX = x;
-        _prevY = y;
+        _prevPosition = position;
     }
 }
 
-void SelectNodeOperation::dragMouse(MouseButton button, int x, int y)
+void SelectNodeOperation::dragMouse(MouseButton button, const Point& position)
 {
     // TODO: Use shift instead of centering the node to the current mouse position!
     if (button == MouseButton::LEFT) {
-        _expression->moveSelectedNode(x, y);
+        _expression->moveSelectedNode(position);
     }
     else {
-        int dx = x - _prevX;
-        int dy = y - _prevY;
-        _expression->shiftOffset(dx, dy);
-        _prevX = x;
-        _prevY = y;
+        Point delta = position - _prevPosition;
+        _expression->shiftOffset(delta);
+        _prevPosition = position;
     }
 }
 

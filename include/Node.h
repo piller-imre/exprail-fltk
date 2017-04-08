@@ -1,6 +1,8 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include "Point.h"
+
 #include <string>
 
 /**
@@ -32,7 +34,7 @@ public:
     /**
      * Construct a new node.
      */
-    Node(NodeType type, const std::string& value, int x, int y);
+    Node(NodeType type, const std::string& value, const Point& position);
 
     /**
      * Get the type of the node.
@@ -55,24 +57,19 @@ public:
     void setValue(const std::string& value);
 
     /**
-     * Get the x coordinate of the position.
+     * Get the position of the node.
      */
-    int getX() const;
+    Point getPosition() const;
 
     /**
-     * Get the y coordinate of the position.
+     * Set the position of the node.
      */
-    int getY() const;
-
-    /**
-     * Change the node position.
-     */
-    void move(int x, int y);
+    void setPosition(const Point& position);
 
     /**
      * Check that the point is collided by the node icon.
      */
-    bool hasCollision(int x, int y) const;
+    bool hasCollision(const Point& point) const;
 
 private:
 
@@ -89,8 +86,7 @@ private:
     /**
      * The position of the node.
      */
-    int _x;
-    int _y;
+    Point _position;
 };
 
 #endif /* NODE_H */

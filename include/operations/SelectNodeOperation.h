@@ -18,20 +18,19 @@ public:
     /**
      * Select a node or deselect the selected one.
      */
-    virtual void pressMouse(MouseButton button, int x, int y);
+    virtual void pressMouse(MouseButton button, const Point& position);
 
     /**
      * Drag the selected node
      */
-    virtual void dragMouse(MouseButton button, int x, int y);
+    virtual void dragMouse(MouseButton button, const Point& position);
 
 private:
 
     /**
      * The previous position of the mouse cursor
      */
-    int _prevX;
-    int _prevY;
+    Point _prevPosition;
 };
 
 #endif /* SELECT_NODE_OPERATION_H */

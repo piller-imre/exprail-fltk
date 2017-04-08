@@ -31,18 +31,18 @@ void Canvas::setExpression(Expression* expression)
 void Canvas::drawMenuBar() const
 {
     drawer.setColor(200, 200, 200);
-    drawer.fillRectangle(0, 0, 384, 32);
-    drawer.drawIconImage(0, 0);
+    drawer.fillRectangle(Point(0, 0), 384, 32);
+    drawer.drawIconImage(Point(0, 0));
 }
 
 void Canvas::drawExpression()
 {
     if (_expression != nullptr) {
-        drawer.setOrigin(_expression->getOffsetX(), _expression->getOffsetY());
+        drawer.setOrigin(_expression->getOffset());
         drawIndicators();
         drawEdges();
         drawNodes();
-        drawer.setOrigin(0, 0);
+        drawer.setOrigin(Point(0, 0));
     }
 }
 
@@ -58,7 +58,7 @@ void Canvas::indicateSelectedNode() const
     const Node* selectedNode = _expression->getSelectedNode();
     if (selectedNode != nullptr) {
         drawer.setColor(240, 200, 0);
-        drawer.drawCircle(selectedNode->getX(), selectedNode->getY(), 40);
+        drawer.drawCircle(selectedNode->getPosition(), 40);
     }
 }
 
@@ -67,7 +67,7 @@ void Canvas::indicateSourceNode() const
     const Node* sourceNode = _expression->getSourceNode();
     if (sourceNode != nullptr) {
         drawer.setColor(255, 0, 0);
-        drawer.drawCircle(sourceNode->getX(), sourceNode->getY(), 40);
+        drawer.drawCircle(sourceNode->getPosition(), 40);
     }
 }
 
@@ -76,7 +76,7 @@ void Canvas::indicateTargetNode() const
     const Node* targetNode = _expression->getTargetNode();
     if (targetNode != nullptr) {
         drawer.setColor(0, 255, 0);
-        drawer.drawCircle(targetNode->getX(), targetNode->getY(), 40);
+        drawer.drawCircle(targetNode->getPosition(), 40);
     }
 }
 
@@ -90,7 +90,7 @@ void Canvas::drawEdges() const
         const Node* target= edge.second;
         assert(source != nullptr);
         assert(target != nullptr);
-        drawer.drawLine(source->getX(), source->getY(), target->getX(), target->getY());
+        drawer.drawLine(source->getPosition(), target->getPosition());
     }
 }
 
@@ -105,9 +105,9 @@ void Canvas::drawNodes() const
 
 void Canvas::drawNode(const Node& node) const
 {
-    drawer.drawIcon(static_cast<int>(node.getType()), node.getX() - 16, node.getY() - 16);
+    drawer.drawIcon(static_cast<int>(node.getType()), node.getPosition() - Point(16, 16));
     drawer.setColor(50, 50, 200);
-    drawer.drawText(node.getValue(), node.getX() - 24, node.getY() + 28);
+    drawer.drawText(node.getValue(), node.getPosition() + Point(-24, 28));
 }
 
 int Canvas::handle(int event)

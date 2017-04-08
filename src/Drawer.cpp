@@ -17,45 +17,52 @@ void Drawer::setColor(int red, int green, int blue) const
     fl_color(red, green, blue);
 }
 
-void Drawer::setOrigin(int x, int y)
+void Drawer::setOrigin(const Point& origin)
 {
-    _x = x;
-    _y = y;
+    _origin = origin;
 }
 
-void Drawer::drawLine(int x1, int y1, int x2, int y2) const
+void Drawer::drawLine(const Point& source, const Point& target) const
 {
-    fl_line(_x + x1, _y + y1, _x + x2, _y + y2);
+    Point p1 = _origin + source;
+    Point p2 = _origin + target;
+    fl_line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 }
 
-void Drawer::drawRectangle(int x, int y, int width, int height) const
+void Drawer::drawRectangle(const Point& position, int width, int height) const
 {
-    fl_rect(_x + x, _y + y, width, height);
+    Point p = _origin + position;
+    fl_rect(p.getX(), p.getY(), width, height);
 }
 
-void Drawer::fillRectangle(int x, int y, int width, int height) const
+void Drawer::fillRectangle(const Point& position, int width, int height) const
 {
-    fl_rectf(_x + x, _y + y, width, height);
+    Point p = _origin + position;
+    fl_rectf(p.getX(), p.getY(), width, height);
 }
 
-void Drawer::drawCircle(int x, int y, int radius) const
+void Drawer::drawCircle(const Point& position, int radius) const
 {
+    Point p = _origin + position;
     int diameter = 2 * radius;
-    fl_arc(_x + x - radius, _y + y - radius, diameter, diameter, 0, 360); 
+    fl_arc(p.getX() - radius, p.getY() - radius, diameter, diameter, 0, 360); 
 }
 
-void Drawer::drawIconImage(int x, int y) const
+void Drawer::drawIconImage(const Point& position) const
 {
-    _iconImage->draw(_x + x, _y + y);
+    Point p = _origin + position;
+    _iconImage->draw(p.getX(), p.getY());
 }
 
-void Drawer::drawIcon(int index, int x, int y) const
+void Drawer::drawIcon(int index, const Point& position) const
 {
-    _iconImage->draw(_x + x, _y + y, 32, 32, index * 32, 0);
+    Point p = _origin + position;
+    _iconImage->draw(p.getX(), p.getY(), 32, 32, index * 32, 0);
 }
 
-void Drawer::drawText(const std::string& text, int x, int y) const
+void Drawer::drawText(const std::string& text, const Point& position) const
 {
-    fl_draw(text.c_str(), _x + x, _y + y);
+    Point p = _origin + position;
+    fl_draw(text.c_str(), p.getX(), p.getY());
 }
 

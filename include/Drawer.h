@@ -1,6 +1,8 @@
 #ifndef DRAWER_H
 #define DRAWER_H
 
+#include "Point.h"
+
 #include <FL/Fl_PNG_Image.H>
 
 #include <string>
@@ -30,42 +32,42 @@ public:
     /**
      * Set the origin of the graphical context.
      */
-    void setOrigin(int x, int y);
+    void setOrigin(const Point& origin);
 
     /**
      * Draw line between the given points.
      */
-    void drawLine(int x1, int y1, int x2, int y2) const;
+    void drawLine(const Point& source, const Point& target) const;
 
     /**
      * Draw a rectangle.
      */
-    void drawRectangle(int x, int y, int width, int height) const;
+    void drawRectangle(const Point& position, int width, int height) const;
 
     /**
      * Draw filled rectangle.
      */
-    void fillRectangle(int x, int y, int width, int height) const;
+    void fillRectangle(const Point& position, int width, int height) const;
 
     /**
      * Draw a circle.
      */
-    void drawCircle(int x, int y, int radius) const;
+    void drawCircle(const Point& position, int radius) const;
 
     /**
      * Draw the icon image.
      */
-    void drawIconImage(int x, int y) const;
+    void drawIconImage(const Point& position) const;
 
     /**
      * Draw icon at the given position.
      */
-    void drawIcon(int index, int x, int y) const;
+    void drawIcon(int index, const Point& position) const;
 
     /**
      * Draw text at the given position.
      */
-    void drawText(const std::string& text, int x, int y) const;
+    void drawText(const std::string& text, const Point& position) const;
 
 protected:
 
@@ -75,10 +77,9 @@ protected:
     Fl_PNG_Image* _iconImage;
 
     /**
-     * Coordinates of the origin
+     * The origin as the reference point
      */
-    int _x;
-    int _y;
+    Point _origin;
 };
 
 #endif /* DRAWER_H */
