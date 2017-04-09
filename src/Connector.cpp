@@ -12,3 +12,12 @@ Connector::Connector(Node* node, Side side)
     _side = side;
 }
 
+Node* Connector::getNode() const
+{
+    return _node;
+}
+
+Side Connector::getSide() const
+{
+    return _side;
+}

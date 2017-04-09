@@ -15,6 +15,16 @@ public:
      */
     Edge(const Connector& first, const Connector& second);
 
+    /**
+     * Get the first connector.
+     */
+    Connector getFirst() const;
+
+    /**
+     * Get the second connector.
+     */
+    Connector getSecond() const;
+
 private:
 
     /**

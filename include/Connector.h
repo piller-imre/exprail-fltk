@@ -29,6 +29,16 @@ public:
      */
     Connector(Node* node, Side side);
 
+    /**
+     * Get the node of the connector.
+     */
+    Node* getNode() const;
+
+    /**
+     * Get the side of the connector.
+     */
+    Side getSide() const;
+
 private:
 
     /**
