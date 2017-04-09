@@ -1,6 +1,7 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
+#include "Connector.h"
 #include "Graph.h"
 
 /**
@@ -41,14 +42,14 @@ public:
     void useFocusedAsSelected(const Point& position);
 
     /**
-     * Use the focused node as source node.
+     * Select the first connector.
      */
-    void useFocusedAsSource(const Point& position);
+    void selectFirstConnector(const Point& position);
 
     /**
-     * Use the focused node as target node.
+     * Select the second connector.
      */
-    void useFocusedAsTarget(const Point& position);
+    void selectSecondConnector(const Point& position);
 
     /**
      * Get the selected node.
@@ -56,14 +57,14 @@ public:
     const Node* getSelectedNode() const;
 
     /**
-     * Get the source node.
+     * Get the first connector.
      */
-    const Node* getSourceNode() const;
+    const Connector getFirstConnector() const;
 
     /**
-     * Get the target node.
+     * Get the second connector.
      */
-    const Node* getTargetNode() const;
+    const Connector getSecondConnector() const;
 
     /**
      * Move the selected node to the given position.
@@ -100,7 +101,12 @@ private:
     /**
      * Search the focused node.
      */
-    Node* searchFocusedNode(const Point& position);
+    Node* searchNode(const Point& position);
+
+    /**
+     * Search the focused connector.
+     */
+    Connector searchConnector(const Point& position);
 
     /**
      * Selected type for new node creation
@@ -113,14 +119,14 @@ private:
     Node* _selectedNode;
 
     /**
-     * The source node of the edge selection
+     * The first connector for edge selection
      */
-    Node* _sourceNode;
+    Connector _firstConnector;
 
     /**
-     * The target node of the edge selection
+     * The second connector for edge selection
      */
-    Node* _targetNode;
+    Connector _secondConnector;
 
     /**
      * Origin of the expression graph own coordinate system

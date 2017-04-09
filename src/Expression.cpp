@@ -3,9 +3,6 @@
 Expression::Expression()
 {
     _selectedNode = nullptr;
-    _sourceNode = nullptr;
-    _targetNode = nullptr;
-    _origin = Point(0, 0);
 }
 
 Expression& Expression::operator=(const Expression& other)
@@ -19,20 +16,8 @@ Expression& Expression::operator=(const Expression& other)
         else {
             _selectedNode = nullptr;
         }
-        if (other._sourceNode != nullptr) {
-            int sourceIndex = other.calcNodeIndex(other._sourceNode);
-            _sourceNode = _nodes[sourceIndex].get();
-        }
-        else {
-            _sourceNode = nullptr;
-        }
-        if (other._targetNode != nullptr) {
-            int targetIndex = other.calcNodeIndex(other._targetNode);
-            _targetNode = _nodes[targetIndex].get();
-        }
-        else {
-            _targetNode = nullptr;
-        }
+        _firstConnector = other._firstConnector;
+        _secondConnector = other._secondConnector;
     }
     return *this;
 }
@@ -56,17 +41,17 @@ void Expression::createNewNode(const Point& position)
 
 void Expression::useFocusedAsSelected(const Point& position)
 {
-    _selectedNode = searchFocusedNode(position);
+    _selectedNode = searchNode(position);
 }
 
-void Expression::useFocusedAsSource(const Point& position)
+void Expression::selectFirstConnector(const Point& position)
 {
-    _sourceNode = searchFocusedNode(position);
+    _firstConnector = searchConnector(position);
 }
 
-void Expression::useFocusedAsTarget(const Point& position)
+void Expression::selectSecondConnector(const Point& position)
 {
-    _targetNode = searchFocusedNode(position);
+    _secondConnector = searchConnector(position);
 }
 
 const Node* Expression::getSelectedNode() const
@@ -74,14 +59,14 @@ const Node* Expression::getSelectedNode() const
     return _selectedNode;
 }
 
-const Node* Expression::getSourceNode() const
+const Connector Expression::getFirstConnector() const
 {
-    return _sourceNode;
+    return _firstConnector;
 }
 
-const Node* Expression::getTargetNode() const
+const Connector Expression::getSecondConnector() const
 {
-    return _targetNode;
+    return _secondConnector;
 }
 
 void Expression::moveSelectedNode(const Point& position)
@@ -117,8 +102,8 @@ void Expression::removeSelectedNode()
 
 void Expression::toggleSelectedEdge()
 {
-    if (_sourceNode != nullptr && _targetNode != nullptr) {
-        std::pair<Node*, Node*> edge(_sourceNode, _targetNode);
+    if (_firstConnector.isValid() && _secondConnector.isValid()) {
+        std::pair<Node*, Node*> edge(_firstConnector.getNode(), _secondConnector.getNode());
         if (_edges.find(edge) == _edges.end()) {
             _edges.insert(edge);
         }
@@ -138,7 +123,7 @@ Point Expression::getOrigin() const
     return _origin;
 }
 
-Node* Expression::searchFocusedNode(const Point& position)
+Node* Expression::searchNode(const Point& position)
 {
     for (const std::unique_ptr<Node>& node : _nodes) {
         if (node->hasCollision(position - _origin)) {
@@ -146,5 +131,19 @@ Node* Expression::searchFocusedNode(const Point& position)
         }
     }
     return nullptr;
+}
+
+Connector Expression::searchConnector(const Point& position)
+{
+    Node* node = searchNode(position);
+    if (node != nullptr) {
+        if (position.getX() < node->getPosition().getX()) {
+            return Connector(node, Side::LEFT);
+        }
+        else {
+            return Connector(node, Side::RIGHT);
+        }
+    }
+    return Connector();
 }
 

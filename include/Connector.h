@@ -39,6 +39,11 @@ public:
      */
     Side getSide() const;
 
+    /**
+     * Check that the connector is valid.
+     */
+    bool isValid() const;
+
 private:
 
     /**

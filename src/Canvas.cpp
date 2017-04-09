@@ -49,8 +49,8 @@ void Canvas::drawExpression()
 void Canvas::drawIndicators() const
 {
     indicateSelectedNode();
-    indicateSourceNode();
-    indicateTargetNode();
+    indicateFirstConnector();
+    indicateSecondConnector();
 }
 
 void Canvas::indicateSelectedNode() const
@@ -62,32 +62,43 @@ void Canvas::indicateSelectedNode() const
     }
 }
 
-void Canvas::indicateSourceNode() const
+void Canvas::indicateFirstConnector() const
 {
-    const Node* sourceNode = _expression->getSourceNode();
-    if (sourceNode != nullptr) {
-        drawer.setColor(255, 0, 0);
-        drawer.drawCircle(sourceNode->getPosition(), 40);
-    }
+    const Connector connector = _expression->getFirstConnector();
+    drawer.setColor(255, 0, 0);
+    drawConnector(connector);
 }
 
-void Canvas::indicateTargetNode() const
+void Canvas::indicateSecondConnector() const
 {
-    const Node* targetNode = _expression->getTargetNode();
-    if (targetNode != nullptr) {
-        drawer.setColor(0, 255, 0);
-        drawer.drawCircle(targetNode->getPosition(), 40);
+    const Connector connector = _expression->getSecondConnector();
+    drawer.setColor(0, 255, 0);
+    drawConnector(connector);
+}
+
+void Canvas::drawConnector(const Connector& connector) const
+{
+    if (connector.isValid()) {
+        Point position = connector.getNode()->getPosition();
+        if (connector.getSide() == Side::LEFT) {
+            position -= Point(16, 0);
+        }
+        else {
+            position += Point(16, 0);
+        }
+        drawer.drawCircle(position, 10);
     }
 }
 
 void Canvas::drawEdges() const
 {
+    // TODO: Use drawEdge method for drawing!
     assert(_expression != nullptr);
     const std::set<std::pair<Node*, Node*>> edges = _expression->getEdges();
     drawer.setColor(255, 0, 0);
     for (const std::pair<Node*, Node*>& edge : edges) {
         const Node* source = edge.first;
-        const Node* target= edge.second;
+        const Node* target = edge.second;
         assert(source != nullptr);
         assert(target != nullptr);
         drawer.drawLine(source->getPosition(), target->getPosition());

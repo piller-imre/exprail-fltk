@@ -21,3 +21,9 @@ Side Connector::getSide() const
 {
     return _side;
 }
+
+bool Connector::isValid() const
+{
+    return _node != nullptr;
+}
+

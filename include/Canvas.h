@@ -58,14 +58,19 @@ private:
     void indicateSelectedNode() const;
 
     /**
-     * Indicate the source node.
+     * Indicate the first connector.
      */
-    void indicateSourceNode() const;
+    void indicateFirstConnector() const;
 
     /**
-     * Indicate the target node.
+     * Indicate the second connector.
      */
-    void indicateTargetNode() const;
+    void indicateSecondConnector() const;
+
+    /**
+     * Draw a connector.
+     */
+    void drawConnector(const Connector& connector) const;
 
     /**
      * Draw the edges of the expression graph.
