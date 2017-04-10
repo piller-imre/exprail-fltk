@@ -9,7 +9,8 @@
 enum class Side
 {
     LEFT,
-    RIGHT
+    RIGHT,
+    INVALID
 };
 
 /**
@@ -27,12 +28,12 @@ public:
     /**
      * Construct new connector.
      */
-    Connector(Node* node, Side side);
+    Connector(int nodeId, Side side);
 
     /**
      * Get the node of the connector.
      */
-    Node* getNode() const;
+    int getNodeId() const;
 
     /**
      * Get the side of the connector.
@@ -47,9 +48,9 @@ public:
 private:
 
     /**
-     * The node which has a connector
+     * The node identifier which has a connector
      */
-    Node* _node;
+    int _nodeId;
 
     /**
      * The side of the node where the connector is connected

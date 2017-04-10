@@ -5,23 +5,6 @@ Expression::Expression()
     _selectedNode = nullptr;
 }
 
-Expression& Expression::operator=(const Expression& other)
-{
-    Graph::operator=(other);
-    if (&other != this) {
-        if (other._selectedNode != nullptr) {
-            int selectedIndex = other.calcNodeIndex(other._selectedNode);
-            _selectedNode = _nodes[selectedIndex].get();
-        }
-        else {
-            _selectedNode = nullptr;
-        }
-        _firstConnector = other._firstConnector;
-        _secondConnector = other._secondConnector;
-    }
-    return *this;
-}
-
 void Expression::selectNodeType(NodeType nodeType)
 {
     _selectedNodeType = nodeType;
@@ -41,7 +24,7 @@ void Expression::createNewNode(const Point& position)
 
 void Expression::useFocusedAsSelected(const Point& position)
 {
-    _selectedNode = searchNode(position);
+    // _selectedNode = searchNode(position);
 }
 
 void Expression::selectFirstConnector(const Point& position)
@@ -86,16 +69,7 @@ void Expression::setSelectedNodeValue(const std::string& value)
 void Expression::removeSelectedNode()
 {
     if (_selectedNode != nullptr) {
-        int index = calcNodeIndex(_selectedNode);    
-        _nodes.erase(_nodes.begin() + index);
-        for (auto it = _edges.begin(); it != _edges.end();) {
-            if (it->first == _selectedNode || it->second == _selectedNode) {
-                it = _edges.erase(it);
-            }
-            else {
-                ++it;
-            }
-        }
+        // TODO: Remove the selected node!
         _selectedNode = nullptr;
     }
 }
@@ -103,13 +77,7 @@ void Expression::removeSelectedNode()
 void Expression::toggleSelectedEdge()
 {
     if (_firstConnector.isValid() && _secondConnector.isValid()) {
-        std::pair<Node*, Node*> edge(_firstConnector.getNode(), _secondConnector.getNode());
-        if (_edges.find(edge) == _edges.end()) {
-            _edges.insert(edge);
-        }
-        else {
-            _edges.erase(edge);
-        }
+        // TODO: Toggle selected edge on valid selection!
     }
 }
 
@@ -123,25 +91,29 @@ Point Expression::getOrigin() const
     return _origin;
 }
 
-Node* Expression::searchNode(const Point& position)
+int Expression::searchNode(const Point& position)
 {
-    for (const std::unique_ptr<Node>& node : _nodes) {
-        if (node->hasCollision(position - _origin)) {
-            return node.get();
+    for (const auto& item : _nodes) {
+        if (item.second.hasCollision(position - _origin)) {
+            return item.first;
         }
     }
-    return nullptr;
+    // TODO: Raise an exception when there is no result!
+    return 0;
 }
 
 Connector Expression::searchConnector(const Point& position)
 {
-    Node* node = searchNode(position);
-    if (node != nullptr) {
-        if (position.getX() < node->getPosition().getX()) {
-            return Connector(node, Side::LEFT);
-        }
-        else {
-            return Connector(node, Side::RIGHT);
+    for (const auto& item : _nodes) {
+        int nodeId = item.first;
+        const Node& node = item.second;
+        if (node.hasCollision(position - _origin)) {
+            if (position.getX() < node.getPosition().getX()) {
+                return Connector(nodeId, Side::LEFT);
+            }
+            else {
+                return Connector(nodeId, Side::RIGHT);
+            }
         }
     }
     return Connector();

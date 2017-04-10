@@ -4,8 +4,8 @@
 #include "Node.h"
 
 #include <memory>
+#include <map>
 #include <set>
-#include <vector>
 #include <utility>
 
 /**
@@ -16,9 +16,9 @@ class Graph
 public:
 
     /**
-     * Copy the content of the graph on assignment.
+     * Construct new graph.
      */
-    Graph& operator=(const Graph& other);
+    Graph();
 
     /**
      * Add new node to the expression.
@@ -26,9 +26,14 @@ public:
     void addNode(const Node& node);
 
     /**
+     * Get the node with the given identifier.
+     */
+    Node& getNode(int nodeId);
+
+    /**
      * Get the nodes of the expression.
      */
-    const std::vector<std::unique_ptr<Node>>& getNodes() const;
+    const std::map<int, Node>& getNodes() const;
 
     /**
      * Add new edge from the source to the target node.
@@ -43,19 +48,24 @@ public:
 protected:
 
     /**
-     * Calculate the index of the node in the _nodes vector.
+     * Get new node identifier.
      */
-    int calcNodeIndex(const Node* node) const;
+    int getNewNodeId();
 
     /**
      * Nodes of the graph
      */
-    std::vector<std::unique_ptr<Node>> _nodes;
+    std::map<int, Node> _nodes;
 
     /**
      * Edges of the graph
      */
     std::set<std::pair<Node*, Node*>> _edges;
+
+    /**
+     * The last node identifier
+     */
+    int _lastNodeId;
 };
 
 #endif /* GRAPH_H */

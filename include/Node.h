@@ -32,6 +32,11 @@ class Node
 public:
 
     /**
+     * Construct a new empty node.
+     */
+    Node();
+
+    /**
      * Construct a new node.
      */
     Node(NodeType type, const std::string& value, const Point& position);

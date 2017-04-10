@@ -17,11 +17,6 @@ public:
     Expression();
 
     /**
-     * Copy expression on assignment.
-     */
-    Expression& operator=(const Expression& other);
-
-    /**
      * Select the type
      */
     void selectNodeType(NodeType nodeType);
@@ -99,9 +94,9 @@ public:
 private:
 
     /**
-     * Search the focused node.
+     * Search the identifier of the focused node.
      */
-    Node* searchNode(const Point& position);
+    int searchNode(const Point& position);
 
     /**
      * Search the focused connector.

@@ -2,19 +2,18 @@
 
 Connector::Connector()
 {
-    _node = nullptr;
-    _side = Side::LEFT;
+    _side = Side::INVALID;
 }
 
-Connector::Connector(Node* node, Side side)
+Connector::Connector(int nodeId, Side side)
 {
-    _node = node;
+    _nodeId = nodeId;
     _side = side;
 }
 
-Node* Connector::getNode() const
+int Connector::getNodeId() const
 {
-    return _node;
+    return _nodeId;
 }
 
 Side Connector::getSide() const
@@ -24,6 +23,6 @@ Side Connector::getSide() const
 
 bool Connector::isValid() const
 {
-    return _node != nullptr;
+    return _side != Side::INVALID;
 }
 

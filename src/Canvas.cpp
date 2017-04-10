@@ -79,7 +79,8 @@ void Canvas::indicateSecondConnector() const
 void Canvas::drawConnector(const Connector& connector) const
 {
     if (connector.isValid()) {
-        Point position = connector.getNode()->getPosition();
+        const Node& node = _expression->getNode(connector.getNodeId());
+        Point position = node.getPosition();
         if (connector.getSide() == Side::LEFT) {
             position -= Point(16, 0);
         }
@@ -108,9 +109,9 @@ void Canvas::drawEdges() const
 void Canvas::drawNodes() const
 {
     assert(_expression != nullptr);
-    const std::vector<std::unique_ptr<Node>>& nodes = _expression->getNodes();
-    for (const std::unique_ptr<Node>& node : nodes) {
-        drawNode(*node);
+    const std::map<int, Node>& nodes = _expression->getNodes();
+    for (const auto& item : nodes) {
+        drawNode(item.second);
     }
 }
 

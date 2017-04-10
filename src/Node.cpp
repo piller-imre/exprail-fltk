@@ -1,5 +1,9 @@
 #include "Node.h"
 
+Node::Node()
+{
+}
+
 Node::Node(NodeType type, const std::string& value, const Point& position)
 {
     setType(type);
