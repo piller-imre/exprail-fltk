@@ -55,10 +55,11 @@ void Canvas::drawIndicators() const
 
 void Canvas::indicateSelectedNode() const
 {
-    const Node* selectedNode = _expression->getSelectedNode();
-    if (selectedNode != nullptr) {
+    int nodeId = _expression->getSelectedNodeId();
+    if (nodeId != Expression::INVALID_ID) {
+        const Node& node = _expression->getNode(nodeId);
         drawer.setColor(240, 200, 0);
-        drawer.drawCircle(selectedNode->getPosition(), 40);
+        drawer.drawCircle(node.getPosition(), 30);
     }
 }
 

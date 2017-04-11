@@ -1,8 +1,10 @@
 #include "Expression.h"
 
+const int Expression::INVALID_ID = -1;
+
 Expression::Expression()
 {
-    _selectedNode = nullptr;
+    _selectedNodeId = 0;
 }
 
 void Expression::selectNodeType(NodeType nodeType)
@@ -24,7 +26,7 @@ void Expression::createNewNode(const Point& position)
 
 void Expression::useFocusedAsSelected(const Point& position)
 {
-    // _selectedNode = searchNode(position);
+    _selectedNodeId = searchNode(position);
 }
 
 void Expression::selectFirstConnector(const Point& position)
@@ -37,9 +39,9 @@ void Expression::selectSecondConnector(const Point& position)
     _secondConnector = searchConnector(position);
 }
 
-const Node* Expression::getSelectedNode() const
+int Expression::getSelectedNodeId() const
 {
-    return _selectedNode;
+    return _selectedNodeId;
 }
 
 const Connector Expression::getFirstConnector() const
@@ -54,23 +56,24 @@ const Connector Expression::getSecondConnector() const
 
 void Expression::moveSelectedNode(const Point& position)
 {
-    if (_selectedNode != nullptr) {
-        _selectedNode->setPosition(position - _origin);
+    if (_selectedNodeId != INVALID_ID) {
+        _nodes[_selectedNodeId].setPosition(position - _origin);
     }
 }
 
 void Expression::setSelectedNodeValue(const std::string& value)
 {
-    if (_selectedNode != nullptr) {
-        _selectedNode->setValue(value);
+    if (_selectedNodeId != INVALID_ID) {
+        _nodes[_selectedNodeId].setValue(value);
     }
 }
 
 void Expression::removeSelectedNode()
 {
-    if (_selectedNode != nullptr) {
-        // TODO: Remove the selected node!
-        _selectedNode = nullptr;
+    if (_selectedNodeId != INVALID_ID) {
+        // TODO: Remove the connected edges!
+        _nodes.erase(_selectedNodeId);
+        _selectedNodeId = INVALID_ID;
     }
 }
 

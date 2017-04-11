@@ -128,12 +128,10 @@ void Operation::getKeyEventData(int& key) const
 
 void Operation::removeSelectedNode()
 {
-    const Node* selectedNode;
-    int response;
-
-    selectedNode = _expression->getSelectedNode();
-    if (selectedNode != nullptr) {
-        response = fl_choice("Do you want to remove the selected node?", "Remove", "Cancel", 0);
+    // TODO: Try to get selected node and after remove it instead of using node id!
+    int selectedNodeId = _expression->getSelectedNodeId();
+    if (selectedNodeId != Expression::INVALID_ID) {
+        int response = fl_choice("Do you want to remove the selected node?", "Remove", "Cancel", 0);
         if (response == 0) {
             _expression->removeSelectedNode();
         }
@@ -142,12 +140,11 @@ void Operation::removeSelectedNode()
 
 void Operation::renameSelectedNode()
 {
-    const Node* selectedNode;
-    const char* value;
-
-    selectedNode = _expression->getSelectedNode();
-    if (selectedNode != nullptr) {
-        value = fl_input("The new value of the node", selectedNode->getValue().c_str());
+    // TODO: Try to get selected node and after remove it instead of using node id!
+    int selectedNodeId = _expression->getSelectedNodeId();
+    if (selectedNodeId != Expression::INVALID_ID) {
+        const Node& node = _expression->getNode(selectedNodeId);
+        const char* value = fl_input("The new value of the node", node.getValue().c_str());
         if (value != nullptr) {
             _expression->setSelectedNodeValue(value);
         }

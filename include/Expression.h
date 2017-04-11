@@ -49,7 +49,7 @@ public:
     /**
      * Get the selected node.
      */
-    const Node* getSelectedNode() const;
+    int getSelectedNodeId() const;
 
     /**
      * Get the first connector.
@@ -91,6 +91,11 @@ public:
      */
     Point getOrigin() const;
 
+    /**
+     * Value for invalid node indices
+     */
+    static const int INVALID_ID;
+
 private:
 
     /**
@@ -109,9 +114,9 @@ private:
     NodeType _selectedNodeType;
 
     /**
-     * The selected node
+     * The identifier of the selected node
      */
-    Node* _selectedNode;
+    int _selectedNodeId;
 
     /**
      * The first connector for edge selection
