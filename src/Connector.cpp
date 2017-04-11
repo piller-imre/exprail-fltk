@@ -26,3 +26,16 @@ bool Connector::isValid() const
     return _side != Side::INVALID;
 }
 
+bool Connector::operator==(const Connector& other) const
+{
+    if (_nodeId == other._nodeId && _side == other._side) {
+        return true;
+    }
+    return false;
+}
+
+bool Connector::operator!=(const Connector& other) const
+{
+    return !(*this == other);
+}
+

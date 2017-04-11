@@ -45,6 +45,16 @@ public:
      */
     bool isValid() const;
 
+    /**
+     * Compare two connectors.
+     */
+    bool operator==(const Connector& other) const;
+
+    /**
+     * Check that the connectors are different.
+     */
+    bool operator!=(const Connector& other) const;
+
 private:
 
     /**

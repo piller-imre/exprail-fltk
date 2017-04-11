@@ -25,6 +25,16 @@ public:
      */
     Connector getSecond() const;
 
+    /**
+     * Compare two edges.
+     */
+    bool operator==(const Edge& other) const;
+
+    /**
+     * Check that the two edges are different.
+     */
+    bool operator!=(const Edge& other) const;
+
 private:
 
     /**
