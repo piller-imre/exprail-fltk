@@ -1,5 +1,9 @@
 #include "Graph.h"
 
+#include <cassert>
+
+const int Graph::INVALID_ID = -1;
+
 Graph::Graph()
 {
     _lastNodeId = 0;
@@ -8,12 +12,13 @@ Graph::Graph()
 void Graph::addNode(const Node& node)
 {
     int nodeId = getNewNodeId();
+    assert(_nodes.find(nodeId) == _nodes.end());
     _nodes[nodeId] = node;
 }
 
 Node& Graph::getNode(int nodeId)
 {
-    // TODO: Check that the identifier is valid!
+    assert(_nodes.find(nodeId) != _nodes.end());
     return _nodes[nodeId];
 }
 

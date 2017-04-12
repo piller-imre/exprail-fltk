@@ -1,27 +1,24 @@
 #include "Edge.h"
 
-Edge::Edge(const Connector& first, const Connector& second)
+Edge::Edge(int sourceId, int targetId)
 {
-    _first = first;
-    _second = second;
+    _sourceId = sourceId;
+    _targetId = targetId;
 }
 
-Connector Edge::getFirst() const
+int Edge::getSourceId() const
 {
-    return _first;
+    return _sourceId;
 }
 
-Connector Edge::getSecond() const
+int Edge::getTargetId() const
 {
-    return _second;
+    return _targetId;
 }
 
 bool Edge::operator==(const Edge& other) const
 {
-    if (_first == other._first && _second == other._second) {
-        return true;
-    }
-    else if (_first == other._second && _second == other._first) {
+    if (_sourceId == other._sourceId && _targetId == other._targetId) {
         return true;
     }
     return false;

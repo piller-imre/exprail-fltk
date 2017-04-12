@@ -48,48 +48,40 @@ void Canvas::drawExpression()
 
 void Canvas::drawIndicators() const
 {
-    indicateSelectedNode();
-    indicateFirstConnector();
-    indicateSecondConnector();
+    if (_expression->hasSelectedNode()) {
+        indicateSelectedNode();
+    }
+    if (_expression->hasSourceNode()) {
+        indicateSourceNode();
+    }
+    if (_expression->hasTargetNode()) {
+        indicateTargetNode();
+    }
 }
 
 void Canvas::indicateSelectedNode() const
 {
-    int nodeId = _expression->getSelectedNodeId();
-    if (nodeId != Expression::INVALID_ID) {
-        const Node& node = _expression->getNode(nodeId);
-        drawer.setColor(240, 200, 0);
-        drawer.drawCircle(node.getPosition(), 30);
-    }
+    const Node& node = _expression->getSelectedNode();
+    drawer.setColor(240, 200, 0);
+    drawer.drawCircle(node.getPosition(), 30);
 }
 
-void Canvas::indicateFirstConnector() const
+void Canvas::indicateSourceNode() const
 {
-    const Connector connector = _expression->getFirstConnector();
+    const Node& node = _expression->getSourceNode();
+    Point position = node.getPosition();
+    position += Point(16, 0);
     drawer.setColor(255, 0, 0);
-    drawConnector(connector);
+    drawer.drawCircle(position, 10);
 }
 
-void Canvas::indicateSecondConnector() const
+void Canvas::indicateTargetNode() const
 {
-    const Connector connector = _expression->getSecondConnector();
+    const Node& node = _expression->getTargetNode();
+    Point position = node.getPosition();
+    position -= Point(16, 0);
     drawer.setColor(0, 255, 0);
-    drawConnector(connector);
-}
-
-void Canvas::drawConnector(const Connector& connector) const
-{
-    if (connector.isValid()) {
-        const Node& node = _expression->getNode(connector.getNodeId());
-        Point position = node.getPosition();
-        if (connector.getSide() == Side::LEFT) {
-            position -= Point(16, 0);
-        }
-        else {
-            position += Point(16, 0);
-        }
-        drawer.drawCircle(position, 10);
-    }
+    drawer.drawCircle(position, 10);
 }
 
 void Canvas::drawEdges() const

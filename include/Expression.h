@@ -1,8 +1,9 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
-#include "Connector.h"
 #include "Graph.h"
+
+#include <cassert>
 
 /**
  * Represents the graph of an expression
@@ -37,29 +38,59 @@ public:
     void useFocusedAsSelected(const Point& position);
 
     /**
-     * Select the first connector.
+     * Select the source node.
      */
-    void selectFirstConnector(const Point& position);
+    void selectSourceNode(const Point& position);
 
     /**
-     * Select the second connector.
+     * Select the target node.
      */
-    void selectSecondConnector(const Point& position);
+    void selectTargetNode(const Point& position);
 
     /**
-     * Get the selected node.
+     * Get the identifier of the selected node.
      */
     int getSelectedNodeId() const;
 
     /**
-     * Get the first connector.
+     * Check that whether the expression has selected node or not.
      */
-    const Connector getFirstConnector() const;
+    bool hasSelectedNode() const;
 
     /**
-     * Get the second connector.
+     * Get the selected node.
      */
-    const Connector getSecondConnector() const;
+    const Node& getSelectedNode() const;
+
+    /**
+     * Get the identifier of the selected source node.
+     */
+    int getSourceNodeId() const;
+
+    /**
+     * Check that whether the expression has selected source node or not.
+     */
+    bool hasSourceNode() const;
+
+    /**
+     * Get the selected source node.
+     */
+    const Node& getSourceNode() const;
+
+    /**
+     * Get the identifier of the selected target node.
+     */
+    int getTargetNodeId() const;
+
+    /**
+     * Check that whether the expression has selected target node or not.
+     */
+    bool hasTargetNode() const;
+
+    /**
+     * Get the selected target node.
+     */
+    const Node& getTargetNode() const;
 
     /**
      * Move the selected node to the given position.
@@ -91,22 +122,12 @@ public:
      */
     Point getOrigin() const;
 
-    /**
-     * Value for invalid node indices
-     */
-    static const int INVALID_ID;
-
 private:
 
     /**
      * Search the identifier of the focused node.
      */
     int searchNode(const Point& position);
-
-    /**
-     * Search the focused connector.
-     */
-    Connector searchConnector(const Point& position);
 
     /**
      * Selected type for new node creation
@@ -119,14 +140,14 @@ private:
     int _selectedNodeId;
 
     /**
-     * The first connector for edge selection
+     * The identifier of the selected source node
      */
-    Connector _firstConnector;
+    int _sourceNodeId;
 
     /**
-     * The second connector for edge selection
+     * The identifier of the selected target node
      */
-    Connector _secondConnector;
+    int _targetNodeId;
 
     /**
      * Origin of the expression graph own coordinate system

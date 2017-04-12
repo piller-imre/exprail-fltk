@@ -45,6 +45,11 @@ public:
      */
     const std::set<std::pair<Node*, Node*>>& getEdges() const;
 
+    /**
+     * Value for invalid node indices
+     */
+    static const int INVALID_ID;
+
 protected:
 
     /**

@@ -1,10 +1,10 @@
 #include "Expression.h"
 
-const int Expression::INVALID_ID = -1;
-
 Expression::Expression()
 {
-    _selectedNodeId = 0;
+    _selectedNodeId = INVALID_ID;
+    _sourceNodeId = INVALID_ID;
+    _targetNodeId = INVALID_ID;
 }
 
 void Expression::selectNodeType(NodeType nodeType)
@@ -29,14 +29,14 @@ void Expression::useFocusedAsSelected(const Point& position)
     _selectedNodeId = searchNode(position);
 }
 
-void Expression::selectFirstConnector(const Point& position)
+void Expression::selectSourceNode(const Point& position)
 {
-    _firstConnector = searchConnector(position);
+    _sourceNodeId = searchNode(position);
 }
 
-void Expression::selectSecondConnector(const Point& position)
+void Expression::selectTargetNode(const Point& position)
 {
-    _secondConnector = searchConnector(position);
+    _targetNodeId = searchNode(position);
 }
 
 int Expression::getSelectedNodeId() const
@@ -44,14 +44,47 @@ int Expression::getSelectedNodeId() const
     return _selectedNodeId;
 }
 
-const Connector Expression::getFirstConnector() const
+bool Expression::hasSelectedNode() const
 {
-    return _firstConnector;
+    return _selectedNodeId != INVALID_ID;
 }
 
-const Connector Expression::getSecondConnector() const
+const Node& Expression::getSelectedNode() const
 {
-    return _secondConnector;
+    assert(hasSelectedNode());
+    return _nodes.at(_selectedNodeId);
+}
+
+int Expression::getSourceNodeId() const
+{
+    return _sourceNodeId;
+}
+
+bool Expression::hasSourceNode() const
+{
+    return _sourceNodeId != INVALID_ID;
+}
+
+const Node& Expression::getSourceNode() const
+{
+    assert(hasSourceNode());
+    return _nodes.at(_sourceNodeId);
+}
+
+int Expression::getTargetNodeId() const
+{
+    return _targetNodeId;
+}
+
+bool Expression::hasTargetNode() const
+{
+    return _targetNodeId != INVALID_ID;
+}
+
+const Node& Expression::getTargetNode() const
+{
+    assert(hasTargetNode());
+    return _nodes.at(_targetNodeId);
 }
 
 void Expression::moveSelectedNode(const Point& position)
@@ -79,7 +112,7 @@ void Expression::removeSelectedNode()
 
 void Expression::toggleSelectedEdge()
 {
-    if (_firstConnector.isValid() && _secondConnector.isValid()) {
+    if (_sourceNodeId != INVALID_ID && _targetNodeId != INVALID_ID) {
         // TODO: Toggle selected edge on valid selection!
     }
 }
@@ -101,24 +134,6 @@ int Expression::searchNode(const Point& position)
             return item.first;
         }
     }
-    // TODO: Raise an exception when there is no result!
-    return 0;
-}
-
-Connector Expression::searchConnector(const Point& position)
-{
-    for (const auto& item : _nodes) {
-        int nodeId = item.first;
-        const Node& node = item.second;
-        if (node.hasCollision(position - _origin)) {
-            if (position.getX() < node.getPosition().getX()) {
-                return Connector(nodeId, Side::LEFT);
-            }
-            else {
-                return Connector(nodeId, Side::RIGHT);
-            }
-        }
-    }
-    return Connector();
+    return INVALID_ID;
 }
 

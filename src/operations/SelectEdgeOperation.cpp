@@ -9,10 +9,10 @@ void SelectEdgeOperation::pressMouse(MouseButton button, const Point& position)
 {
     switch (button) {
     case MouseButton::LEFT:
-        _expression->selectFirstConnector(position);
+        _expression->selectSourceNode(position);
         break;
     case MouseButton::RIGHT:
-        _expression->selectSecondConnector(position);
+        _expression->selectTargetNode(position);
         break;
     case MouseButton::MIDDLE:
         _expression->toggleSelectedEdge();

@@ -1,29 +1,27 @@
 #ifndef EDGE_H
 #define EDGE_H
 
-#include "Connector.h"
-
 /**
- * Represents an edge between two nodes.
+ * Represents a directed edge between two nodes.
  */
 class Edge
 {
 public:
 
     /**
-     * Construct a new edge from two connectors.
+     * Construct a new edge from node identifiers.
      */
-    Edge(const Connector& first, const Connector& second);
+    Edge(int sourceId, int targetId);
 
     /**
-     * Get the first connector.
+     * Get the identifier of the source node.
      */
-    Connector getFirst() const;
+    int getSourceId() const;
 
     /**
-     * Get the second connector.
+     * Get the identifier of the target node.
      */
-    Connector getSecond() const;
+    int getTargetId() const;
 
     /**
      * Compare two edges.
@@ -38,14 +36,14 @@ public:
 private:
 
     /**
-     * First connector
+     * The identifier of the source node
      */
-    Connector _first;
+    int _sourceId;
 
     /**
-     * Second connector
+     * The identifier of the target node
      */
-    Connector _second;
+    int _targetId;
 };
 
 #endif /* EDGE_H */
