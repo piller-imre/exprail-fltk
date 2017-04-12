@@ -1,6 +1,6 @@
 CC = g++
 
-CFLAGS = -Iinclude -I../src -g -O2 -std=c++11 -Wall
+CFLAGS = -Iinclude -I../src -g -O2 -std=c++11 -Wall -Wextra -Wpedantic -Wno-unused-parameter
 LDFLAGS = -lfltk -lfltk_images
 
 SOURCES = \
