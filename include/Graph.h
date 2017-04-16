@@ -3,6 +3,8 @@
 
 #include "Node.h"
 
+#include "Edge.h"
+
 #include <memory>
 #include <map>
 #include <set>
@@ -28,7 +30,7 @@ public:
     /**
      * Get the node with the given identifier.
      */
-    Node& getNode(int nodeId);
+    const Node& getNode(int nodeId) const;
 
     /**
      * Get the nodes of the expression.
@@ -38,12 +40,12 @@ public:
     /**
      * Add new edge from the source to the target node.
      */
-    void addEdge(Node* source, Node* target);
+    void addEdge(int sourceId, int targetId);
 
     /**
      * Get the edges of the expression.
      */
-    const std::set<std::pair<Node*, Node*>>& getEdges() const;
+    const std::set<Edge>& getEdges() const;
 
     /**
      * Value for invalid node indices
@@ -65,7 +67,7 @@ protected:
     /**
      * Edges of the graph
      */
-    std::set<std::pair<Node*, Node*>> _edges;
+    std::set<Edge> _edges;
 
     /**
      * The last node identifier

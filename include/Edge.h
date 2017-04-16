@@ -33,6 +33,11 @@ public:
      */
     bool operator!=(const Edge& other) const;
 
+    /**
+     * Comparison operator for lexical ordering.
+     */
+    bool operator<(const Edge& other) const;
+
 private:
 
     /**

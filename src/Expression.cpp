@@ -113,7 +113,13 @@ void Expression::removeSelectedNode()
 void Expression::toggleSelectedEdge()
 {
     if (_sourceNodeId != INVALID_ID && _targetNodeId != INVALID_ID) {
-        // TODO: Toggle selected edge on valid selection!
+        Edge edge(_sourceNodeId, _targetNodeId);
+        if (_edges.find(edge) == _edges.end()) {
+            _edges.insert(edge);
+        }
+        else {
+            _edges.erase(edge);
+        }
     }
 }
 

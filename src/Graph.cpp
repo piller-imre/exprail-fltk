@@ -16,10 +16,10 @@ void Graph::addNode(const Node& node)
     _nodes[nodeId] = node;
 }
 
-Node& Graph::getNode(int nodeId)
+const Node& Graph::getNode(int nodeId) const
 {
     assert(_nodes.find(nodeId) != _nodes.end());
-    return _nodes[nodeId];
+    return _nodes.at(nodeId);
 }
 
 const std::map<int, Node>& Graph::getNodes() const
@@ -27,13 +27,13 @@ const std::map<int, Node>& Graph::getNodes() const
     return _nodes;
 }
 
-void Graph::addEdge(Node* source, Node* target)
+void Graph::addEdge(int sourceId, int targetId)
 {
-    std::pair<Node*, Node*> edge(source, target);
+    Edge edge(sourceId, targetId);
     _edges.insert(edge);
 }
 
-const std::set<std::pair<Node*, Node*>>& Graph::getEdges() const
+const std::set<Edge>& Graph::getEdges() const
 {
     return _edges;
 }

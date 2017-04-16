@@ -86,17 +86,20 @@ void Canvas::indicateTargetNode() const
 
 void Canvas::drawEdges() const
 {
-    // TODO: Use drawEdge method for drawing!
     assert(_expression != nullptr);
-    const std::set<std::pair<Node*, Node*>> edges = _expression->getEdges();
     drawer.setColor(255, 0, 0);
-    for (const std::pair<Node*, Node*>& edge : edges) {
-        const Node* source = edge.first;
-        const Node* target = edge.second;
-        assert(source != nullptr);
-        assert(target != nullptr);
-        drawer.drawLine(source->getPosition(), target->getPosition());
+    for (const Edge& edge : _expression->getEdges()) {
+        drawEdge(edge);
     }
+}
+
+void Canvas::drawEdge(const Edge& edge) const
+{
+    Node sourceNode = _expression->getNode(edge.getSourceId());
+    Node targetNode = _expression->getNode(edge.getTargetId());
+    Point sourcePoint = sourceNode.getPosition() + Point(16, 0);
+    Point targetPoint = targetNode.getPosition() - Point(16, 0);
+    drawer.drawLine(sourcePoint, targetPoint);
 }
 
 void Canvas::drawNodes() const

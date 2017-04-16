@@ -29,3 +29,16 @@ bool Edge::operator!=(const Edge& other) const
     return !(*this == other);
 }
 
+bool Edge::operator<(const Edge& other) const
+{
+    if (_sourceId < other._sourceId) {
+        return true;
+    }
+    else if (_sourceId == other._sourceId && _targetId < other._targetId) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+

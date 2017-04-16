@@ -73,6 +73,11 @@ private:
     void drawEdges() const;
 
     /**
+     * Draw an edge between two nodes.
+     */
+    void drawEdge(const Edge& edge) const;
+
+    /**
      * Draw the nodes of the selected expression.
      */
     void drawNodes() const;
