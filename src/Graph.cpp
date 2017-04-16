@@ -27,6 +27,14 @@ const std::map<int, Node>& Graph::getNodes() const
     return _nodes;
 }
 
+void Graph::removeNode(int nodeId)
+{
+    assert(_nodes.find(nodeId) != _nodes.end());
+    removeConnectedEdges(nodeId);
+    _nodes.erase(nodeId);
+    assert(_nodes.find(nodeId) == _nodes.end());
+}
+
 void Graph::addEdge(int sourceId, int targetId)
 {
     Edge edge(sourceId, targetId);
@@ -42,5 +50,17 @@ int Graph::getNewNodeId()
 {
     ++_lastNodeId;
     return _lastNodeId;
+}
+
+void Graph::removeConnectedEdges(int nodeId)
+{
+    for (auto it = _edges.begin(); it != _edges.end();) {
+        if (it->getSourceId() == nodeId || it->getTargetId() == nodeId) {
+            it = _edges.erase(it);
+        }
+        else {
+            ++it;
+        }
+    }
 }
 

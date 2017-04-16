@@ -104,8 +104,13 @@ void Expression::setSelectedNodeValue(const std::string& value)
 void Expression::removeSelectedNode()
 {
     if (_selectedNodeId != INVALID_ID) {
-        // TODO: Remove the connected edges!
-        _nodes.erase(_selectedNodeId);
+        if (_sourceNodeId == _selectedNodeId) {
+            _sourceNodeId = INVALID_ID;
+        }
+        if (_targetNodeId == _selectedNodeId) {
+            _targetNodeId = INVALID_ID;
+        }
+        removeNode(_selectedNodeId);
         _selectedNodeId = INVALID_ID;
     }
 }

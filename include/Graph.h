@@ -38,6 +38,11 @@ public:
     const std::map<int, Node>& getNodes() const;
 
     /**
+     * Remove the given node.
+     */
+    void removeNode(int nodeId);
+
+    /**
      * Add new edge from the source to the target node.
      */
     void addEdge(int sourceId, int targetId);
@@ -53,6 +58,11 @@ public:
     static const int INVALID_ID;
 
 protected:
+
+    /**
+     * Remove the edges which are connected to the node.
+     */
+    void removeConnectedEdges(int nodeId);
 
     /**
      * Get new node identifier.
