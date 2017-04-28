@@ -6,6 +6,7 @@ LDFLAGS = -lfltk -lfltk_images
 SOURCES = \
 	src/handlers.cpp \
 	src/Canvas.cpp \
+	src/Curve.cpp \
 	src/Drawer.cpp \
 	src/Edge.cpp \
 	src/Point.cpp \

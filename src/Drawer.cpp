@@ -1,5 +1,7 @@
 #include "Drawer.h"
 
+#include "Curve.h"
+
 #include <FL/fl_draw.H>
 
 #include <cmath>
@@ -51,11 +53,12 @@ void Drawer::drawEdge(const Point& source, const Point& target) const
 void Drawer::drawStepCurve(const Point& source, const Point& target) const
 {
     int middleX = (source.getX() + target.getX()) / 2;
-    Point sourceSidePoint(middleX, source.getY());
-    Point targetSidePoint(middleX, target.getY());
-    drawLine(source, sourceSidePoint);
-    drawLine(sourceSidePoint, targetSidePoint);
-    drawLine(targetSidePoint, target);
+    Curve curve;
+    curve.add(source);
+    curve.add(Point(middleX, source.getY()));
+    curve.add(Point(middleX, target.getY()));
+    curve.add(target);
+    drawPath(curve.getPath());
 }
 
 void Drawer::drawZigzagCurve(const Point& source, const Point& target) const
@@ -63,14 +66,14 @@ void Drawer::drawZigzagCurve(const Point& source, const Point& target) const
     int middleY = (source.getY() + target.getY()) / 2;
     int sourceSideX = source.getX() + 32;
     int targetSideX = target.getX() - 32;
-    std::vector<Point> points;
-    points.push_back(source);
-    points.push_back(Point(sourceSideX, source.getY()));
-    points.push_back(Point(sourceSideX, middleY));
-    points.push_back(Point(targetSideX, middleY));
-    points.push_back(Point(targetSideX, target.getY()));
-    points.push_back(target);
-    drawPath(points);
+    Curve curve;
+    curve.add(source);
+    curve.add(Point(sourceSideX, source.getY()));
+    curve.add(Point(sourceSideX, middleY));
+    curve.add(Point(targetSideX, middleY));
+    curve.add(Point(targetSideX, target.getY()));
+    curve.add(target);
+    drawPath(curve.getPath());
 }
 
 void Drawer::drawShoeCurve(const Point& source, const Point& target) const
@@ -84,14 +87,14 @@ void Drawer::drawShoeCurve(const Point& source, const Point& target) const
     else {
         supportY -= 32;
     }
-    std::vector<Point> points;
-    points.push_back(source);
-    points.push_back(Point(sourceSideX, source.getY()));
-    points.push_back(Point(sourceSideX, supportY));
-    points.push_back(Point(targetSideX, supportY));
-    points.push_back(Point(targetSideX, target.getY()));
-    points.push_back(target);
-    drawPath(points);
+    Curve curve;
+    curve.add(source);
+    curve.add(Point(sourceSideX, source.getY()));
+    curve.add(Point(sourceSideX, supportY));
+    curve.add(Point(targetSideX, supportY));
+    curve.add(Point(targetSideX, target.getY()));
+    curve.add(target);
+    drawPath(curve.getPath());
 }
 
 void Drawer::drawPath(const std::vector<Point>& points) const
