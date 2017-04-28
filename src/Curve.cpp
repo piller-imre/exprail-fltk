@@ -18,7 +18,7 @@ std::vector<Point> Curve::getPath() const
     double t = 0.0;
     while (t < 1.0) {
         path.push_back(calcBernstein(t));
-        t += 0.1;
+        t += 0.01;
     }
     return path;
 }

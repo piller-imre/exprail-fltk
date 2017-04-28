@@ -106,6 +106,11 @@ protected:
      * The origin as the reference point
      */
     Point _origin;
+
+    /**
+     * Curviness parameter for edge drawing
+     */
+    int _curviness;
 };
 
 #endif /* DRAWER_H */
