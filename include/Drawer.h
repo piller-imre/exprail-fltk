@@ -6,6 +6,7 @@
 #include <FL/Fl_PNG_Image.H>
 
 #include <string>
+#include <vector>
 
 /**
  * Draw primitives in the graphical context.
@@ -58,6 +59,11 @@ public:
      * Draw shoe-like curve.
      */
     void drawShoeCurve(const Point& source, const Point& target) const;
+
+    /**
+     * Draw path from the vector of points as a polyline.
+     */
+    void drawPath(const std::vector<Point>& points) const;
 
     /**
      * Draw a rectangle.

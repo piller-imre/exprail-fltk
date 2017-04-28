@@ -3,7 +3,6 @@
 #include <FL/fl_draw.H>
 
 #include <cmath>
-#include <vector>
 
 Drawer::Drawer()
 {
@@ -71,9 +70,7 @@ void Drawer::drawZigzagCurve(const Point& source, const Point& target) const
     points.push_back(Point(targetSideX, middleY));
     points.push_back(Point(targetSideX, target.getY()));
     points.push_back(target);
-    for (unsigned int i = 0; i < points.size() - 1; ++i) {
-        drawLine(points[i], points[i + 1]);
-    }
+    drawPath(points);
 }
 
 void Drawer::drawShoeCurve(const Point& source, const Point& target) const
@@ -94,6 +91,11 @@ void Drawer::drawShoeCurve(const Point& source, const Point& target) const
     points.push_back(Point(targetSideX, supportY));
     points.push_back(Point(targetSideX, target.getY()));
     points.push_back(target);
+    drawPath(points);
+}
+
+void Drawer::drawPath(const std::vector<Point>& points) const
+{
     for (unsigned int i = 0; i < points.size() - 1; ++i) {
         drawLine(points[i], points[i + 1]);
     }
