@@ -27,6 +27,18 @@ public:
      */
     std::vector<Point> getPath() const;
 
+protected:
+
+    /**
+     * Calculate the point with Bernstein polynom.
+     */
+    Point calcBernstein(double t) const;
+
+    /**
+     * Calculate the combination of (n, k).
+     */
+    int calcChoose(int n, int k) const;
+
 private:
 
     /**
