@@ -2,6 +2,7 @@
 
 #include <FL/fl_draw.H>
 
+#include <cmath>
 #include <vector>
 
 Drawer::Drawer()
@@ -33,10 +34,19 @@ void Drawer::drawLine(const Point& source, const Point& target) const
 
 void Drawer::drawEdge(const Point& source, const Point& target) const
 {
-    // TODO: Determine the type of the curve!
-    // drawStepCurve(source, target);
-    // drawShoeCurve(source, target);
-    drawZigzagCurve(source, target);
+    int distanceX = target.getX() - source.getX();
+    int distanceY = target.getY() - source.getY();
+    if (distanceX > 64) {
+        drawStepCurve(source, target);
+    }
+    else {
+        if (std::abs(distanceY) < 64) {
+            drawShoeCurve(source, target);
+        }
+        else {
+            drawZigzagCurve(source, target);
+        }
+    }
 }
 
 void Drawer::drawStepCurve(const Point& source, const Point& target) const
