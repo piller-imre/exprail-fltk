@@ -29,6 +29,30 @@ void Drawer::drawLine(const Point& source, const Point& target) const
     fl_line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 }
 
+void Drawer::drawEdge(const Point& source, const Point& target) const
+{
+    // TODO: Determine the type of the curve!
+    drawStepCurve(source, target);
+}
+
+void Drawer::drawStepCurve(const Point& source, const Point& target) const
+{
+    double middleX = (source.getX() + target.getX()) / 2;
+    Point sourceSidePoint(middleX, source.getY());
+    Point targetSidePoint(middleX, target.getY());
+    drawLine(source, sourceSidePoint);
+    drawLine(sourceSidePoint, targetSidePoint);
+    drawLine(targetSidePoint, target);
+}
+
+void Drawer::drawZigzagCurve(const Point& source, const Point& target) const
+{
+}
+
+void Drawer::drawShoeCurve(const Point& source, const Point& target) const
+{
+}
+
 void Drawer::drawRectangle(const Point& position, int width, int height) const
 {
     Point p = _origin + position;

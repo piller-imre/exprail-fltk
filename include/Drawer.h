@@ -40,6 +40,26 @@ public:
     void drawLine(const Point& source, const Point& target) const;
 
     /**
+     * Draw curved edge between two points.
+     */
+    void drawEdge(const Point& source, const Point& target) const;
+
+    /**
+     * Draw step-like curve.
+     */
+    void drawStepCurve(const Point& source, const Point& target) const;
+
+    /**
+     * Draw zigzag-like curve.
+     */
+    void drawZigzagCurve(const Point& source, const Point& target) const;
+
+    /**
+     * Draw shoe-like curve.
+     */
+    void drawShoeCurve(const Point& source, const Point& target) const;
+
+    /**
      * Draw a rectangle.
      */
     void drawRectangle(const Point& position, int width, int height) const;

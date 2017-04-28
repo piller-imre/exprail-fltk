@@ -99,7 +99,7 @@ void Canvas::drawEdge(const Edge& edge) const
     Node targetNode = _expression->getNode(edge.getTargetId());
     Point sourcePoint = sourceNode.getPosition() + Point(16, 0);
     Point targetPoint = targetNode.getPosition() - Point(16, 0);
-    drawer.drawLine(sourcePoint, targetPoint);
+    drawer.drawEdge(sourcePoint, targetPoint);
 }
 
 void Canvas::drawNodes() const
