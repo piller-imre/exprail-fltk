@@ -2,6 +2,8 @@
 
 #include <FL/fl_draw.H>
 
+#include <vector>
+
 Drawer::Drawer()
 {
     _iconImage = new Fl_PNG_Image("/tmp/nodes.png");
@@ -32,12 +34,13 @@ void Drawer::drawLine(const Point& source, const Point& target) const
 void Drawer::drawEdge(const Point& source, const Point& target) const
 {
     // TODO: Determine the type of the curve!
-    drawStepCurve(source, target);
+    // drawStepCurve(source, target);
+    drawShoeCurve(source, target);
 }
 
 void Drawer::drawStepCurve(const Point& source, const Point& target) const
 {
-    double middleX = (source.getX() + target.getX()) / 2;
+    int middleX = (source.getX() + target.getX()) / 2;
     Point sourceSidePoint(middleX, source.getY());
     Point targetSidePoint(middleX, target.getY());
     drawLine(source, sourceSidePoint);
@@ -51,6 +54,25 @@ void Drawer::drawZigzagCurve(const Point& source, const Point& target) const
 
 void Drawer::drawShoeCurve(const Point& source, const Point& target) const
 {
+    int sourceSideX = source.getX() + 32;
+    int targetSideX = target.getX() - 32;
+    int supportY = target.getY();
+    if (source.getY() < target.getY()) {
+        supportY += 32;
+    }
+    else {
+        supportY -= 32;
+    }
+    std::vector<Point> points;
+    points.push_back(source);
+    points.push_back(Point(sourceSideX, source.getY()));
+    points.push_back(Point(sourceSideX, supportY));
+    points.push_back(Point(targetSideX, supportY));
+    points.push_back(Point(targetSideX, target.getY()));
+    points.push_back(target);
+    for (unsigned int i = 0; i < points.size() - 1; ++i) {
+        drawLine(points[i], points[i + 1]);
+    }
 }
 
 void Drawer::drawRectangle(const Point& position, int width, int height) const
