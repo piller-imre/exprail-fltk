@@ -35,7 +35,8 @@ void Drawer::drawEdge(const Point& source, const Point& target) const
 {
     // TODO: Determine the type of the curve!
     // drawStepCurve(source, target);
-    drawShoeCurve(source, target);
+    // drawShoeCurve(source, target);
+    drawZigzagCurve(source, target);
 }
 
 void Drawer::drawStepCurve(const Point& source, const Point& target) const
@@ -50,6 +51,19 @@ void Drawer::drawStepCurve(const Point& source, const Point& target) const
 
 void Drawer::drawZigzagCurve(const Point& source, const Point& target) const
 {
+    int middleY = (source.getY() + target.getY()) / 2;
+    int sourceSideX = source.getX() + 32;
+    int targetSideX = target.getX() - 32;
+    std::vector<Point> points;
+    points.push_back(source);
+    points.push_back(Point(sourceSideX, source.getY()));
+    points.push_back(Point(sourceSideX, middleY));
+    points.push_back(Point(targetSideX, middleY));
+    points.push_back(Point(targetSideX, target.getY()));
+    points.push_back(target);
+    for (unsigned int i = 0; i < points.size() - 1; ++i) {
+        drawLine(points[i], points[i + 1]);
+    }
 }
 
 void Drawer::drawShoeCurve(const Point& source, const Point& target) const
