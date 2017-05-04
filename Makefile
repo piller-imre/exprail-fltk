@@ -14,6 +14,8 @@ SOURCES = \
 	src/Expression.cpp \
 	src/Graph.cpp \
 	src/Node.cpp \
+	src/Tokenizer.cpp \
+	src/Parser.cpp \
 	src/operations/Operation.cpp \
 	src/operations/OperationFactory.cpp \
 	src/operations/CreateNodeOperation.cpp \
