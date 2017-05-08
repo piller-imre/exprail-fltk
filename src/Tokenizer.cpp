@@ -1,16 +1,30 @@
 #include "Tokenizer.h"
 
-Tokenizer::Tokenizer(const std::string& filename)
-{
-}
-
-Token Tokenizer::getNextToken()
+Token Tokenizer::getNextToken(std::istream& stream)
 {
     Token token;
+    // TODO: Get the next token!
     return token;
 }
 
-void Tokenizer::openFile(const std::string& filename)
+static std::string readKeyword(std::istream& stream)
 {
+    std::string keyword;
+    // TODO: Read the keyword!
+    return keyword;
+}
+
+static std::string readNumber(std::istream& stream)
+{
+    std::string number;
+    // TODO: Read the number!
+    return number;
+}
+
+static std::string readText(std::istream& stream)
+{
+    std::string text;
+    // TODO: Read the text!
+    return text;
 }
 

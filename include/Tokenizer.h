@@ -1,6 +1,7 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
+#include <istream>
 #include <string>
 
 /**
@@ -9,8 +10,8 @@
 enum class TokenType
 {
     KEYWORD,
-    STRING,
-    INTEGER,
+    NUMBER,
+    TEXT,
     NEWLINE,
     EMPTY
 };
@@ -41,21 +42,26 @@ class Tokenizer
 public:
 
     /**
-     * Construct a tokenizer for the given file.
+     * Get the next token from the stream.
      */
-    Tokenizer(const std::string& filename);
-
-    /**
-     * Get the next token of the input file.
-     */
-    Token getNextToken();
+    static Token getNextToken(std::istream& stream);
 
 protected:
 
     /**
-     * Open the file for tokenization.
+     * Read a keyword from the stream.
      */
-    void openFile(const std::string& filename);
+    static std::string readKeyword(std::istream& stream);
+
+    /**
+     * Read an integer number from the stream.
+     */
+    static std::string readNumber(std::istream& stream);
+
+    /**
+     * Read a quoted string as text from the stream.
+     */
+    static std::string readText(std::istream& stream);
 };
 
 #endif /* TOKENIZER_H */
