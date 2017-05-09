@@ -2,6 +2,7 @@ CC = g++
 
 CFLAGS = -Iinclude -I../src -g -O2 -std=c++11 -Wall -Wextra -Wpedantic -Wno-unused-parameter
 LDFLAGS = -lfltk -lfltk_images
+TEST_LDFLAGS = -lgtest -lgtest_main -lpthread
 
 SOURCES = \
 	src/handlers.cpp \
@@ -23,9 +24,15 @@ SOURCES = \
 	src/operations/SelectEdgeOperation.cpp \
     src/main.cpp
 
+TEST_SOURCES = \
+	src/Tokenizer.cpp \
+	test/Tokenizer_test.cpp
+
 OBJECTS = $(SOURCES:.cpp=.o)
+TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o)
 
 EXECUTABLE = editor
+TEST_EXECUTABLE = test_editor
 
 all: $(SOURCES) $(EXECUTABLE)
 
@@ -37,3 +44,12 @@ $(EXECUTABLE) : $(OBJECTS)
 
 clean:
 	rm $(OBJECTS)
+
+test: $(TEST_SOURCES) $(TEST_EXECUTABLE)
+
+$(TEST_EXECUTABLE) : $(TEST_OBJECTS)
+	$(CC) $(TEST_OBJECTS) $(TEST_LDFLAGS) -o $@
+
+clean_test:
+	rm $(TEST_OBJECTS)
+

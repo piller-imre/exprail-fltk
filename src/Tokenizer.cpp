@@ -4,6 +4,8 @@ Token Tokenizer::getNextToken(std::istream& stream)
 {
     Token token;
     // TODO: Get the next token!
+    token.type = TokenType::EMPTY;
+    token.value = "";
     return token;
 }
 

@@ -46,8 +46,6 @@ public:
      */
     static Token getNextToken(std::istream& stream);
 
-protected:
-
     /**
      * Read a keyword from the stream.
      */
