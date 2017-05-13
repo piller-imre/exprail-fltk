@@ -1,6 +1,8 @@
 #include "Tokenizer.h"
 
 #include <cctype>
+#include <sstream>
+#include <stdexcept>
 
 Token Tokenizer::getNextToken(std::istream& stream)
 {
@@ -84,11 +86,10 @@ std::string Tokenizer::readText(std::istream& stream)
                         text += c;
                     }
                     else {
-                        // TODO: Thrown an error!
+                        std::stringstream message;
+                        message << "The '" << c << "' is an invalid escaped character!";
+                        throw std::runtime_error(message.str());
                     }
-                }
-                else {
-                    // TODO: Thrown an error!
                 }
             }
         }
@@ -97,5 +98,5 @@ std::string Tokenizer::readText(std::istream& stream)
         }
     }
 
-    return text;
+    throw std::runtime_error("Unexpected end of string literal!");
 }

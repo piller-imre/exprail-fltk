@@ -3,13 +3,14 @@
 #include <gtest/gtest.h>
 
 #include <sstream>
+#include <stdexcept>
 
 TEST(Tokenizer_test, EmptyInput)
 {
     std::istringstream input;
     Token token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, InfiniteEmptyToken)
@@ -18,8 +19,8 @@ TEST(Tokenizer_test, InfiniteEmptyToken)
     Token token;
     for (int i = 0; i < 10; ++i) {
         token = Tokenizer::getNextToken(input);
-        EXPECT_EQ(token.getType(), TokenType::EMPTY);
-        EXPECT_EQ(token.getValue(), "");
+        ASSERT_EQ(token.getType(), TokenType::EMPTY);
+        ASSERT_EQ(token.getValue(), "");
     }
 }
 
@@ -28,11 +29,11 @@ TEST(Tokenizer_test, SingleKeyword)
     Token token;
     std::istringstream input("keyword");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::KEYWORD);
-    EXPECT_EQ(token.getValue(), "keyword");
+    ASSERT_EQ(token.getType(), TokenType::KEYWORD);
+    ASSERT_EQ(token.getValue(), "keyword");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, MultipleKeywords)
@@ -42,12 +43,12 @@ TEST(Tokenizer_test, MultipleKeywords)
     std::vector<std::string> values = {"first", "second", "third"};
     for (const std::string& value : values) {
         token = Tokenizer::getNextToken(input);
-        EXPECT_EQ(token.getType(), TokenType::KEYWORD);
-        EXPECT_EQ(token.getValue(), value);
+        ASSERT_EQ(token.getType(), TokenType::KEYWORD);
+        ASSERT_EQ(token.getValue(), value);
     }
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, SingleNumber)
@@ -55,11 +56,11 @@ TEST(Tokenizer_test, SingleNumber)
     Token token;
     std::istringstream input("1");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::NUMBER);
-    EXPECT_EQ(token.getValue(), "1");
+    ASSERT_EQ(token.getType(), TokenType::NUMBER);
+    ASSERT_EQ(token.getValue(), "1");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, MultipleNumbers)
@@ -69,12 +70,12 @@ TEST(Tokenizer_test, MultipleNumbers)
     std::vector<std::string> values = {"1", "2", "3", "4", "5"};
     for (const std::string& value : values) {
         token = Tokenizer::getNextToken(input);
-        EXPECT_EQ(token.getType(), TokenType::NUMBER);
-        EXPECT_EQ(token.getValue(), value);
+        ASSERT_EQ(token.getType(), TokenType::NUMBER);
+        ASSERT_EQ(token.getValue(), value);
     }
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, SingleText)
@@ -82,11 +83,11 @@ TEST(Tokenizer_test, SingleText)
     Token token;
     std::istringstream input("\"alpha\"");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::TEXT);
-    EXPECT_EQ(token.getValue(), "alpha");
+    ASSERT_EQ(token.getType(), TokenType::TEXT);
+    ASSERT_EQ(token.getValue(), "alpha");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, MultipleTexts)
@@ -96,12 +97,12 @@ TEST(Tokenizer_test, MultipleTexts)
     std::vector<std::string> values = {"alpha", "beta", "gamma"};
     for (const std::string& value : values) {
         token = Tokenizer::getNextToken(input);
-        EXPECT_EQ(token.getType(), TokenType::TEXT);
-        EXPECT_EQ(token.getValue(), value);
+        ASSERT_EQ(token.getType(), TokenType::TEXT);
+        ASSERT_EQ(token.getValue(), value);
     }
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, SingleNewline)
@@ -109,11 +110,11 @@ TEST(Tokenizer_test, SingleNewline)
     Token token;
     std::istringstream input("\n");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::NEWLINE);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::NEWLINE);
+    ASSERT_EQ(token.getValue(), "");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, MultipleNewlines)
@@ -122,12 +123,12 @@ TEST(Tokenizer_test, MultipleNewlines)
     std::istringstream input("\n\n\n\n\n\n");
     for (int i = 0; i < 6; ++i) {
         token = Tokenizer::getNextToken(input);
-        EXPECT_EQ(token.getType(), TokenType::NEWLINE);
-        EXPECT_EQ(token.getValue(), "");
+        ASSERT_EQ(token.getType(), TokenType::NEWLINE);
+        ASSERT_EQ(token.getValue(), "");
     }
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, AllTokenTypeAtOnce)
@@ -135,20 +136,20 @@ TEST(Tokenizer_test, AllTokenTypeAtOnce)
     Token token;
     std::istringstream input("keyword 1234 \"text\"\n");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::KEYWORD);
-    EXPECT_EQ(token.getValue(), "keyword");
+    ASSERT_EQ(token.getType(), TokenType::KEYWORD);
+    ASSERT_EQ(token.getValue(), "keyword");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::NUMBER);
-    EXPECT_EQ(token.getValue(), "1234");
+    ASSERT_EQ(token.getType(), TokenType::NUMBER);
+    ASSERT_EQ(token.getValue(), "1234");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::TEXT);
-    EXPECT_EQ(token.getValue(), "text");
+    ASSERT_EQ(token.getType(), TokenType::TEXT);
+    ASSERT_EQ(token.getValue(), "text");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::NEWLINE);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::NEWLINE);
+    ASSERT_EQ(token.getValue(), "");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, IgnoreWhitespaces)
@@ -156,20 +157,20 @@ TEST(Tokenizer_test, IgnoreWhitespaces)
     Token token;
     std::istringstream input("\t   keyword\t1234 \"text\"   \n ");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::KEYWORD);
-    EXPECT_EQ(token.getValue(), "keyword");
+    ASSERT_EQ(token.getType(), TokenType::KEYWORD);
+    ASSERT_EQ(token.getValue(), "keyword");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::NUMBER);
-    EXPECT_EQ(token.getValue(), "1234");
+    ASSERT_EQ(token.getType(), TokenType::NUMBER);
+    ASSERT_EQ(token.getValue(), "1234");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::TEXT);
-    EXPECT_EQ(token.getValue(), "text");
+    ASSERT_EQ(token.getType(), TokenType::TEXT);
+    ASSERT_EQ(token.getValue(), "text");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::NEWLINE);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::NEWLINE);
+    ASSERT_EQ(token.getValue(), "");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, QuoteInText)
@@ -177,11 +178,11 @@ TEST(Tokenizer_test, QuoteInText)
     Token token;
     std::istringstream input("\"Text with \\\" character\"");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::TEXT);
-    EXPECT_EQ(token.getValue(), "Text with \" character");
+    ASSERT_EQ(token.getType(), TokenType::TEXT);
+    ASSERT_EQ(token.getValue(), "Text with \" character");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, BackslashInText)
@@ -189,11 +190,11 @@ TEST(Tokenizer_test, BackslashInText)
     Token token;
     std::istringstream input("\"Text with \\\\ character\"");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::TEXT);
-    EXPECT_EQ(token.getValue(), "Text with \\ character");
+    ASSERT_EQ(token.getType(), TokenType::TEXT);
+    ASSERT_EQ(token.getValue(), "Text with \\ character");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
 
 TEST(Tokenizer_test, QuotesAndBackslashesInText)
@@ -201,9 +202,51 @@ TEST(Tokenizer_test, QuotesAndBackslashesInText)
     Token token;
     std::istringstream input("\"\\\\\\\\\\\"\\\"\\\\\\\"\\\\\"");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::TEXT);
-    EXPECT_EQ(token.getValue(), "\\\\\"\"\\\"\\");
+    ASSERT_EQ(token.getType(), TokenType::TEXT);
+    ASSERT_EQ(token.getValue(), "\\\\\"\"\\\"\\");
     token = Tokenizer::getNextToken(input);
-    EXPECT_EQ(token.getType(), TokenType::EMPTY);
-    EXPECT_EQ(token.getValue(), "");
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
+}
+
+TEST(Tokenizer_test, UnexpectedEndOfStringLiteral)
+{
+    Token token;
+    std::istringstream input("\"Unfinished");
+    try {
+        token = Tokenizer::getNextToken(input);
+    }
+    catch (const std::runtime_error& error) {
+        ASSERT_STREQ(error.what(), "Unexpected end of string literal!");
+    }
+    catch (...) {
+        FAIL() << "Unexpected exception type!";
+    }
+}
+
+TEST(Tokenizer_test, InvalidEscapedCharacter)
+{
+    Token token;
+    std::istringstream input("\"Try to escape\\!\"");
+    try {
+        token = Tokenizer::getNextToken(input);
+    }
+    catch (const std::runtime_error& error) {
+        ASSERT_STREQ(error.what(), "The '!' is an invalid escaped character!");
+    }
+    catch (...) {
+        FAIL() << "Unexpected exception type!";
+    }
+}
+
+TEST(Tokenizer_test, MultilineText)
+{
+    Token token;
+    std::istringstream input("\"Multi\nline\ntext\"");
+    token = Tokenizer::getNextToken(input);
+    ASSERT_EQ(token.getType(), TokenType::TEXT);
+    ASSERT_EQ(token.getValue(), "Multi\nline\ntext");
+    token = Tokenizer::getNextToken(input);
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
 }
