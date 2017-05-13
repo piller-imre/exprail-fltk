@@ -75,7 +75,22 @@ std::string Tokenizer::readText(std::istream& stream)
 
     while (stream.get(c)) {
         if (c != '"') {
-            text += c;
+            if (c != '\\') {
+                text += c;
+            }
+            else {
+                if (stream.get(c)) {
+                    if (c == '"' || c == '\\') {
+                        text += c;
+                    }
+                    else {
+                        // TODO: Thrown an error!
+                    }
+                }
+                else {
+                    // TODO: Thrown an error!
+                }
+            }
         }
         else {
             return text;

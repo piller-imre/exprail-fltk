@@ -171,3 +171,39 @@ TEST(Tokenizer_test, IgnoreWhitespaces)
     EXPECT_EQ(token.getType(), TokenType::EMPTY);
     EXPECT_EQ(token.getValue(), "");
 }
+
+TEST(Tokenizer_test, QuoteInText)
+{
+    Token token;
+    std::istringstream input("\"Text with \\\" character\"");
+    token = Tokenizer::getNextToken(input);
+    EXPECT_EQ(token.getType(), TokenType::TEXT);
+    EXPECT_EQ(token.getValue(), "Text with \" character");
+    token = Tokenizer::getNextToken(input);
+    EXPECT_EQ(token.getType(), TokenType::EMPTY);
+    EXPECT_EQ(token.getValue(), "");
+}
+
+TEST(Tokenizer_test, BackslashInText)
+{
+    Token token;
+    std::istringstream input("\"Text with \\\\ character\"");
+    token = Tokenizer::getNextToken(input);
+    EXPECT_EQ(token.getType(), TokenType::TEXT);
+    EXPECT_EQ(token.getValue(), "Text with \\ character");
+    token = Tokenizer::getNextToken(input);
+    EXPECT_EQ(token.getType(), TokenType::EMPTY);
+    EXPECT_EQ(token.getValue(), "");
+}
+
+TEST(Tokenizer_test, QuotesAndBackslashesInText)
+{
+    Token token;
+    std::istringstream input("\"\\\\\\\\\\\"\\\"\\\\\\\"\\\\\"");
+    token = Tokenizer::getNextToken(input);
+    EXPECT_EQ(token.getType(), TokenType::TEXT);
+    EXPECT_EQ(token.getValue(), "\\\\\"\"\\\"\\");
+    token = Tokenizer::getNextToken(input);
+    EXPECT_EQ(token.getType(), TokenType::EMPTY);
+    EXPECT_EQ(token.getValue(), "");
+}
