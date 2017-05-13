@@ -1,32 +1,99 @@
 #include "Tokenizer.h"
 
+#include <cctype>
+
 Token Tokenizer::getNextToken(std::istream& stream)
 {
     Token token;
-    // TODO: Get the next token!
-    token.type = TokenType::EMPTY;
-    token.value = "";
+    char c;
+
+    while (true) {
+        if (stream.get(c)) {
+            if (std::isalpha(c)) {
+                std::string keyword = readKeyword(stream);
+                token.type = TokenType::KEYWORD;
+                token.value = keyword;
+                break;
+            }
+            else if (std::isdigit(c)) {
+                std::string number = readNumber(stream);
+                token.type = TokenType::NUMBER;
+                token.value = number;
+                break;
+            }
+            else if (c == '"') {
+                std::string text = readText(stream);
+                token.type = TokenType::TEXT;
+                token.value = text;
+                break;
+            }
+            else if (c == '\n') {
+                token.type = TokenType::NEWLINE;
+                token.value = "";
+                break;
+            }
+        }
+        else {
+            token.type = TokenType::EMPTY;
+            token.value = "";
+            break;
+        }
+    }
+
     return token;
 }
 
-static std::string readKeyword(std::istream& stream)
+std::string Tokenizer::readKeyword(std::istream& stream)
 {
     std::string keyword;
-    // TODO: Read the keyword!
+    char c;
+
+    stream.unget();
+    while (stream.get(c)) {
+        if (std::isalnum(c)) {
+            keyword += c;
+        }
+        else {
+            stream.unget();
+            return keyword;
+        }
+    }
+
     return keyword;
 }
 
-static std::string readNumber(std::istream& stream)
+std::string Tokenizer::readNumber(std::istream& stream)
 {
     std::string number;
-    // TODO: Read the number!
+    char c;
+
+    stream.unget();
+    while (stream.get(c)) {
+        if (std::isdigit(c)) {
+            number += c;
+        }
+        else {
+            stream.unget();
+            return number;
+        }
+    }
+
     return number;
 }
 
-static std::string readText(std::istream& stream)
+std::string Tokenizer::readText(std::istream& stream)
 {
     std::string text;
-    // TODO: Read the text!
+    char c;
+
+    while (stream.get(c)) {
+        if (c != '"') {
+            text += c;
+        }
+        else {
+            return text;
+        }
+    }
+
     return text;
 }
-

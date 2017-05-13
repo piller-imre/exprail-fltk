@@ -45,6 +45,7 @@ TEST(Tokenizer_test, MultipleKeywords)
         EXPECT_EQ(token.type, TokenType::KEYWORD);
         EXPECT_EQ(token.value, value);
     }
+    token = Tokenizer::getNextToken(input);
     EXPECT_EQ(token.type, TokenType::EMPTY);
     EXPECT_EQ(token.value, "");
 }
@@ -71,6 +72,7 @@ TEST(Tokenizer_test, MultipleNumbers)
         EXPECT_EQ(token.type, TokenType::NUMBER);
         EXPECT_EQ(token.value, value);
     }
+    token = Tokenizer::getNextToken(input);
     EXPECT_EQ(token.type, TokenType::EMPTY);
     EXPECT_EQ(token.value, "");
 }
@@ -97,6 +99,7 @@ TEST(Tokenizer_test, MultipleTexts)
         EXPECT_EQ(token.type, TokenType::TEXT);
         EXPECT_EQ(token.value, value);
     }
+    token = Tokenizer::getNextToken(input);
     EXPECT_EQ(token.type, TokenType::EMPTY);
     EXPECT_EQ(token.value, "");
 }
@@ -122,6 +125,7 @@ TEST(Tokenizer_test, MultipleNewlines)
         EXPECT_EQ(token.type, TokenType::NEWLINE);
         EXPECT_EQ(token.value, "");
     }
+    token = Tokenizer::getNextToken(input);
     EXPECT_EQ(token.type, TokenType::EMPTY);
     EXPECT_EQ(token.value, "");
 }
