@@ -15,6 +15,7 @@ SOURCES = \
 	src/Expression.cpp \
 	src/Graph.cpp \
 	src/Node.cpp \
+	src/Token.cpp \
 	src/Tokenizer.cpp \
 	src/Parser.cpp \
 	src/operations/Operation.cpp \
@@ -25,6 +26,7 @@ SOURCES = \
     src/main.cpp
 
 TEST_SOURCES = \
+	src/Token.cpp \
 	src/Tokenizer.cpp \
 	test/Tokenizer_test.cpp
 

@@ -1,38 +1,10 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
+#include "Token.h"
+
 #include <istream>
 #include <string>
-
-/**
- * Possible graph description language tokens
- */
-enum class TokenType
-{
-    KEYWORD,
-    NUMBER,
-    TEXT,
-    NEWLINE,
-    EMPTY
-};
-
-/**
- * Represents a graph description language token
- *
- * TODO: Use Token class instead!
- */
-struct Token
-{
-    /**
-     * The type of the token
-     */
-    TokenType type;
-
-    /**
-     * The value of the token
-     */
-    std::string value;
-};
 
 /**
  * Tokenizer for the graph description language

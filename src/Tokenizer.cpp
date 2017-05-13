@@ -4,43 +4,30 @@
 
 Token Tokenizer::getNextToken(std::istream& stream)
 {
-    Token token;
     char c;
 
     while (true) {
         if (stream.get(c)) {
             if (std::isalpha(c)) {
                 std::string keyword = readKeyword(stream);
-                token.type = TokenType::KEYWORD;
-                token.value = keyword;
-                break;
+                return Token(TokenType::KEYWORD, keyword);
             }
             else if (std::isdigit(c)) {
                 std::string number = readNumber(stream);
-                token.type = TokenType::NUMBER;
-                token.value = number;
-                break;
+                return Token(TokenType::NUMBER, number);
             }
             else if (c == '"') {
                 std::string text = readText(stream);
-                token.type = TokenType::TEXT;
-                token.value = text;
-                break;
+                return Token(TokenType::TEXT, text);
             }
             else if (c == '\n') {
-                token.type = TokenType::NEWLINE;
-                token.value = "";
-                break;
+                return Token(TokenType::NEWLINE, "");
             }
         }
         else {
-            token.type = TokenType::EMPTY;
-            token.value = "";
-            break;
+            return Token(TokenType::EMPTY, "");
         }
     }
-
-    return token;
 }
 
 std::string Tokenizer::readKeyword(std::istream& stream)
