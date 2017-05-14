@@ -1,16 +1,16 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include <FL/Fl.H>
+#include "Canvas.h"
+#include "Grammar.h"
 
+#include <FL/Fl.H>
 #include <FL/Fl_Browser.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Window.H>
 
 #include <map>
 #include <string>
-
-#include "Canvas.h"
 
 /**
  * Expression editor
@@ -105,9 +105,9 @@ private:
     Canvas* _canvas;
 
     /**
-     * The expressions of the grammar
+     * The edited grammar
      */
-    std::map<std::string, Expression> _expressions;
+    Grammar _grammar;
 };
 
 #endif /* EDITOR_H */
