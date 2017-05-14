@@ -36,7 +36,8 @@ TEST_SOURCES = \
 	src/Token.cpp \
 	src/Tokenizer.cpp \
 	src/Parser.cpp \
-	test/Tokenizer_test.cpp
+	test/Tokenizer_test.cpp \
+	test/Parser_test.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o)
