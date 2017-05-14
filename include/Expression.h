@@ -18,6 +18,11 @@ public:
     Expression();
 
     /**
+     * Construct new expression from nodes and edges.
+     */
+    Expression(const std::map<int, Node>& nodes, const std::set<Edge>& edges);
+
+    /**
      * Select the type
      */
     void selectNodeType(NodeType nodeType);

@@ -5,7 +5,6 @@
 
 Grammar::Grammar()
 {
-
 }
 
 void Grammar::addExpression(const std::string& name, const Expression& expression)

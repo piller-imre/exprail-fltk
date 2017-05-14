@@ -27,8 +27,15 @@ SOURCES = \
     src/main.cpp
 
 TEST_SOURCES = \
+	src/Point.cpp \
+	src/Node.cpp \
+	src/Edge.cpp \
+	src/Graph.cpp \
+	src/Expression.cpp \
+	src/Grammar.cpp \
 	src/Token.cpp \
 	src/Tokenizer.cpp \
+	src/Parser.cpp \
 	test/Tokenizer_test.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)

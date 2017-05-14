@@ -7,6 +7,13 @@ Expression::Expression()
     _targetNodeId = INVALID_ID;
 }
 
+Expression::Expression(const std::map<int, Node> &nodes, const std::set<Edge> &edges)
+    : Expression()
+{
+    _nodes = nodes;
+    _edges = edges;
+}
+
 void Expression::selectNodeType(NodeType nodeType)
 {
     _selectedNodeType = nodeType;
@@ -147,4 +154,3 @@ int Expression::searchNode(const Point& position)
     }
     return INVALID_ID;
 }
-
