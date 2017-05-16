@@ -1,5 +1,5 @@
 #include "Parser.h"
-#include "Token.h"
+#include "Tokenizer.h"
 
 #include <gtest/gtest.h>
 
@@ -8,8 +8,8 @@
 
 TEST(Parser_test, ExpressionName)
 {
-    std::istringstream input("\"name\"");
-    Token token;
+    std::istringstream input("expression \"name\"");
+    Token token = Tokenizer::getNextToken(input);
     std::string expressionName = Parser::readExpressionName(input, token);
     ASSERT_EQ(expressionName, "name");
     ASSERT_EQ(token.getType(), TokenType::EMPTY);
@@ -17,18 +17,18 @@ TEST(Parser_test, ExpressionName)
 
 TEST(Parser_test, NodesAfterExpressionName)
 {
-    std::istringstream input("\"name\"\nnodes");
-    Token token;
+    std::istringstream input("expression \"name\"\nnodes");
+    Token token = Tokenizer::getNextToken(input);
     std::string expressionName = Parser::readExpressionName(input, token);
     ASSERT_EQ(expressionName, "name");
     ASSERT_EQ(token.getType(), TokenType::KEYWORD);
-    ASSERT_EQ(token.getValue(), "expression");
+    ASSERT_EQ(token.getValue(), "nodes");
 }
 
 TEST(Parser_test, SingleNode)
 {
-    std::istringstream input("1 begin \"name\" 30 -20");
-    Token token;
+    std::istringstream input("nodes\n1 begin \"name\" 30 -20");
+    Token token = Tokenizer::getNextToken(input);
     std::map<int, Node> nodes = Parser::readNodes(input, token);
     ASSERT_EQ(nodes.size(), 1);
     ASSERT_NE(nodes.find(1), nodes.end());
@@ -41,8 +41,8 @@ TEST(Parser_test, SingleNode)
 
 TEST(Parser_test, MultipleNodes)
 {
-    std::istringstream input("1 begin \"a\" 30 -20\n2 end \"b\" -10 40");
-    Token token;
+    std::istringstream input("nodes\n1 begin \"a\" 30 -20\n2 end \"b\" -10 40");
+    Token token = Tokenizer::getNextToken(input);
     std::map<int, Node> nodes = Parser::readNodes(input, token);
     ASSERT_EQ(nodes.size(), 2);
     ASSERT_NE(nodes.find(1), nodes.end());
@@ -60,8 +60,8 @@ TEST(Parser_test, MultipleNodes)
 
 TEST(Parser_test, SingleEdge)
 {
-    std::istringstream input("1 2");
-    Token token;
+    std::istringstream input("edges\n1 2");
+    Token token = Tokenizer::getNextToken(input);
     std::set<Edge> edges = Parser::readEdges(input, token);
     ASSERT_EQ(edges.size(), 1);
     ASSERT_NE(edges.find(Edge(1, 2)), edges.end());
@@ -70,8 +70,8 @@ TEST(Parser_test, SingleEdge)
 
 TEST(Parser_test, MultipleEdges)
 {
-    std::istringstream input("1 2\n3 4\n5 6");
-    Token token;
+    std::istringstream input("edges\n1 2\n3 4\n5 6");
+    Token token = Tokenizer::getNextToken(input);
     std::set<Edge> edges = Parser::readEdges(input, token);
     ASSERT_EQ(edges.size(), 3);
     ASSERT_NE(edges.find(Edge(1, 2)), edges.end());
@@ -82,8 +82,8 @@ TEST(Parser_test, MultipleEdges)
 
 TEST(Parser_test, ExpressionNameSkipEmptyLines)
 {
-    std::istringstream input("\"name\"\n\n\nnodes");
-    Token token;
+    std::istringstream input("expression \"name\"\n\n\nnodes");
+    Token token = Tokenizer::getNextToken(input);
     Parser::readExpressionName(input, token);
     ASSERT_EQ(token.getType(), TokenType::KEYWORD);
     ASSERT_EQ(token.getValue(), "nodes");
@@ -91,8 +91,8 @@ TEST(Parser_test, ExpressionNameSkipEmptyLines)
 
 TEST(Parser_test, NodesSkipEmptyLines)
 {
-    std::istringstream input("1 begin \"a\" 30 -20\n2 end \"b\" -10 40\n\n\nedges");
-    Token token;
+    std::istringstream input("nodes\n1 begin \"a\" 30 -20\n2 end \"b\" -10 40\n\n\nedges");
+    Token token = Tokenizer::getNextToken(input);
     Parser::readNodes(input, token);
     ASSERT_EQ(token.getType(), TokenType::KEYWORD);
     ASSERT_EQ(token.getValue(), "edges");
@@ -100,8 +100,8 @@ TEST(Parser_test, NodesSkipEmptyLines)
 
 TEST(Parser_test, EdgesSkipEmptyLines)
 {
-    std::istringstream input("1 2\n3 4\n5 6\n\n\n\nexpression");
-    Token token;
+    std::istringstream input("edges\n1 2\n3 4\n5 6\n\n\n\nexpression");
+    Token token = Tokenizer::getNextToken(input);
     Parser::readEdges(input, token);
     ASSERT_EQ(token.getType(), TokenType::KEYWORD);
     ASSERT_EQ(token.getValue(), "expression");
@@ -109,8 +109,8 @@ TEST(Parser_test, EdgesSkipEmptyLines)
 
 TEST(Parser_test, EdgesSkipLastEmptyLines)
 {
-    std::istringstream input("1 2\n3 4\n5 6\n\n\n\n");
-    Token token;
+    std::istringstream input("edges\n1 2\n3 4\n5 6\n\n\n\n");
+    Token token = Tokenizer::getNextToken(input);
     Parser::readEdges(input, token);
     ASSERT_EQ(token.getType(), TokenType::EMPTY);
     ASSERT_EQ(token.getValue(), "");
