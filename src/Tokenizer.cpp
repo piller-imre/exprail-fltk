@@ -14,7 +14,7 @@ Token Tokenizer::getNextToken(std::istream& stream)
                 std::string keyword = readKeyword(stream);
                 return Token(TokenType::KEYWORD, keyword);
             }
-            else if (std::isdigit(c)) {
+            else if (c == '-' || std::isdigit(c)) {
                 std::string number = readNumber(stream);
                 return Token(TokenType::NUMBER, number);
             }
@@ -59,6 +59,9 @@ std::string Tokenizer::readNumber(std::istream& stream)
     stream.unget();
     while (stream.get(c)) {
         if (std::isdigit(c)) {
+            number += c;
+        }
+        else if (c == '-' && number.size() == 0) {
             number += c;
         }
         else {

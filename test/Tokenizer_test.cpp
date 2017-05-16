@@ -78,6 +78,33 @@ TEST(Tokenizer_test, MultipleNumbers)
     ASSERT_EQ(token.getValue(), "");
 }
 
+TEST(Tokenizer_test, NegativeNumber)
+{
+    Token token;
+    std::istringstream input("-1234");
+    token = Tokenizer::getNextToken(input);
+    ASSERT_EQ(token.getType(), TokenType::NUMBER);
+    ASSERT_EQ(token.getValue(), "-1234");
+    token = Tokenizer::getNextToken(input);
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
+}
+
+TEST(Tokenizer_test, MultipleNegativeNumbers)
+{
+    Token token;
+    std::istringstream input("-10 2 -30 -400 5");
+    std::vector<std::string> values = {"-10", "2", "-30", "-400", "5"};
+    for (const std::string& value : values) {
+        token = Tokenizer::getNextToken(input);
+        ASSERT_EQ(token.getType(), TokenType::NUMBER);
+        ASSERT_EQ(token.getValue(), value);
+    }
+    token = Tokenizer::getNextToken(input);
+    ASSERT_EQ(token.getType(), TokenType::EMPTY);
+    ASSERT_EQ(token.getValue(), "");
+}
+
 TEST(Tokenizer_test, SingleText)
 {
     Token token;
