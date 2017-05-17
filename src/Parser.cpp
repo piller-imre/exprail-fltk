@@ -52,13 +52,13 @@ std::map<int, Node> Parser::readNodes(std::istream& stream, Token& token)
         skipEmptyLines(stream, token);
         // TODO: Use valid node types!
         if (type == "begin") {
-            nodes[id] = Node(NodeType::BEGIN, value, Point(x, y));
+            nodes[id] = Node(NodeType::START, value, Point(x, y));
         }
         else if (type == "end") {
-            nodes[id] = Node(NodeType::END, value, Point(x, y));
+            nodes[id] = Node(NodeType::FINISH, value, Point(x, y));
         }
         else if (type == "keyword") {
-            nodes[id] = Node(NodeType::KEYWORD, value, Point(x, y));
+            nodes[id] = Node(NodeType::TOKEN, value, Point(x, y));
         }
     }
 

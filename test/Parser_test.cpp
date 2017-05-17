@@ -32,7 +32,7 @@ TEST(Parser_test, SingleNode)
     std::map<int, Node> nodes = Parser::readNodes(input, token);
     ASSERT_EQ(nodes.size(), 1);
     ASSERT_NE(nodes.find(1), nodes.end());
-    ASSERT_EQ(nodes[1].getType(), NodeType::BEGIN);
+    ASSERT_EQ(nodes[1].getType(), NodeType::START);
     ASSERT_EQ(nodes[1].getValue(), "name");
     ASSERT_EQ(nodes[1].getPosition().getX(), 30);
     ASSERT_EQ(nodes[1].getPosition().getY(), -20);
@@ -46,12 +46,12 @@ TEST(Parser_test, MultipleNodes)
     std::map<int, Node> nodes = Parser::readNodes(input, token);
     ASSERT_EQ(nodes.size(), 2);
     ASSERT_NE(nodes.find(1), nodes.end());
-    ASSERT_EQ(nodes[1].getType(), NodeType::BEGIN);
+    ASSERT_EQ(nodes[1].getType(), NodeType::START);
     ASSERT_EQ(nodes[1].getValue(), "a");
     ASSERT_EQ(nodes[1].getPosition().getX(), 30);
     ASSERT_EQ(nodes[1].getPosition().getY(), -20);
     ASSERT_NE(nodes.find(2), nodes.end());
-    ASSERT_EQ(nodes[2].getType(), NodeType::END);
+    ASSERT_EQ(nodes[2].getType(), NodeType::FINISH);
     ASSERT_EQ(nodes[2].getValue(), "b");
     ASSERT_EQ(nodes[2].getPosition().getX(), -10);
     ASSERT_EQ(nodes[2].getPosition().getY(), 40);
@@ -144,17 +144,17 @@ TEST(Parser_test, SingleGrammar)
     ASSERT_NE(edges.find(Edge(1, 3)), edges.end());
     ASSERT_NE(edges.find(Edge(3, 2)), edges.end());
 
-    ASSERT_EQ(nodes[1].getType(), NodeType::BEGIN);
+    ASSERT_EQ(nodes[1].getType(), NodeType::START);
     ASSERT_EQ(nodes[1].getValue(), "a");
     ASSERT_EQ(nodes[1].getPosition().getX(), 30);
     ASSERT_EQ(nodes[1].getPosition().getY(), -20);
 
-    ASSERT_EQ(nodes[2].getType(), NodeType::END);
+    ASSERT_EQ(nodes[2].getType(), NodeType::FINISH);
     ASSERT_EQ(nodes[2].getValue(), "b");
     ASSERT_EQ(nodes[2].getPosition().getX(), -10);
     ASSERT_EQ(nodes[2].getPosition().getY(), 40);
 
-    ASSERT_EQ(nodes[3].getType(), NodeType::KEYWORD);
+    ASSERT_EQ(nodes[3].getType(), NodeType::TOKEN);
     ASSERT_EQ(nodes[3].getValue(), "c");
     ASSERT_EQ(nodes[3].getPosition().getX(), 50);
     ASSERT_EQ(nodes[3].getPosition().getY(), 0);

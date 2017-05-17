@@ -10,18 +10,19 @@
  */
 enum class NodeType
 {
-    BEGIN,
-    END,
+    START,
+    FINISH,
     CONNECTION,
-    SYMBOL,
-    KEYWORD,
     EXPRESSION,
-    SET,
     INFO,
     ERROR,
     TRANSFORMATION,
     OPERATION,
-    STACK
+    STACK,
+    CLEAN,
+    GROUND,
+    ROUTER,
+    TOKEN
 };
 
 /**
