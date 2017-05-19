@@ -1,6 +1,8 @@
 #ifndef EDGE_H
 #define EDGE_H
 
+#include <ostream>
+
 /**
  * Represents a directed edge between two nodes.
  */
@@ -50,6 +52,11 @@ private:
      */
     int _targetId;
 };
+
+/**
+ * Write the content of the edge to the output stream.
+ */
+std::ostream& operator<<(std::ostream& outputStream, const Edge& edge);
 
 #endif /* EDGE_H */
 

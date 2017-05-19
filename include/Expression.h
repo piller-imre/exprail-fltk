@@ -160,5 +160,10 @@ private:
     Point _origin;
 };
 
+/**
+ * Write the content of the expression to the output stream.
+ */
+std::ostream& operator<<(std::ostream& outputStream, const Expression& expression);
+
 #endif /* EXPRESSION_H */
 

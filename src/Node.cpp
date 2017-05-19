@@ -54,3 +54,7 @@ bool Node::hasCollision(const Point& point) const
     return false;
 }
 
+std::ostream& operator<<(std::ostream& outputStream, const Node& node)
+{
+    return outputStream;
+}

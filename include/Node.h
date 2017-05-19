@@ -95,5 +95,10 @@ private:
     Point _position;
 };
 
+/**
+ * Write the content of the node to the output stream.
+ */
+std::ostream& operator<<(std::ostream& outputStream, const Node& node);
+
 #endif /* NODE_H */
 

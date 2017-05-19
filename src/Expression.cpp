@@ -154,3 +154,8 @@ int Expression::searchNode(const Point& position)
     }
     return INVALID_ID;
 }
+
+std::ostream& operator<<(std::ostream& outputStream, const Expression& expression)
+{
+    return outputStream;
+}

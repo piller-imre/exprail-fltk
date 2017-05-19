@@ -58,3 +58,9 @@ Expression &Grammar::getExpression(const std::string& name)
         throw std::runtime_error(message.str());
     }
 }
+
+
+std::ostream& operator<<(std::ostream& outputStream, const Grammar& grammar)
+{
+    return outputStream;
+}

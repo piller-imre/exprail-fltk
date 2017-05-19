@@ -46,4 +46,9 @@ private:
     std::map<std::string, Expression> _expressions;
 };
 
+/**
+ * Write the content of the grammar to the output stream.
+ */
+std::ostream& operator<<(std::ostream& outputStream, const Grammar& grammar);
+
 #endif /* GRAMMAR_H */

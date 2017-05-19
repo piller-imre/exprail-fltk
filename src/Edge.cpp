@@ -1,5 +1,7 @@
 #include "Edge.h"
 
+#include <ostream>
+
 Edge::Edge(int sourceId, int targetId)
 {
     _sourceId = sourceId;
@@ -42,3 +44,7 @@ bool Edge::operator<(const Edge& other) const
     }
 }
 
+std::ostream& operator<<(std::ostream& outputStream, const Edge& edge)
+{
+    return outputStream;
+}
