@@ -47,7 +47,7 @@ void Grammar::removeExpression(const std::string& name)
     }
 }
 
-Expression &Grammar::getExpression(const std::string& name)
+Expression& Grammar::getExpression(const std::string& name)
 {
     if (_expressions.find(name) != _expressions.end()) {
         return _expressions[name];
@@ -59,8 +59,23 @@ Expression &Grammar::getExpression(const std::string& name)
     }
 }
 
+const std::map<std::string, Expression>& Grammar::getExpressions() const
+{
+    return _expressions;
+}
 
 std::ostream& operator<<(std::ostream& outputStream, const Grammar& grammar)
 {
+    for (auto const& item : grammar.getExpressions()) {
+        outputStream << "expression \"";
+        for (char c : item.first) {
+            if (c == '"' || c == '\\') {
+                outputStream << '\\';
+            }
+            outputStream << c;
+        }
+        outputStream << "\"" << std::endl;
+        outputStream << item.second << std::endl;
+    }
     return outputStream;
 }

@@ -157,5 +157,13 @@ int Expression::searchNode(const Point& position)
 
 std::ostream& operator<<(std::ostream& outputStream, const Expression& expression)
 {
+    outputStream << "nodes" << std::endl;
+    for (auto const& item : expression.getNodes()) {
+        outputStream << item.first << " " << item.second << std::endl;
+    }
+    outputStream << "edges" << std::endl;
+    for (const Edge& edge : expression.getEdges()) {
+        outputStream << edge << std::endl;
+    }
     return outputStream;
 }

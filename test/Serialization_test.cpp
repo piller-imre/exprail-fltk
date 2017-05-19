@@ -37,7 +37,7 @@ TEST(Serialization_test, BackslashValuedNode)
     std::stringstream output;
     Node node(NodeType::ERROR, "Unexpected \\ character!", Point(5, 10));
     output << node;
-    ASSERT_EQ(output.str(), "error \"Unexpected \\\\ character \" 5 10");
+    ASSERT_EQ(output.str(), "error \"Unexpected \\\\ character!\" 5 10");
 }
 
 TEST(Serialization_test, Edge)
@@ -70,8 +70,8 @@ TEST(Serialization_test, SimpleExpression)
     std::string expectedResult =
         "nodes\n"
         "1 start \"entry\" -10 0\n"
-        "2 start \"exit\" 10 0\n"
-        "3 start \"keyword\" 0 10\n"
+        "2 finish \"exit\" 10 0\n"
+        "3 token \"keyword\" 0 10\n"
         "edges\n"
         "1 2\n"
         "1 3\n"
@@ -113,21 +113,21 @@ TEST(Serialization_test, SimpleGrammar)
     grammar.addExpression("B", b);
 
     std::string expectedResult =
-        "expression \"A\""
+        "expression \"A\"\n"
         "nodes\n"
         "1 start \"entry\" -10 0\n"
-        "2 start \"exit\" 10 0\n"
-        "3 start \"keyword\" 0 10\n"
+        "2 finish \"exit\" 10 0\n"
+        "3 token \"keyword\" 0 10\n"
         "edges\n"
         "1 2\n"
         "1 3\n"
         "3 2\n"
         "\n"
-        "expression \"B\""
+        "expression \"B\"\n"
         "nodes\n"
         "1 start \"\" 30 0\n"
-        "2 start \"\" 40 0\n"
-        "3 start \"keyword\" 0 -10\n"
+        "2 finish \"\" 40 0\n"
+        "3 token \"keyword\" 0 -10\n"
         "4 error \"Unexpected error!\" 20 20\n"
         "edges\n"
         "1 2\n"

@@ -38,6 +38,11 @@ public:
      */
     Expression& getExpression(const std::string& name);
 
+    /**
+     * Get all expressions.
+     */
+    const std::map<std::string, Expression>& getExpressions() const;
+
 private:
 
     /**

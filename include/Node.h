@@ -3,6 +3,7 @@
 
 #include "Point.h"
 
+#include <ostream>
 #include <string>
 
 /**
@@ -99,6 +100,11 @@ private:
  * Write the content of the node to the output stream.
  */
 std::ostream& operator<<(std::ostream& outputStream, const Node& node);
+
+/**
+ * Write the string version of the node type to the output stream.
+ */
+std::ostream& operator<<(std::ostream& outputStream, NodeType nodeType);
 
 #endif /* NODE_H */
 

@@ -1,6 +1,6 @@
 #include "Node.h"
 
-Node::Node()
+Node::Node() : _type(NodeType::START)
 {
 }
 
@@ -56,5 +56,62 @@ bool Node::hasCollision(const Point& point) const
 
 std::ostream& operator<<(std::ostream& outputStream, const Node& node)
 {
+    outputStream << node.getType() << " \"";
+    for (char c : node.getValue()) {
+        if (c == '"' || c == '\\') {
+            outputStream << '\\';
+        }
+        outputStream << c;
+    }
+    outputStream << "\" ";
+    outputStream << node.getPosition().getX() << " " << node.getPosition().getY();
+
+    return outputStream;
+}
+
+std::ostream& operator<<(std::ostream& outputStream, NodeType nodeType)
+{
+    switch (nodeType) {
+    case NodeType::START:
+        outputStream << "start";
+        break;
+    case NodeType::FINISH:
+        outputStream << "finish";
+        break;
+    case NodeType::CONNECTION:
+        outputStream << "connection";
+        break;
+    case NodeType::EXPRESSION:
+        outputStream << "expression";
+        break;
+    case NodeType::INFO:
+        outputStream << "info";
+        break;
+    case NodeType::ERROR:
+        outputStream << "error";
+        break;
+    case NodeType::TRANSFORMATION:
+        outputStream << "transformation";
+        break;
+    case NodeType::OPERATION:
+        outputStream << "operation";
+        break;
+    case NodeType::STACK:
+        outputStream << "stack";
+        break;
+    case NodeType::CLEAN:
+        outputStream << "clean";
+        break;
+    case NodeType::GROUND:
+        outputStream << "ground";
+        break;
+    case NodeType::ROUTER:
+        outputStream << "router";
+        break;
+    case NodeType::TOKEN:
+        outputStream << "token";
+        break;
+    }
+
     return outputStream;
 }
