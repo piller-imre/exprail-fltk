@@ -31,6 +31,11 @@ public:
     static std::map<int, Node> readNodes(std::istream& stream, Token& token);
 
     /**
+     * Calculate the node type from string value.
+     */
+    static NodeType calcNodeType(const std::string& value);
+
+    /**
      * Read edge data from the input stream.
      */
     static std::set<Edge> readEdges(std::istream& stream, Token& token);

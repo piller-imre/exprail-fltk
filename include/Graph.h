@@ -53,6 +53,11 @@ public:
     const std::set<Edge>& getEdges() const;
 
     /**
+     * Update the last node identifier by the existing nodes.
+     */
+    void updateLastNodeId();
+
+    /**
      * Value for invalid node indices
      */
     static const int INVALID_ID;

@@ -46,6 +46,16 @@ const std::set<Edge>& Graph::getEdges() const
     return _edges;
 }
 
+void Graph::updateLastNodeId()
+{
+    _lastNodeId = INVALID_ID;
+    for (auto const& item : _nodes) {
+        if (item.first > _lastNodeId) {
+            _lastNodeId = item.first;
+        }
+    }
+}
+
 int Graph::getNewNodeId()
 {
     ++_lastNodeId;
@@ -63,4 +73,3 @@ void Graph::removeConnectedEdges(int nodeId)
         }
     }
 }
-

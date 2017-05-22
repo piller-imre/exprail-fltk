@@ -7,6 +7,7 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Browser.H>
 #include <FL/Fl_Button.H>
+#include <FL/Fl_Menu_Bar.H>
 #include <FL/Fl_Window.H>
 
 #include <map>
@@ -35,9 +36,34 @@ public:
     void createExpressionWindow();
 
     /**
+     * Create the menu bar.
+     */
+    void createMenuBar();
+
+    /**
      * Create new canvas window.
      */
     void createCanvas();
+
+    /**
+     * Open an existing grammar for editing.
+     */
+    void openGrammar();
+
+    /**
+     * Save the grammar to a file.
+     */
+    void saveGrammar();
+
+    /**
+     * Check that the path of the grammar file has set.
+     */
+    bool hasGrammarPath() const;
+
+    /**
+     * Set the path of the grammar file.
+     */
+    void setGrammarPath(const std::string& path);
 
     /**
      * Add new expression.
@@ -74,17 +100,24 @@ public:
      */
     int run();
 
-private:
+protected:
 
     /**
-     * Check that the expression name is valid.
+     * Update the list of expression names in the expression window.
      */
-    bool isValidExpressionName(const std::string& name) const;
+    void updateExpressionNameList();
+
+private:
 
     /**
      * Expression browser window
      */
     Fl_Window* _expressionWindow;
+
+    /**
+     * Menu bar
+     */
+    Fl_Menu_Bar* _menuBar;
 
     /**
      * Buttons for expression list operations
@@ -108,7 +141,11 @@ private:
      * The edited grammar
      */
     Grammar _grammar;
+
+    /**
+     * The path of the grammar file
+     */
+    std::string _grammarFilePath;
 };
 
 #endif /* EDITOR_H */
-

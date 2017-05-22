@@ -54,3 +54,42 @@ void browser_event_callback(Fl_Widget* widget, void*)
     }
 }
 
+void open_grammar_callback(Fl_Widget* widget, void*)
+{
+    if (editor.hasGrammarPath() == false) {
+        Fl_File_Chooser* fileChooser = new Fl_File_Chooser("", "", Fl_File_Chooser::SINGLE, "Open a grammar");
+        fileChooser->callback(file_chooser_for_opening_callback);
+        fileChooser->show();
+    }
+    else {
+        fl_message("A grammar already has opened!");
+    }
+}
+
+void save_grammar_callback(Fl_Widget* widget, void*)
+{
+    if (editor.hasGrammarPath() == true) {
+        editor.saveGrammar();
+    }
+    else {
+        Fl_File_Chooser* fileChooser = new Fl_File_Chooser("", "", Fl_File_Chooser::CREATE, "Save the grammar");
+        fileChooser->callback(file_chooser_for_saving_callback);
+        fileChooser->show();
+    }
+}
+
+void file_chooser_for_opening_callback(Fl_File_Chooser* widget, void*)
+{
+    if (widget->shown() == false && widget->value() != nullptr) {
+        editor.setGrammarPath(widget->value());
+        editor.openGrammar();
+    }
+}
+
+void file_chooser_for_saving_callback(Fl_File_Chooser* widget, void*)
+{
+    if (widget->shown() == false && widget->value() != nullptr) {
+        editor.setGrammarPath(widget->value());
+        editor.saveGrammar();
+    }
+}

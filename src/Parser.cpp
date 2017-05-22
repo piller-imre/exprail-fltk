@@ -2,6 +2,8 @@
 
 #include "Tokenizer.h"
 
+#include <sstream>
+
 Grammar Parser::readGrammar(std::istream& stream)
 {
     Token token;
@@ -13,6 +15,7 @@ Grammar Parser::readGrammar(std::istream& stream)
         std::map<int, Node> nodes = readNodes(stream, token);
         std::set<Edge> edges = readEdges(stream, token);
         Expression expression(nodes, edges);
+        expression.updateLastNodeId();
         grammar.addExpression(expressionName, expression);
     }
 
@@ -50,19 +53,37 @@ std::map<int, Node> Parser::readNodes(std::istream& stream, Token& token)
         int x = readNumber(stream, token);
         int y = readNumber(stream, token);
         skipEmptyLines(stream, token);
-        // TODO: Use valid node types!
-        if (type == "begin") {
-            nodes[id] = Node(NodeType::START, value, Point(x, y));
-        }
-        else if (type == "end") {
-            nodes[id] = Node(NodeType::FINISH, value, Point(x, y));
-        }
-        else if (type == "keyword") {
-            nodes[id] = Node(NodeType::TOKEN, value, Point(x, y));
-        }
+        nodes[id] = Node(calcNodeType(type), value, Point(x, y));
     }
 
     return nodes;
+}
+
+NodeType Parser::calcNodeType(const std::string& value)
+{
+    std::map<std::string, NodeType> table = {
+        {"start", NodeType::START},
+        {"finish", NodeType::FINISH},
+        {"connection", NodeType::CONNECTION},
+        {"expression", NodeType::EXPRESSION},
+        {"info", NodeType::INFO},
+        {"error", NodeType::ERROR},
+        {"transformation", NodeType::TRANSFORMATION},
+        {"operation", NodeType::OPERATION},
+        {"stack", NodeType::STACK},
+        {"clean", NodeType::CLEAN},
+        {"ground", NodeType::GROUND},
+        {"router", NodeType::ROUTER},
+        {"token", NodeType::TOKEN}
+    };
+    if (table.find(value) != table.end()) {
+        return table.at(value);
+    }
+    else {
+        std::stringstream message;
+        message << "The '" << value << "' is an invalid node type!";
+        throw std::runtime_error(message.str());
+    }
 }
 
 std::set<Edge> Parser::readEdges(std::istream& stream, Token& token)

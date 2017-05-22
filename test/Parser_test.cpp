@@ -6,6 +6,9 @@
 #include <sstream>
 #include <stdexcept>
 
+// TODO: Create test for calculating node types!
+// TODO: Create test for checking last node id after parsing!
+
 TEST(Parser_test, ExpressionName)
 {
     std::istringstream input("expression \"name\"");
@@ -27,7 +30,7 @@ TEST(Parser_test, NodesAfterExpressionName)
 
 TEST(Parser_test, SingleNode)
 {
-    std::istringstream input("nodes\n1 begin \"name\" 30 -20");
+    std::istringstream input("nodes\n1 start \"name\" 30 -20");
     Token token = Tokenizer::getNextToken(input);
     std::map<int, Node> nodes = Parser::readNodes(input, token);
     ASSERT_EQ(nodes.size(), 1);
@@ -41,7 +44,7 @@ TEST(Parser_test, SingleNode)
 
 TEST(Parser_test, MultipleNodes)
 {
-    std::istringstream input("nodes\n1 begin \"a\" 30 -20\n2 end \"b\" -10 40");
+    std::istringstream input("nodes\n1 start \"a\" 30 -20\n2 finish \"b\" -10 40");
     Token token = Tokenizer::getNextToken(input);
     std::map<int, Node> nodes = Parser::readNodes(input, token);
     ASSERT_EQ(nodes.size(), 2);
@@ -91,7 +94,7 @@ TEST(Parser_test, ExpressionNameSkipEmptyLines)
 
 TEST(Parser_test, NodesSkipEmptyLines)
 {
-    std::istringstream input("nodes\n1 begin \"a\" 30 -20\n2 end \"b\" -10 40\n\n\nedges");
+    std::istringstream input("nodes\n1 start \"a\" 30 -20\n2 finish \"b\" -10 40\n\n\nedges");
     Token token = Tokenizer::getNextToken(input);
     Parser::readNodes(input, token);
     ASSERT_EQ(token.getType(), TokenType::KEYWORD);
@@ -121,9 +124,9 @@ TEST(Parser_test, SingleGrammar)
     std::istringstream input(
         "expression \"sample\"\n"
         "nodes\n"
-        "1 begin \"a\" 30 -20\n"
-        "2 end \"b\" -10 40\n"
-        "3 keyword \"c\" 50 0\n"
+        "1 start \"a\" 30 -20\n"
+        "2 finish \"b\" -10 40\n"
+        "3 token \"c\" 50 0\n"
         "edges\n"
         "1 2\n"
         "1 3\n"

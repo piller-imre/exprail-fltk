@@ -1,6 +1,7 @@
 #ifndef HANDLERS_H
 #define HANDLERS_H
 
+#include <FL/Fl_File_Chooser.H>
 #include <FL/Fl_Widget.H>
 
 /**
@@ -33,5 +34,24 @@ void move_expression_down_callback(Fl_Widget* button, void*);
  */
 void browser_event_callback(Fl_Widget* widget, void*);
 
-#endif /* HANDLERS_H */
+/**
+ * Open a grammar file handler
+ */
+void open_grammar_callback(Fl_Widget* widget, void*);
 
+/**
+ * Save grammar to a file handler
+ */
+void save_grammar_callback(Fl_Widget* widget, void*);
+
+/**
+ * File chooser for opening handler
+ */
+void file_chooser_for_opening_callback(Fl_File_Chooser* widget, void*);
+
+/**
+ * File chooser for saving handler
+ */
+void file_chooser_for_saving_callback(Fl_File_Chooser* widget, void*);
+
+#endif /* HANDLERS_H */
