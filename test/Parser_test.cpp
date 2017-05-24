@@ -134,9 +134,13 @@ TEST(Parser_test, SingleGrammar)
     );
     Grammar grammar = Parser::readGrammar(input);
     // TODO: Check that the expression name is exists!
+    std::vector<std::string> expressionOrder = grammar.getExpressionOrder();
     Expression expression = grammar.getExpression("sample");
     std::map<int, Node> nodes = expression.getNodes();
     std::set<Edge> edges = expression.getEdges();
+
+    ASSERT_EQ(expressionOrder.size(), 1);
+    ASSERT_EQ(expressionOrder[0], "sample");
 
     ASSERT_EQ(nodes.size(), 3);
     ASSERT_EQ(edges.size(), 3);

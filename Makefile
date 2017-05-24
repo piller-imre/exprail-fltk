@@ -36,6 +36,7 @@ TEST_SOURCES = \
 	src/Token.cpp \
 	src/Tokenizer.cpp \
 	src/Parser.cpp \
+	test/Grammar_test.cpp \
 	test/Tokenizer_test.cpp \
 	test/Parser_test.cpp \
 	test/Serialization_test.cpp

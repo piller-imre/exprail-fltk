@@ -5,6 +5,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 
 /**
  * Represents a grammar definition
@@ -43,12 +44,32 @@ public:
      */
     const std::map<std::string, Expression>& getExpressions() const;
 
+    /**
+     * Get the ordered list of the expressions.
+     */
+    const std::vector<std::string>& getExpressionOrder() const;
+
+    /**
+     * Move the selected expression up.
+     */
+    void moveExpressionUp(const std::string& name);
+
+    /**
+     * Move the selected expression down.
+     */
+    void moveExpressionDown(const std::string& name);
+
 private:
 
     /**
      * Expressions of the grammar
      */
     std::map<std::string, Expression> _expressions;
+
+    /**
+     * The order of the expressions
+     */
+    std::vector<std::string> _expressionOrder;
 };
 
 /**

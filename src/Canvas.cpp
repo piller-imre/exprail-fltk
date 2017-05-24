@@ -129,4 +129,3 @@ int Canvas::handle(int event)
     redraw();
     return 1;
 }
-

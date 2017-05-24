@@ -64,6 +64,21 @@ const std::map<std::string, Expression>& Grammar::getExpressions() const
     return _expressions;
 }
 
+const std::vector<std::string>& Grammar::getExpressionOrder() const
+{
+    return _expressionOrder;
+}
+
+void Grammar::moveExpressionUp(const std::string& name)
+{
+    // TODO: Move the expression up!
+}
+
+void Grammar::moveExpressionDown(const std::string& name)
+{
+    // TODO: Move the expression down!
+}
+
 std::ostream& operator<<(std::ostream& outputStream, const Grammar& grammar)
 {
     for (auto const& item : grammar.getExpressions()) {
