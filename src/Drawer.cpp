@@ -9,6 +9,7 @@
 Drawer::Drawer()
 {
     _iconImage = new Fl_PNG_Image("/tmp/nodes.png");
+    _indicatorImage = new Fl_PNG_Image("/tmp/indicators.png");
     _curviness = 64;
 }
 
@@ -134,6 +135,12 @@ void Drawer::drawIcon(int index, const Point& position) const
 {
     Point p = _origin + position;
     _iconImage->draw(p.getX(), p.getY(), 32, 32, index * 32, 0);
+}
+
+void Drawer::drawIndicator(int index, const Point& position) const
+{
+    Point p = _origin + position;
+    _indicatorImage->draw(p.getX() - 32, p.getY() - 32, 64, 64, index * 64, 0);
 }
 
 void Drawer::drawText(const std::string& text, const Point& position) const

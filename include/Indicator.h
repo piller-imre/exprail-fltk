@@ -21,6 +21,11 @@ public:
     Indicator(const Node& node);
 
     /**
+     * Get the indicated node.
+     */
+    const Node& getNode() const;
+
+    /**
      * Enable the source error flag of the indicator.
      */
     void enableSourceError();

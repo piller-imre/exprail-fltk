@@ -11,6 +11,11 @@ Indicator::Indicator(const Node& node)
     _node = node;
 }
 
+const Node& Indicator::getNode() const
+{
+    return _node;
+}
+
 void Indicator::enableSourceError()
 {
     _sourceError = true;

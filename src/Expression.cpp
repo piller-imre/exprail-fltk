@@ -122,6 +122,8 @@ void Expression::moveSelectedNode(const Point& position)
 {
     if (_selectedNodeId != INVALID_ID) {
         _nodes[_selectedNodeId].setPosition(position - _origin);
+        // TODO: Use pointers in the indicator for avoiding recalculations of all indicators!
+        updateIndicators();
     }
 }
 
@@ -170,6 +172,11 @@ Point Expression::getOrigin() const
     return _origin;
 }
 
+const std::vector<Indicator>&Expression::getIndicators() const
+{
+    return _indicators;
+}
+
 int Expression::searchNode(const Point& position)
 {
     for (const auto& item : _nodes) {
@@ -193,10 +200,12 @@ void Expression::updateIndicators()
             if (hasSource(nodeId) == true) {
                 indicator.enableSourceError();
             }
+            break;
         default:
             if (hasSource(nodeId) == false) {
                 indicator.enableSourceError();
             }
+            break;
         }
         switch (node.getType()) {
         case NodeType::FINISH:
@@ -204,10 +213,12 @@ void Expression::updateIndicators()
             if (hasTarget(nodeId) == true) {
                 indicator.enableTargetError();
             }
+            break;
         default:
             if (hasTarget(nodeId) == false) {
                 indicator.enableTargetError();
             }
+            break;
         }
         if (node.hasValueError()) {
             indicator.enableValueError();

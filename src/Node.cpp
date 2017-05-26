@@ -64,14 +64,16 @@ bool Node::hasValueError() const
     case NodeType::CLEAN:
     case NodeType::GROUND:
         if (_value == "") {
-            return true;
+            return false;
         }
+        break;
     default:
         if (_value != "") {
-            return true;
+            return false;
         }
+        break;
     }
-    return false;
+    return true;
 }
 
 std::ostream& operator<<(std::ostream& outputStream, const Node& node)

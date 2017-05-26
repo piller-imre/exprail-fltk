@@ -149,6 +149,11 @@ public:
      */
     Point getOrigin() const;
 
+    /**
+     * Get the node indicators of the expression.
+     */
+    const std::vector<Indicator>& getIndicators() const;
+
 private:
 
     /**

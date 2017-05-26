@@ -91,6 +91,11 @@ public:
     void drawIcon(int index, const Point& position) const;
 
     /**
+     * Draw indicator background at the given position.
+     */
+    void drawIndicator(int index, const Point& position) const;
+
+    /**
      * Draw text at the given position.
      */
     void drawText(const std::string& text, const Point& position) const;
@@ -101,6 +106,11 @@ protected:
      * Icon image
      */
     Fl_PNG_Image* _iconImage;
+
+    /**
+     * Indicator image
+     */
+    Fl_PNG_Image* _indicatorImage;
 
     /**
      * The origin as the reference point

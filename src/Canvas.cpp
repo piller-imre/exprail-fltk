@@ -31,7 +31,7 @@ void Canvas::setExpression(Expression* expression)
 void Canvas::drawMenuBar() const
 {
     drawer.setColor(200, 200, 200);
-    drawer.fillRectangle(Point(0, 0), 384, 32);
+    drawer.fillRectangle(Point(0, 0), 416, 32);
     drawer.drawIconImage(Point(0, 0));
 }
 
@@ -56,6 +56,17 @@ void Canvas::drawIndicators() const
     }
     if (_expression->hasTargetNode()) {
         indicateTargetNode();
+    }
+    for (const Indicator& indicator : _expression->getIndicators()) {
+        if (indicator.hasSourceError()) {
+            drawer.drawIndicator(0, indicator.getNode().getPosition());
+        }
+        if (indicator.hasTargetError()) {
+            drawer.drawIndicator(1, indicator.getNode().getPosition());
+        }
+        if (indicator.hasValueError()) {
+            drawer.drawIndicator(2, indicator.getNode().getPosition());
+        }
     }
 }
 
