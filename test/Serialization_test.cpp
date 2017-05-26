@@ -63,9 +63,9 @@ TEST(Serialization_test, SimpleExpression)
     expression.addNode(Node(NodeType::START, "entry", Point(-10, 0)));
     expression.addNode(Node(NodeType::FINISH, "exit", Point(10, 0)));
     expression.addNode(Node(NodeType::TOKEN, "keyword", Point(0, 10)));
-    expression.addEdge(1, 2);
-    expression.addEdge(1, 3);
-    expression.addEdge(3, 2);
+    expression.addEdge(Edge(1, 2));
+    expression.addEdge(Edge(1, 3));
+    expression.addEdge(Edge(3, 2));
     output << expression;
     std::string expectedResult =
         "nodes\n"
@@ -96,9 +96,9 @@ TEST(Serialization_test, SimpleGrammar)
     a.addNode(Node(NodeType::START, "entry", Point(-10, 0)));
     a.addNode(Node(NodeType::FINISH, "exit", Point(10, 0)));
     a.addNode(Node(NodeType::TOKEN, "keyword", Point(0, 10)));
-    a.addEdge(1, 2);
-    a.addEdge(1, 3);
-    a.addEdge(3, 2);
+    a.addEdge(Edge(1, 2));
+    a.addEdge(Edge(1, 3));
+    a.addEdge(Edge(3, 2));
     grammar.addExpression("A", a);
 
     Expression b;
@@ -106,10 +106,10 @@ TEST(Serialization_test, SimpleGrammar)
     b.addNode(Node(NodeType::FINISH, "", Point(40, 0)));
     b.addNode(Node(NodeType::TOKEN, "keyword", Point(0, -10)));
     b.addNode(Node(NodeType::ERROR, "Unexpected error!", Point(20, 20)));
-    b.addEdge(1, 2);
-    b.addEdge(1, 3);
-    b.addEdge(3, 2);
-    b.addEdge(1, 4);
+    b.addEdge(Edge(1, 2));
+    b.addEdge(Edge(1, 3));
+    b.addEdge(Edge(3, 2));
+    b.addEdge(Edge(1, 4));
     grammar.addExpression("B", b);
 
     std::string expectedResult =

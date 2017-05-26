@@ -34,10 +34,12 @@ TEST_SOURCES = \
 	src/Edge.cpp \
 	src/Graph.cpp \
 	src/Expression.cpp \
+	src/Indicator.cpp \
 	src/Grammar.cpp \
 	src/Token.cpp \
 	src/Tokenizer.cpp \
 	src/Parser.cpp \
+	src/Validator.cpp \
 	test/Grammar_test.cpp \
 	test/Tokenizer_test.cpp \
 	test/Parser_test.cpp \
