@@ -59,13 +59,13 @@ void Canvas::drawIndicators() const
     }
     for (const Indicator& indicator : _expression->getIndicators()) {
         if (indicator.hasSourceError()) {
-            drawer.drawIndicator(0, indicator.getNode().getPosition());
+            drawer.drawIndicator(3, indicator.getNode().getPosition());
         }
         if (indicator.hasTargetError()) {
-            drawer.drawIndicator(1, indicator.getNode().getPosition());
+            drawer.drawIndicator(4, indicator.getNode().getPosition());
         }
         if (indicator.hasValueError()) {
-            drawer.drawIndicator(2, indicator.getNode().getPosition());
+            drawer.drawIndicator(5, indicator.getNode().getPosition());
         }
     }
 }
@@ -73,26 +73,19 @@ void Canvas::drawIndicators() const
 void Canvas::indicateSelectedNode() const
 {
     const Node& node = _expression->getSelectedNode();
-    drawer.setColor(240, 200, 0);
-    drawer.drawCircle(node.getPosition(), 30);
+    drawer.drawIndicator(0, node.getPosition());
 }
 
 void Canvas::indicateSourceNode() const
 {
     const Node& node = _expression->getSourceNode();
-    Point position = node.getPosition();
-    position += Point(16, 0);
-    drawer.setColor(255, 0, 0);
-    drawer.drawCircle(position, 10);
+    drawer.drawIndicator(1, node.getPosition());
 }
 
 void Canvas::indicateTargetNode() const
 {
     const Node& node = _expression->getTargetNode();
-    Point position = node.getPosition();
-    position -= Point(16, 0);
-    drawer.setColor(0, 255, 0);
-    drawer.drawCircle(position, 10);
+    drawer.drawIndicator(2, node.getPosition());
 }
 
 void Canvas::drawEdges() const
