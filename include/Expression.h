@@ -154,6 +154,11 @@ public:
      */
     const std::vector<Indicator>& getIndicators() const;
 
+    /**
+     * Get the error messages of the expression.
+     */
+    const std::vector<std::string>& getErrorMessages() const;
+
 private:
 
     /**
@@ -165,6 +170,11 @@ private:
      * Update the node indicators.
      */
     void updateIndicators();
+
+    /**
+     * Update the error messages.
+     */
+    void updateErrorMessages();
 
     /**
      * Selected type for new node creation
@@ -195,6 +205,11 @@ private:
      * The node indicators
      */
     std::vector<Indicator> _indicators;
+
+    /**
+     * Error messages
+     */
+    std::vector<std::string> _errorMessages;
 };
 
 /**

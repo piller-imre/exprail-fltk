@@ -100,6 +100,11 @@ public:
      */
     void drawText(const std::string& text, const Point& position) const;
 
+    /**
+     * Draw error message at the given position.
+     */
+    void drawMessage(const std::string& errorMessage, const Point& position) const;
+
 protected:
 
     /**

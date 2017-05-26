@@ -42,6 +42,7 @@ void Canvas::drawExpression()
         drawIndicators();
         drawEdges();
         drawNodes();
+        drawErrorMessages();
         drawer.setOrigin(Point(0, 0));
     }
 }
@@ -67,6 +68,17 @@ void Canvas::drawIndicators() const
         if (indicator.hasValueError()) {
             drawer.drawIndicator(5, indicator.getNode().getPosition());
         }
+    }
+}
+
+void Canvas::drawErrorMessages() const
+{
+    int x = 20;
+    int y = 60;
+    drawer.setColor(255, 0, 0);
+    for (const std::string& errorMessage : _expression->getErrorMessages()) {
+        drawer.drawMessage(errorMessage, Point(x, y));
+        y += 24;
     }
 }
 

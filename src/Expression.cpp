@@ -1,5 +1,7 @@
 #include "Expression.h"
 
+#include "Validator.h"
+
 Expression::Expression()
 {
     _selectedNodeId = INVALID_ID;
@@ -172,9 +174,14 @@ Point Expression::getOrigin() const
     return _origin;
 }
 
-const std::vector<Indicator>&Expression::getIndicators() const
+const std::vector<Indicator>& Expression::getIndicators() const
 {
     return _indicators;
+}
+
+const std::vector<std::string>& Expression::getErrorMessages() const
+{
+    return _errorMessages;
 }
 
 int Expression::searchNode(const Point& position)
@@ -227,6 +234,12 @@ void Expression::updateIndicators()
             _indicators.push_back(indicator);
         }
     }
+    updateErrorMessages();
+}
+
+void Expression::updateErrorMessages()
+{
+    _errorMessages = Validator::validate(*this);
 }
 
 std::ostream& operator<<(std::ostream& outputStream, const Expression& expression)

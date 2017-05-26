@@ -20,6 +20,7 @@ SOURCES = \
 	src/Token.cpp \
 	src/Tokenizer.cpp \
 	src/Parser.cpp \
+	src/Validator.cpp \
 	src/operations/Operation.cpp \
 	src/operations/OperationFactory.cpp \
 	src/operations/CreateNodeOperation.cpp \

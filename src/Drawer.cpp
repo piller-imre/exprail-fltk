@@ -149,3 +149,7 @@ void Drawer::drawText(const std::string& text, const Point& position) const
     fl_draw(text.c_str(), p.getX(), p.getY());
 }
 
+void Drawer::drawMessage(const std::string& message, const Point& position) const
+{
+    fl_draw(message.c_str(), position.getX(), position.getY());
+}

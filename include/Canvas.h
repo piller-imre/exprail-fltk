@@ -53,6 +53,11 @@ private:
     void drawIndicators() const;
 
     /**
+     * Draw the error messages.
+     */
+    void drawErrorMessages() const;
+
+    /**
      * Indicate the selected node.
      */
     void indicateSelectedNode() const;
