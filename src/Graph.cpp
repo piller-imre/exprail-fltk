@@ -35,15 +35,24 @@ void Graph::removeNode(int nodeId)
     assert(_nodes.find(nodeId) == _nodes.end());
 }
 
-void Graph::addEdge(int sourceId, int targetId)
+void Graph::addEdge(const Edge& edge)
 {
-    Edge edge(sourceId, targetId);
     _edges.insert(edge);
 }
 
 const std::set<Edge>& Graph::getEdges() const
 {
     return _edges;
+}
+
+bool Graph::hasEdge(const Edge& edge) const
+{
+    return _edges.find(edge) != _edges.end();
+}
+
+void Graph::removeEdge(const Edge& edge)
+{
+    _edges.erase(edge);
 }
 
 void Graph::updateLastNodeId()
@@ -54,6 +63,26 @@ void Graph::updateLastNodeId()
             _lastNodeId = item.first;
         }
     }
+}
+
+bool Graph::hasSource(int nodeId) const
+{
+    for (const Edge& edge : _edges) {
+        if (edge.getTargetId() == nodeId) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Graph::hasTarget(int nodeId) const
+{
+    for (const Edge& edge : _edges) {
+        if (edge.getSourceId() == nodeId) {
+            return true;
+        }
+    }
+    return false;
 }
 
 int Graph::getNewNodeId()

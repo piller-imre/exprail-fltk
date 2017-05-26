@@ -25,7 +25,7 @@ public:
     /**
      * Add new node to the expression.
      */
-    void addNode(const Node& node);
+    virtual void addNode(const Node& node);
 
     /**
      * Get the node with the given identifier.
@@ -40,12 +40,12 @@ public:
     /**
      * Remove the given node.
      */
-    void removeNode(int nodeId);
+    virtual void removeNode(int nodeId);
 
     /**
      * Add new edge from the source to the target node.
      */
-    void addEdge(int sourceId, int targetId);
+    virtual void addEdge(const Edge& edge);
 
     /**
      * Get the edges of the expression.
@@ -53,9 +53,29 @@ public:
     const std::set<Edge>& getEdges() const;
 
     /**
+     * Check that the graph has the given edge.
+     */
+    bool hasEdge(const Edge& edge) const;
+
+    /**
+     * Remove the edge from source node to target node.
+     */
+    virtual void removeEdge(const Edge& edge);
+
+    /**
      * Update the last node identifier by the existing nodes.
      */
     void updateLastNodeId();
+
+    /**
+     * Check that the node has connected edge on the source side.
+     */
+    bool hasSource(int nodeId) const;
+
+    /**
+     * Check that the node has connected edge on the target side.
+     */
+    bool hasTarget(int nodeId) const;
 
     /**
      * Value for invalid node indices

@@ -14,6 +14,30 @@ Expression::Expression(const std::map<int, Node> &nodes, const std::set<Edge> &e
     _edges = edges;
 }
 
+void Expression::addNode(const Node& node)
+{
+    Graph::addNode(node);
+    updateIndicators();
+}
+
+void Expression::removeNode(int nodeId)
+{
+    Graph::removeNode(nodeId);
+    updateIndicators();
+}
+
+void Expression::addEdge(const Edge& edge)
+{
+    Graph::addEdge(edge);
+    updateIndicators();
+}
+
+void Expression::removeEdge(const Edge& edge)
+{
+    Graph::removeEdge(edge);
+    updateIndicators();
+}
+
 void Expression::selectNodeType(NodeType nodeType)
 {
     _selectedNodeType = nodeType;
@@ -105,6 +129,7 @@ void Expression::setSelectedNodeValue(const std::string& value)
 {
     if (_selectedNodeId != INVALID_ID) {
         _nodes[_selectedNodeId].setValue(value);
+        updateIndicators();
     }
 }
 
@@ -126,11 +151,11 @@ void Expression::toggleSelectedEdge()
 {
     if (_sourceNodeId != INVALID_ID && _targetNodeId != INVALID_ID) {
         Edge edge(_sourceNodeId, _targetNodeId);
-        if (_edges.find(edge) == _edges.end()) {
-            _edges.insert(edge);
+        if (hasEdge(edge) == false) {
+            addEdge(edge);
         }
         else {
-            _edges.erase(edge);
+            removeEdge(edge);
         }
     }
 }
@@ -153,6 +178,44 @@ int Expression::searchNode(const Point& position)
         }
     }
     return INVALID_ID;
+}
+
+void Expression::updateIndicators()
+{
+    _indicators.clear();
+    for (const auto& item : _nodes) {
+        int nodeId = item.first;
+        const Node& node = item.second;
+        Indicator indicator(node);
+        switch (node.getType()) {
+        case NodeType::START:
+        case NodeType::GROUND:
+            if (hasSource(nodeId) == true) {
+                indicator.enableSourceError();
+            }
+        default:
+            if (hasSource(nodeId) == false) {
+                indicator.enableSourceError();
+            }
+        }
+        switch (node.getType()) {
+        case NodeType::FINISH:
+        case NodeType::ERROR:
+            if (hasTarget(nodeId) == true) {
+                indicator.enableTargetError();
+            }
+        default:
+            if (hasTarget(nodeId) == false) {
+                indicator.enableTargetError();
+            }
+        }
+        if (node.hasValueError()) {
+            indicator.enableValueError();
+        }
+        if (indicator.hasSourceError() || indicator.hasTargetError() || indicator.hasValueError()) {
+            _indicators.push_back(indicator);
+        }
+    }
 }
 
 std::ostream& operator<<(std::ostream& outputStream, const Expression& expression)

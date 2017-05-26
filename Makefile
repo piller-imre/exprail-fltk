@@ -13,6 +13,7 @@ SOURCES = \
 	src/Point.cpp \
 	src/Editor.cpp \
 	src/Expression.cpp \
+	src/Indicator.cpp \
 	src/Grammar.cpp \
 	src/Graph.cpp \
 	src/Node.cpp \

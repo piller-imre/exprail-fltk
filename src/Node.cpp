@@ -54,6 +54,26 @@ bool Node::hasCollision(const Point& point) const
     return false;
 }
 
+bool Node::hasValueError() const
+{
+    switch (_type) {
+    case NodeType::START:
+    case NodeType::FINISH:
+    case NodeType::CONNECTION:
+    case NodeType::STACK:
+    case NodeType::CLEAN:
+    case NodeType::GROUND:
+        if (_value == "") {
+            return true;
+        }
+    default:
+        if (_value != "") {
+            return true;
+        }
+    }
+    return false;
+}
+
 std::ostream& operator<<(std::ostream& outputStream, const Node& node)
 {
     outputStream << node.getType() << " \"";

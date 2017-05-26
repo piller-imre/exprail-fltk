@@ -2,8 +2,10 @@
 #define EXPRESSION_H
 
 #include "Graph.h"
+#include "Indicator.h"
 
 #include <cassert>
+#include <vector>
 
 /**
  * Represents the graph of an expression
@@ -21,6 +23,26 @@ public:
      * Construct new expression from nodes and edges.
      */
     Expression(const std::map<int, Node>& nodes, const std::set<Edge>& edges);
+
+    /**
+     * Add new node to the expression.
+     */
+    virtual void addNode(const Node& node) override;
+
+    /**
+     * Remove the given node.
+     */
+    virtual void removeNode(int nodeId) override;
+
+    /**
+     * Add new edge from the source to the target node.
+     */
+    virtual void addEdge(const Edge& edge) override;
+
+    /**
+     * Remove the edge from source node to target node.
+     */
+    virtual void removeEdge(const Edge& edge) override;
 
     /**
      * Select the type
@@ -135,6 +157,11 @@ private:
     int searchNode(const Point& position);
 
     /**
+     * Update the node indicators.
+     */
+    void updateIndicators();
+
+    /**
      * Selected type for new node creation
      */
     NodeType _selectedNodeType;
@@ -158,6 +185,11 @@ private:
      * Origin of the expression graph own coordinate system
      */
     Point _origin;
+
+    /**
+     * The node indicators
+     */
+    std::vector<Indicator> _indicators;
 };
 
 /**

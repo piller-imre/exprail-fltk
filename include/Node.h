@@ -78,6 +78,11 @@ public:
      */
     bool hasCollision(const Point& point) const;
 
+    /**
+     * Check that the value of the node is correct.
+     */
+    bool hasValueError() const;
+
 private:
 
     /**
