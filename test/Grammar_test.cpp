@@ -58,13 +58,13 @@ TEST(Grammar_test, MoveExpressionDown)
     grammar.addExpression("second", Expression());
     grammar.addExpression("third", Expression());
     std::vector<std::string> expressionOrder;
-    grammar.moveExpressionUp("first");
+    grammar.moveExpressionDown("first");
     expressionOrder = grammar.getExpressionOrder();
     ASSERT_EQ(expressionOrder.size(), 3);
     ASSERT_EQ(expressionOrder[0], "second");
     ASSERT_EQ(expressionOrder[1], "first");
     ASSERT_EQ(expressionOrder[2], "third");
-    grammar.moveExpressionUp("first");
+    grammar.moveExpressionDown("first");
     expressionOrder = grammar.getExpressionOrder();
     ASSERT_EQ(expressionOrder.size(), 3);
     ASSERT_EQ(expressionOrder[0], "second");
@@ -99,6 +99,7 @@ TEST(Grammar_test, MoveMissingExpressionDown)
     grammar.addExpression("first", Expression());
     try {
         grammar.moveExpressionDown("second");
+        FAIL() << "An exception has not thrown!";
     }
     catch (const std::runtime_error& error) {
         ASSERT_STREQ(error.what(), "The expression 'second' is missing!");
@@ -114,6 +115,7 @@ TEST(Grammar_test, MoveMissingExpressionUp)
     grammar.addExpression("first", Expression());
     try {
         grammar.moveExpressionUp("second");
+        FAIL() << "An exception has not thrown!";
     }
     catch (const std::runtime_error& error) {
         ASSERT_STREQ(error.what(), "The expression 'second' is missing!");

@@ -50,16 +50,21 @@ public:
     const std::vector<std::string>& getExpressionOrder() const;
 
     /**
-     * Move the selected expression up.
-     */
-    void moveExpressionUp(const std::string& name);
-
-    /**
      * Move the selected expression down.
      */
     void moveExpressionDown(const std::string& name);
 
+    /**
+     * Move the selected expression up.
+     */
+    void moveExpressionUp(const std::string& name);
+
 private:
+
+    /**
+     * Calculate the index of the expression in expression name order.
+     */
+    unsigned int calcExpressionIndex(const std::string& name) const;
 
     /**
      * Expressions of the grammar
