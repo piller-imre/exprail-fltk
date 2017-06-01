@@ -131,6 +131,7 @@ void Editor::moveSelectedExpressionUp()
 {
     int selectedLine = _browser->value();
     if (selectedLine > 1) {
+        _grammar.moveExpressionUp(_browser->text(selectedLine));
         _browser->move(selectedLine, selectedLine - 1);
     }
 }
@@ -139,6 +140,7 @@ void Editor::moveSelectedExpressionDown()
 {
     int selectedLine = _browser->value();
     if (selectedLine > 0) {
+        _grammar.moveExpressionDown(_browser->text(selectedLine));
         _browser->move(selectedLine, selectedLine + 1);
     }
 }
@@ -154,7 +156,7 @@ int Editor::run()
 void Editor::updateExpressionNameList()
 {
     _browser->clear();
-    for (const auto& item : _grammar.getExpressions()) {
-        _browser->add(item.first.c_str());
+    for (const std::string& name : _grammar.getExpressionOrder()) {
+        _browser->add(name.c_str());
     }
 }

@@ -80,6 +80,6 @@ private:
 /**
  * Write the content of the grammar to the output stream.
  */
-std::ostream& operator<<(std::ostream& outputStream, const Grammar& grammar);
+std::ostream& operator<<(std::ostream& outputStream, Grammar& grammar);
 
 #endif /* GRAMMAR_H */

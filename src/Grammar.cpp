@@ -56,7 +56,7 @@ void Grammar::removeExpression(const std::string& name)
 Expression& Grammar::getExpression(const std::string& name)
 {
     if (_expressions.find(name) != _expressions.end()) {
-        return _expressions[name];
+        return _expressions.at(name);
     }
     else {
         std::stringstream message;
@@ -103,18 +103,18 @@ unsigned int Grammar::calcExpressionIndex(const std::string& name) const
     return nameIndex;
 }
 
-std::ostream& operator<<(std::ostream& outputStream, const Grammar& grammar)
+std::ostream& operator<<(std::ostream& outputStream, Grammar& grammar)
 {
-    for (auto const& item : grammar.getExpressions()) {
+    for (const std::string& name : grammar.getExpressionOrder()) {
         outputStream << "expression \"";
-        for (char c : item.first) {
+        for (char c : name) {
             if (c == '"' || c == '\\') {
                 outputStream << '\\';
             }
             outputStream << c;
         }
         outputStream << "\"" << std::endl;
-        outputStream << item.second << std::endl;
+        outputStream << grammar.getExpression(name) << std::endl;
     }
     return outputStream;
 }
