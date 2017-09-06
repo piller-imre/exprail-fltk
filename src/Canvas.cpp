@@ -31,8 +31,8 @@ void Canvas::setExpression(Expression* expression)
 void Canvas::drawMenuBar() const
 {
     drawer.setColor(200, 200, 200);
-    drawer.fillRectangle(Point(0, 0), 416, 32);
-    drawer.drawIconImage(Point(0, 0));
+    drawer.fillRectangle(Point(0, 0), 448, 32);
+    drawer.drawIcons(Point(0, 0));
 }
 
 void Canvas::drawExpression()
@@ -60,13 +60,13 @@ void Canvas::drawIndicators() const
     }
     for (const Indicator& indicator : _expression->getIndicators()) {
         if (indicator.hasSourceError()) {
-            drawer.drawIndicator(3, indicator.getNode().getPosition());
+            drawer.drawIndicator(IndicatorType::SOURCE_ERROR, indicator.getNode().getPosition());
         }
         if (indicator.hasTargetError()) {
-            drawer.drawIndicator(4, indicator.getNode().getPosition());
+            drawer.drawIndicator(IndicatorType::TARGET_ERROR, indicator.getNode().getPosition());
         }
         if (indicator.hasValueError()) {
-            drawer.drawIndicator(5, indicator.getNode().getPosition());
+            drawer.drawIndicator(IndicatorType::VALUE_ERROR, indicator.getNode().getPosition());
         }
     }
 }
@@ -85,19 +85,19 @@ void Canvas::drawErrorMessages() const
 void Canvas::indicateSelectedNode() const
 {
     const Node& node = _expression->getSelectedNode();
-    drawer.drawIndicator(0, node.getPosition());
+    drawer.drawIndicator(IndicatorType::SELECTION, node.getPosition());
 }
 
 void Canvas::indicateSourceNode() const
 {
     const Node& node = _expression->getSourceNode();
-    drawer.drawIndicator(1, node.getPosition());
+    drawer.drawIndicator(IndicatorType::SOURCE, node.getPosition());
 }
 
 void Canvas::indicateTargetNode() const
 {
     const Node& node = _expression->getTargetNode();
-    drawer.drawIndicator(2, node.getPosition());
+    drawer.drawIndicator(IndicatorType::TARGET, node.getPosition());
 }
 
 void Canvas::drawEdges() const
@@ -129,7 +129,7 @@ void Canvas::drawNodes() const
 
 void Canvas::drawNode(const Node& node) const
 {
-    drawer.drawIcon(static_cast<int>(node.getType()), node.getPosition() - Point(16, 16));
+    drawer.drawIcon(node.getType(), node.getPosition() - Point(16, 16));
     drawer.setColor(50, 50, 200);
     drawer.drawText(node.getValue(), node.getPosition() + Point(-24, 28));
 }

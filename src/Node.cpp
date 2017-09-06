@@ -106,32 +106,35 @@ std::ostream& operator<<(std::ostream& outputStream, NodeType nodeType)
     case NodeType::EXPRESSION:
         outputStream << "expression";
         break;
+    case NodeType::GROUND:
+        outputStream << "ground";
+        break;
+    case NodeType::TOKEN:
+        outputStream << "token";
+        break;
+    case NodeType::ROUTER:
+        outputStream << "router";
+        break;
+    case NodeType::AVOID:
+        outputStream << "avoid";
+        break;
     case NodeType::INFO:
         outputStream << "info";
         break;
     case NodeType::ERROR:
         outputStream << "error";
         break;
-    case NodeType::TRANSFORMATION:
-        outputStream << "transformation";
-        break;
     case NodeType::OPERATION:
         outputStream << "operation";
+        break;
+    case NodeType::TRANSFORMATION:
+        outputStream << "transformation";
         break;
     case NodeType::STACK:
         outputStream << "stack";
         break;
     case NodeType::CLEAN:
         outputStream << "clean";
-        break;
-    case NodeType::GROUND:
-        outputStream << "ground";
-        break;
-    case NodeType::ROUTER:
-        outputStream << "router";
-        break;
-    case NodeType::TOKEN:
-        outputStream << "token";
         break;
     }
 

@@ -15,15 +15,16 @@ enum class NodeType
     FINISH,
     CONNECTION,
     EXPRESSION,
+    GROUND,
+    TOKEN,
+    ROUTER,
+    AVOID,
     INFO,
     ERROR,
-    TRANSFORMATION,
     OPERATION,
+    TRANSFORMATION,
     STACK,
-    CLEAN,
-    GROUND,
-    ROUTER,
-    TOKEN
+    CLEAN
 };
 
 /**

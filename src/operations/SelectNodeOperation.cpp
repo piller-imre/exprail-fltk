@@ -9,7 +9,7 @@ SelectNodeOperation::SelectNodeOperation(Expression* expression)
 void SelectNodeOperation::pressMouse(MouseButton button, const Point& position)
 {
     if (button == MouseButton::LEFT) {
-        if (position.getX() < 416 && position.getY() < 32) {
+        if (position.getX() < 448 && position.getY() < 32) {
             NodeType nodeType = static_cast<NodeType>(position.getX() / 32);
             _expression->selectNodeType(nodeType);
             _nextOperationType = OperationType::CREATE_NODE;
