@@ -2,18 +2,17 @@
 
 #include "Curve.h"
 #include "Node.h"
+#include "Theme.h"
 
 #include <FL/fl_draw.H>
 
 #include <cmath>
-#include <iostream> // DEBUG
 #include <sstream>
 
 Drawer::Drawer()
 {
-    loadINodeIcons();
+    loadNodeIcons();
     loadIndicatorIcons();
-    _curviness = 64;
 }
 
 Drawer::~Drawer()
@@ -26,7 +25,7 @@ Drawer::~Drawer()
     }
 }
 
-void Drawer::loadINodeIcons()
+void Drawer::loadNodeIcons()
 {
     // TODO: Use theme path for further customization!
     std::stringstream stream;
@@ -57,6 +56,11 @@ void Drawer::setColor(int red, int green, int blue) const
     fl_color(red, green, blue);
 }
 
+void Drawer::setColor(const Color& color) const
+{
+    fl_color(color.red(), color.green(), color.blue());
+}
+
 void Drawer::setOrigin(const Point& origin)
 {
     _origin = origin;
@@ -69,19 +73,19 @@ void Drawer::drawLine(const Point& source, const Point& target) const
     fl_line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 }
 
-void Drawer::drawEdge(const Point& source, const Point& target) const
+void Drawer::drawEdge(const Point& source, const Point& target, int curviness) const
 {
     int distanceX = target.getX() - source.getX();
     int distanceY = target.getY() - source.getY();
-    if (distanceX > _curviness) {
+    if (distanceX > curviness) {
         drawStepCurve(source, target);
     }
     else {
-        if (std::abs(distanceY) < _curviness) {
-            drawShoeCurve(source, target);
+        if (std::abs(distanceY) < curviness) {
+            drawShoeCurve(source, target, curviness);
         }
         else {
-            drawZigzagCurve(source, target);
+            drawZigzagCurve(source, target, curviness);
         }
     }
 }
@@ -97,11 +101,11 @@ void Drawer::drawStepCurve(const Point& source, const Point& target) const
     drawPath(curve.getPath());
 }
 
-void Drawer::drawZigzagCurve(const Point& source, const Point& target) const
+void Drawer::drawZigzagCurve(const Point& source, const Point& target, int curviness) const
 {
     int middleY = (source.getY() + target.getY()) / 2;
-    int sourceSideX = source.getX() + _curviness;
-    int targetSideX = target.getX() - _curviness;
+    int sourceSideX = source.getX() + curviness;
+    int targetSideX = target.getX() - curviness;
     Curve curve;
     curve.add(source);
     curve.add(Point(sourceSideX, source.getY()));
@@ -112,16 +116,16 @@ void Drawer::drawZigzagCurve(const Point& source, const Point& target) const
     drawPath(curve.getPath());
 }
 
-void Drawer::drawShoeCurve(const Point& source, const Point& target) const
+void Drawer::drawShoeCurve(const Point& source, const Point& target, int curviness) const
 {
-    int sourceSideX = source.getX() + _curviness;
-    int targetSideX = target.getX() - _curviness;
+    int sourceSideX = source.getX() + curviness;
+    int targetSideX = target.getX() - curviness;
     int supportY = target.getY();
     if (source.getY() < target.getY()) {
-        supportY += _curviness;
+        supportY += curviness;
     }
     else {
-        supportY -= _curviness;
+        supportY -= curviness;
     }
     Curve curve;
     curve.add(source);

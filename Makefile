@@ -7,6 +7,7 @@ TEST_LDFLAGS = -lgtest -lgtest_main -lpthread
 SOURCES = \
 	src/handlers.cpp \
 	src/Canvas.cpp \
+	src/Color.cpp \
 	src/Curve.cpp \
 	src/Drawer.cpp \
 	src/Edge.cpp \
@@ -17,6 +18,7 @@ SOURCES = \
 	src/Grammar.cpp \
 	src/Graph.cpp \
 	src/Node.cpp \
+	src/Theme.cpp \
 	src/Token.cpp \
 	src/Tokenizer.cpp \
 	src/Parser.cpp \

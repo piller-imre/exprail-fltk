@@ -12,6 +12,8 @@ Canvas::Canvas(int width, int height, const char* title)
 
     _expression = nullptr;
     _operation = OperationFactory::create(OperationType::NONE, nullptr);
+
+    _theme.load("default");
 }
 
 void Canvas::draw()
@@ -30,20 +32,20 @@ void Canvas::setExpression(Expression* expression)
 
 void Canvas::drawMenuBar() const
 {
-    drawer.setColor(200, 200, 200);
-    drawer.fillRectangle(Point(0, 0), 448, 32);
-    drawer.drawIcons(Point(0, 0));
+    _drawer.setColor(_theme.toolbarColor());
+    _drawer.fillRectangle(Point(0, 0), 448, 32);
+    _drawer.drawIcons(Point(0, 0));
 }
 
 void Canvas::drawExpression()
 {
     if (_expression != nullptr) {
-        drawer.setOrigin(_expression->getOrigin());
+        _drawer.setOrigin(_expression->getOrigin());
         drawIndicators();
         drawEdges();
         drawNodes();
         drawErrorMessages();
-        drawer.setOrigin(Point(0, 0));
+        _drawer.setOrigin(Point(0, 0));
     }
 }
 
@@ -60,13 +62,13 @@ void Canvas::drawIndicators() const
     }
     for (const Indicator& indicator : _expression->getIndicators()) {
         if (indicator.hasSourceError()) {
-            drawer.drawIndicator(IndicatorType::SOURCE_ERROR, indicator.getNode().getPosition());
+            _drawer.drawIndicator(IndicatorType::SOURCE_ERROR, indicator.getNode().getPosition());
         }
         if (indicator.hasTargetError()) {
-            drawer.drawIndicator(IndicatorType::TARGET_ERROR, indicator.getNode().getPosition());
+            _drawer.drawIndicator(IndicatorType::TARGET_ERROR, indicator.getNode().getPosition());
         }
         if (indicator.hasValueError()) {
-            drawer.drawIndicator(IndicatorType::VALUE_ERROR, indicator.getNode().getPosition());
+            _drawer.drawIndicator(IndicatorType::VALUE_ERROR, indicator.getNode().getPosition());
         }
     }
 }
@@ -75,9 +77,9 @@ void Canvas::drawErrorMessages() const
 {
     int x = 20;
     int y = 60;
-    drawer.setColor(255, 0, 0);
+    _drawer.setColor(_theme.errorMessageColor());
     for (const std::string& errorMessage : _expression->getErrorMessages()) {
-        drawer.drawMessage(errorMessage, Point(x, y));
+        _drawer.drawMessage(errorMessage, Point(x, y));
         y += 24;
     }
 }
@@ -85,25 +87,25 @@ void Canvas::drawErrorMessages() const
 void Canvas::indicateSelectedNode() const
 {
     const Node& node = _expression->getSelectedNode();
-    drawer.drawIndicator(IndicatorType::SELECTION, node.getPosition());
+    _drawer.drawIndicator(IndicatorType::SELECTION, node.getPosition());
 }
 
 void Canvas::indicateSourceNode() const
 {
     const Node& node = _expression->getSourceNode();
-    drawer.drawIndicator(IndicatorType::SOURCE, node.getPosition());
+    _drawer.drawIndicator(IndicatorType::SOURCE, node.getPosition());
 }
 
 void Canvas::indicateTargetNode() const
 {
     const Node& node = _expression->getTargetNode();
-    drawer.drawIndicator(IndicatorType::TARGET, node.getPosition());
+    _drawer.drawIndicator(IndicatorType::TARGET, node.getPosition());
 }
 
 void Canvas::drawEdges() const
 {
     assert(_expression != nullptr);
-    drawer.setColor(255, 0, 0);
+    _drawer.setColor(_theme.lineColor());
     for (const Edge& edge : _expression->getEdges()) {
         drawEdge(edge);
     }
@@ -115,7 +117,7 @@ void Canvas::drawEdge(const Edge& edge) const
     Node targetNode = _expression->getNode(edge.getTargetId());
     Point sourcePoint = sourceNode.getPosition() + Point(16, 0);
     Point targetPoint = targetNode.getPosition() - Point(16, 0);
-    drawer.drawEdge(sourcePoint, targetPoint);
+    _drawer.drawEdge(sourcePoint, targetPoint, _theme.curviness());
 }
 
 void Canvas::drawNodes() const
@@ -129,9 +131,9 @@ void Canvas::drawNodes() const
 
 void Canvas::drawNode(const Node& node) const
 {
-    drawer.drawIcon(node.getType(), node.getPosition() - Point(16, 16));
-    drawer.setColor(50, 50, 200);
-    drawer.drawText(node.getValue(), node.getPosition() + Point(-24, 28));
+    _drawer.drawIcon(node.getType(), node.getPosition() - Point(16, 16));
+    _drawer.setColor(_theme.nodeLabelColor());
+    _drawer.drawText(node.getValue(), node.getPosition() + Point(-24, 28));
 }
 
 int Canvas::handle(int event)

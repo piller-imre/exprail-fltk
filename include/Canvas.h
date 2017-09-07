@@ -4,6 +4,7 @@
 #include "Drawer.h"
 #include "Expression.h"
 #include "Node.h"
+#include "Theme.h"
 #include "operations/Operation.h"
 
 #include <FL/Fl_Double_Window.H>
@@ -95,7 +96,12 @@ private:
     /**
      * Drawer
      */
-	Drawer drawer;
+    Drawer _drawer;
+
+    /**
+     * Drawing theme
+     */
+    Theme _theme;
 
     /**
      * The edited expression

@@ -1,8 +1,9 @@
 #ifndef DRAWER_H
 #define DRAWER_H
 
-#include "Point.h"
+#include "Color.h"
 #include "Node.h"
+#include "Point.h"
 
 #include <FL/Fl_PNG_Image.H>
 
@@ -30,7 +31,7 @@ class Drawer
 public:
 
     /**
-     * Construct a new drawer object.
+     * Construct a new drawer.
      */
     Drawer();
 
@@ -42,7 +43,7 @@ public:
     /**
      * Load the node icons.
      */
-    void loadINodeIcons();
+    void loadNodeIcons();
 
     /**
      * Load the indicator icons.
@@ -53,6 +54,11 @@ public:
      * Set current color.
      */
     void setColor(int red, int green, int blue) const;
+
+    /**
+     * Set current color.
+     */
+    void setColor(const Color& color) const;
 
     /**
      * Set the origin of the graphical context.
@@ -67,7 +73,7 @@ public:
     /**
      * Draw curved edge between two points.
      */
-    void drawEdge(const Point& source, const Point& target) const;
+    void drawEdge(const Point& source, const Point& target, int curviness) const;
 
     /**
      * Draw step-like curve.
@@ -77,12 +83,12 @@ public:
     /**
      * Draw zigzag-like curve.
      */
-    void drawZigzagCurve(const Point& source, const Point& target) const;
+    void drawZigzagCurve(const Point& source, const Point& target, int curviness) const;
 
     /**
      * Draw shoe-like curve.
      */
-    void drawShoeCurve(const Point& source, const Point& target) const;
+    void drawShoeCurve(const Point& source, const Point& target, int curviness) const;
 
     /**
      * Draw path from the vector of points as a polyline.
@@ -145,11 +151,6 @@ protected:
      * The origin as the reference point
      */
     Point _origin;
-
-    /**
-     * Curviness parameter for edge drawing
-     */
-    int _curviness;
 };
 
 #endif /* DRAWER_H */
