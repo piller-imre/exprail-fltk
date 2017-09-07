@@ -8,7 +8,7 @@ Theme::Theme()
     setDefaultValues();
 }
 
-void Theme::load(const string& themeName)
+void Theme::load(const std::string& themeName)
 {
     setDefaultValues();
     std::stringstream stream;
@@ -67,5 +67,27 @@ const Color&Theme::errorMessageColor() const
 
 void Theme::processConfigLine(const std::string& line)
 {
-    // TODO: Process the line.
+    std::string key;
+    std::string value;
+    std::stringstream stream(line);
+    stream >> key;
+    stream >> value;
+    if (key == "curviness") {
+        _curviness = std::stoi(value);
+    }
+    else if (key == "background-color") {
+        _backgroundColor = Color(value);
+    }
+    else if (key == "line-color") {
+        _lineColor = Color(value);
+    }
+    else if (key == "toolbar-color") {
+        _toolbarColor = Color(value);
+    }
+    else if (key == "node-label-color") {
+        _nodeLabelColor = Color(value);
+    }
+    else if (key == "error-message-color") {
+        _errorMessageColor = Color(value);
+    }
 }
