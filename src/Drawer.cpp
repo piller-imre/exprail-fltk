@@ -7,49 +7,6 @@
 #include <FL/fl_draw.H>
 
 #include <cmath>
-#include <sstream>
-
-Drawer::Drawer()
-{
-    loadNodeIcons();
-    loadIndicatorIcons();
-}
-
-Drawer::~Drawer()
-{
-    for (Fl_PNG_Image* icon : _nodeIcons) {
-        delete icon;
-    }
-    for (Fl_PNG_Image* icon : _indicatorIcons) {
-        delete icon;
-    }
-}
-
-void Drawer::loadNodeIcons()
-{
-    // TODO: Use theme path for further customization!
-    std::stringstream stream;
-    for (int i = 0; i < 14; ++i) {
-        NodeType type = static_cast<NodeType>(i);
-        stream.str(std::string());
-        stream << "/tmp/default/icons/nodes/" << type << ".png";
-        std::string path = stream.str();
-        // TODO: Check that the file exists!
-        Fl_PNG_Image* image = new Fl_PNG_Image(path.c_str());
-        _nodeIcons.push_back(image);
-    }
-}
-
-void Drawer::loadIndicatorIcons()
-{
-    // TODO: Check that the files exist!
-    _indicatorIcons.push_back(new Fl_PNG_Image("/tmp/default/icons/indicators/selection.png"));
-    _indicatorIcons.push_back(new Fl_PNG_Image("/tmp/default/icons/indicators/source.png"));
-    _indicatorIcons.push_back(new Fl_PNG_Image("/tmp/default/icons/indicators/target.png"));
-    _indicatorIcons.push_back(new Fl_PNG_Image("/tmp/default/icons/indicators/source_error.png"));
-    _indicatorIcons.push_back(new Fl_PNG_Image("/tmp/default/icons/indicators/target_error.png"));
-    _indicatorIcons.push_back(new Fl_PNG_Image("/tmp/default/icons/indicators/value_error.png"));
-}
 
 void Drawer::setColor(int red, int green, int blue) const
 {
@@ -163,25 +120,16 @@ void Drawer::drawCircle(const Point& position, int radius) const
     fl_arc(p.getX() - radius, p.getY() - radius, diameter, diameter, 0, 360); 
 }
 
-void Drawer::drawIcons(const Point& position) const
-{
-    for (int i = 0; i < 14; ++i) {
-        _nodeIcons[i]->draw(position.getX() + i * 32, position.getY(), 32, 32);
-    }
-}
-
-void Drawer::drawIcon(NodeType nodeType, const Point& position) const
+void Drawer::drawIcon(Fl_PNG_Image* image, const Point& position) const
 {
     Point p = _origin + position;
-    int typeIndex = static_cast<int>(nodeType);
-    _nodeIcons[typeIndex]->draw(p.getX(), p.getY(), 32, 32);
+    image->draw(p.getX(), p.getY());
 }
 
-void Drawer::drawIndicator(IndicatorType indicatorType, const Point& position) const
+void Drawer::drawIndicator(Fl_PNG_Image* image, const Point& position) const
 {
     Point p = _origin + position;
-    int index = static_cast<int>(indicatorType);
-    _indicatorIcons[index]->draw(p.getX() - 32, p.getY() - 32, 64, 64);
+    image->draw(p.getX() - 32, p.getY() - 32);
 }
 
 void Drawer::drawText(const std::string& text, const Point& position) const

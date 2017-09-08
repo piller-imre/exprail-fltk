@@ -3,6 +3,7 @@
 
 #include "Drawer.h"
 #include "Expression.h"
+#include "IconPack.h"
 #include "Node.h"
 #include "Theme.h"
 #include "operations/Operation.h"
@@ -102,6 +103,11 @@ private:
      * Drawing theme
      */
     Theme _theme;
+
+    /**
+     * Icon pack
+     */
+    IconPack _iconPack;
 
     /**
      * The edited expression

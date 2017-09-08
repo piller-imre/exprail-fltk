@@ -66,15 +66,16 @@ NodeType Parser::calcNodeType(const std::string& value)
         {"finish", NodeType::FINISH},
         {"connection", NodeType::CONNECTION},
         {"expression", NodeType::EXPRESSION},
+        {"ground", NodeType::GROUND},
+        {"token", NodeType::TOKEN},
+        {"router", NodeType::ROUTER},
+        {"avoid", NodeType::AVOID},
         {"info", NodeType::INFO},
         {"error", NodeType::ERROR},
-        {"transformation", NodeType::TRANSFORMATION},
         {"operation", NodeType::OPERATION},
+        {"transformation", NodeType::TRANSFORMATION},
         {"stack", NodeType::STACK},
-        {"clean", NodeType::CLEAN},
-        {"ground", NodeType::GROUND},
-        {"router", NodeType::ROUTER},
-        {"token", NodeType::TOKEN}
+        {"clean", NodeType::CLEAN}
     };
     if (table.find(value) != table.end()) {
         return table.at(value);

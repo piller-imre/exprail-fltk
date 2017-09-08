@@ -2,6 +2,7 @@
 #define DRAWER_H
 
 #include "Color.h"
+#include "Indicator.h"
 #include "Node.h"
 #include "Point.h"
 
@@ -11,44 +12,11 @@
 #include <vector>
 
 /**
- * Indicator types
- */
-enum class IndicatorType
-{
-    SELECTION,
-    SOURCE,
-    TARGET,
-    SOURCE_ERROR,
-    TARGET_ERROR,
-    VALUE_ERROR
-};
-
-/**
  * Draw primitives in the graphical context.
  */
 class Drawer
 {
 public:
-
-    /**
-     * Construct a new drawer.
-     */
-    Drawer();
-
-    /**
-     * Destruct the drawer object.
-     */
-    ~Drawer();
-
-    /**
-     * Load the node icons.
-     */
-    void loadNodeIcons();
-
-    /**
-     * Load the indicator icons.
-     */
-    void loadIndicatorIcons();
 
     /**
      * Set current color.
@@ -111,19 +79,14 @@ public:
     void drawCircle(const Point& position, int radius) const;
 
     /**
-     * Draw the icon image.
-     */
-    void drawIcons(const Point& position) const;
-
-    /**
      * Draw icon at the given position.
      */
-    void drawIcon(NodeType nodeType, const Point& position) const;
+    void drawIcon(Fl_PNG_Image* image, const Point& position) const;
 
     /**
      * Draw indicator background at the given position.
      */
-    void drawIndicator(IndicatorType indicatorType, const Point& position) const;
+    void drawIndicator(Fl_PNG_Image* image, const Point& position) const;
 
     /**
      * Draw text at the given position.
@@ -136,16 +99,6 @@ public:
     void drawMessage(const std::string& errorMessage, const Point& position) const;
 
 protected:
-
-    /**
-     * Icon images
-     */
-    std::vector<Fl_PNG_Image*> _nodeIcons;
-
-    /**
-     * Indicator images
-     */
-    std::vector<Fl_PNG_Image*> _indicatorIcons;
 
     /**
      * The origin as the reference point

@@ -14,6 +14,7 @@ Canvas::Canvas(int width, int height, const char* title)
     _operation = OperationFactory::create(OperationType::NONE, nullptr);
 
     _theme.load("default");
+    _iconPack.load("default");
 }
 
 void Canvas::draw()
@@ -34,7 +35,11 @@ void Canvas::drawMenuBar() const
 {
     _drawer.setColor(_theme.toolbarColor());
     _drawer.fillRectangle(Point(0, 0), 448, 32);
-    _drawer.drawIcons(Point(0, 0));
+    for (int i = 0; i < 14; ++i) {
+        NodeType nodeType = static_cast<NodeType>(i);
+        Fl_PNG_Image* image = _iconPack.getNodeImage(nodeType);
+        _drawer.drawIcon(image, Point(i * 32, 0));
+    }
 }
 
 void Canvas::drawExpression()
@@ -62,13 +67,13 @@ void Canvas::drawIndicators() const
     }
     for (const Indicator& indicator : _expression->getIndicators()) {
         if (indicator.hasSourceError()) {
-            _drawer.drawIndicator(IndicatorType::SOURCE_ERROR, indicator.getNode().getPosition());
+            _drawer.drawIndicator(_iconPack.getIndicatorImage(IndicatorType::SOURCE_ERROR), indicator.getNode().getPosition());
         }
         if (indicator.hasTargetError()) {
-            _drawer.drawIndicator(IndicatorType::TARGET_ERROR, indicator.getNode().getPosition());
+            _drawer.drawIndicator(_iconPack.getIndicatorImage(IndicatorType::TARGET_ERROR), indicator.getNode().getPosition());
         }
         if (indicator.hasValueError()) {
-            _drawer.drawIndicator(IndicatorType::VALUE_ERROR, indicator.getNode().getPosition());
+            _drawer.drawIndicator(_iconPack.getIndicatorImage(IndicatorType::VALUE_ERROR), indicator.getNode().getPosition());
         }
     }
 }
@@ -87,19 +92,20 @@ void Canvas::drawErrorMessages() const
 void Canvas::indicateSelectedNode() const
 {
     const Node& node = _expression->getSelectedNode();
-    _drawer.drawIndicator(IndicatorType::SELECTION, node.getPosition());
+    _drawer.drawIndicator(_iconPack.getIndicatorImage(IndicatorType::SELECTION), node.getPosition());
+
 }
 
 void Canvas::indicateSourceNode() const
 {
     const Node& node = _expression->getSourceNode();
-    _drawer.drawIndicator(IndicatorType::SOURCE, node.getPosition());
+    _drawer.drawIndicator(_iconPack.getIndicatorImage(IndicatorType::SOURCE), node.getPosition());
 }
 
 void Canvas::indicateTargetNode() const
 {
     const Node& node = _expression->getTargetNode();
-    _drawer.drawIndicator(IndicatorType::TARGET, node.getPosition());
+    _drawer.drawIndicator(_iconPack.getIndicatorImage(IndicatorType::TARGET), node.getPosition());
 }
 
 void Canvas::drawEdges() const
@@ -131,9 +137,18 @@ void Canvas::drawNodes() const
 
 void Canvas::drawNode(const Node& node) const
 {
-    _drawer.drawIcon(node.getType(), node.getPosition() - Point(16, 16));
+    Fl_PNG_Image* image;
+    if (node.getType() == NodeType::TOKEN) {
+        image = _iconPack.getTokenImage(node.getValue());
+    }
+    else {
+        image = _iconPack.getNodeImage(node.getType());
+    }
+    _drawer.drawIcon(image, node.getPosition() - Point(16, 16));
     _drawer.setColor(_theme.nodeLabelColor());
-    _drawer.drawText(node.getValue(), node.getPosition() + Point(-24, 28));
+    if (_iconPack.isCustomToken(node.getValue()) == false) {
+        _drawer.drawText(node.getValue(), node.getPosition() + Point(-24, 28));
+    }
 }
 
 int Canvas::handle(int event)

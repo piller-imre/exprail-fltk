@@ -4,6 +4,19 @@
 #include "Node.h"
 
 /**
+ * Indicator types
+ */
+enum class IndicatorType
+{
+    SELECTION,
+    SOURCE,
+    TARGET,
+    SOURCE_ERROR,
+    TARGET_ERROR,
+    VALUE_ERROR
+};
+
+/**
  * Indicate some information about a node
  */
 class Indicator
