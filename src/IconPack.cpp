@@ -1,5 +1,8 @@
 #include "IconPack.h"
 
+#include "Parser.h"
+
+#include <fstream>
 #include <sstream>
 #include <string>
 
@@ -15,22 +18,31 @@ IconPack::~IconPack()
     for (Fl_PNG_Image* icon : _indicatorIcons) {
         delete icon;
     }
-    for (auto &item : _tokenIcons) {
-        delete item.second;
+    for (auto &item : _customNodeIcons) {
+        for (auto icon : item.second) {
+            delete icon.second;
+        }
     }
 }
 
 void IconPack::load(const std::string& name)
 {
     loadNodeIcons(name);
+    loadCustomNodeIcons(name);
     loadIndicatorIcons(name);
-    loadTokenIcons(name);
 }
 
-Fl_PNG_Image* IconPack::getNodeImage(NodeType nodeType) const
+Fl_PNG_Image* IconPack::getNodeImage(const Node& node) const
 {
-    int nodeIndex = static_cast<int>(nodeType);
-    return _nodeIcons[nodeIndex];
+    Fl_PNG_Image* image;
+    try {
+        image = _customNodeIcons.at(node.getType()).at(node.getValue());
+    }
+    catch (const std::out_of_range&) {
+        int nodeIndex = static_cast<int>(node.getType());
+        image = _nodeIcons[nodeIndex];
+    }
+    return image;
 }
 
 Fl_PNG_Image* IconPack::getIndicatorImage(IndicatorType indicatorType) const
@@ -39,20 +51,15 @@ Fl_PNG_Image* IconPack::getIndicatorImage(IndicatorType indicatorType) const
     return _indicatorIcons[indicatorIndex];
 }
 
-Fl_PNG_Image* IconPack::getTokenImage(const std::string& tokenType) const
+bool IconPack::isCustomNode(const Node &node) const
 {
-    if (isCustomToken(tokenType)) {
-        return _tokenIcons.at(tokenType);
-    }
-    return getNodeImage(NodeType::TOKEN);
-}
-
-bool IconPack::isCustomToken(const std::string& tokenType) const
-{
-    if (_tokenIcons.find(tokenType) != _tokenIcons.end()) {
+    try {
+        _customNodeIcons.at(node.getType()).at(node.getValue());
         return true;
     }
-    return false;
+    catch (const std::out_of_range&) {
+        return false;
+    }
 }
 
 void IconPack::loadNodeIcons(const std::string& name)
@@ -65,6 +72,18 @@ void IconPack::loadNodeIcons(const std::string& name)
         name << type;
         Fl_PNG_Image* image = loadIcon(directory.str(), name.str());
         _nodeIcons.push_back(image);
+    }
+}
+
+void IconPack::loadCustomNodeIcons(const std::string& name)
+{
+    // TODO: Check the format of the nodes.conf file!
+    std::stringstream stream;
+    stream << "/tmp/" << name << "/nodes.conf";
+    std::ifstream configFile(stream.str());
+    std::string line;
+    while (std::getline(configFile, line)) {
+        processCustomNodeLine(line);
     }
 }
 
@@ -81,15 +100,22 @@ void IconPack::loadIndicatorIcons(const std::string& name)
     _indicatorIcons.push_back(loadIcon(directory, "value_error"));
 }
 
-void IconPack::loadTokenIcons(const std::string& name)
+void IconPack::processCustomNodeLine(const std::string &line)
 {
-    // TODO: Use token.conf file instead of hard wired token type names!
-    std::stringstream stream;
-    stream << "/tmp/" << name << "/icons/tokens/";
-    std::string directory = stream.str();
-    _tokenIcons["0-9"] = loadIcon(directory, "0-9");
-    _tokenIcons["a-Z"] = loadIcon(directory, "a-Z");
-    _tokenIcons["ws"] = loadIcon(directory, "ws");
+    std::string type;
+    std::string value;
+    std::string fileName;
+    std::stringstream stream(line);
+    stream >> type;
+    stream >> value;
+    stream >> fileName;
+    if (type.empty() == false) {
+        std::stringstream pathStream;
+        pathStream << "/tmp/default/icons/custom-nodes/" << fileName;
+        NodeType nodeType = Parser::calcNodeType(type);
+        Fl_PNG_Image* image = new Fl_PNG_Image(pathStream.str().c_str());
+        _customNodeIcons[nodeType][value] = image;
+    }
 }
 
 Fl_PNG_Image* IconPack::loadIcon(const std::string& directory, const std::string& name)

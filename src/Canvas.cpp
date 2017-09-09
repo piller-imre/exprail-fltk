@@ -1,5 +1,6 @@
 #include "Canvas.h"
 
+#include "Point.h"
 #include "operations/OperationFactory.h"
 
 #include <cassert>
@@ -36,8 +37,8 @@ void Canvas::drawMenuBar() const
     _drawer.setColor(_theme.toolbarColor());
     _drawer.fillRectangle(Point(0, 0), 448, 32);
     for (int i = 0; i < 14; ++i) {
-        NodeType nodeType = static_cast<NodeType>(i);
-        Fl_PNG_Image* image = _iconPack.getNodeImage(nodeType);
+        Node node(static_cast<NodeType>(i), "", Point(0, 0));
+        Fl_PNG_Image* image = _iconPack.getNodeImage(node);
         _drawer.drawIcon(image, Point(i * 32, 0));
     }
 }
@@ -137,16 +138,10 @@ void Canvas::drawNodes() const
 
 void Canvas::drawNode(const Node& node) const
 {
-    Fl_PNG_Image* image;
-    if (node.getType() == NodeType::TOKEN) {
-        image = _iconPack.getTokenImage(node.getValue());
-    }
-    else {
-        image = _iconPack.getNodeImage(node.getType());
-    }
+    Fl_PNG_Image* image = _iconPack.getNodeImage(node);
     _drawer.drawIcon(image, node.getPosition() - Point(16, 16));
     _drawer.setColor(_theme.nodeLabelColor());
-    if (_iconPack.isCustomToken(node.getValue()) == false) {
+    if (_iconPack.isCustomNode(node) == false) {
         _drawer.drawText(node.getValue(), node.getPosition() + Point(-24, 28));
     }
 }

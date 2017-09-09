@@ -8,6 +8,7 @@
 
 #include <map>
 #include <string>
+#include <utility>
 #include <vector>
 
 /**
@@ -35,7 +36,7 @@ public:
     /**
      * Get a node image from the icon pack.
      */
-    Fl_PNG_Image* getNodeImage(NodeType nodeType) const;
+    Fl_PNG_Image* getNodeImage(const Node& node) const;
 
     /**
      * Get an indicator image from the icon pack.
@@ -43,14 +44,9 @@ public:
     Fl_PNG_Image* getIndicatorImage(IndicatorType indicatorType) const;
 
     /**
-     * Get a token image from the icon pack.
+     * Check that is there any custom node icon for the node.
      */
-    Fl_PNG_Image* getTokenImage(const std::string& tokenType) const;
-
-    /**
-     * Check that whether the given type is a custom token type.
-     */
-    bool isCustomToken(const std::string& tokenType) const;
+    bool isCustomNode(const Node& node) const;
 
 protected:
 
@@ -60,14 +56,19 @@ protected:
     void loadNodeIcons(const std::string& name);
 
     /**
+     * Load the token icons of the given theme.
+     */
+    void loadCustomNodeIcons(const std::string& name);
+
+    /**
      * Load the indicator icons of the given theme.
      */
     void loadIndicatorIcons(const std::string& name);
 
     /**
-     * Load the token icons of the given theme.
+     * Process the line of the custom node config file.
      */
-    void loadTokenIcons(const std::string& name);
+    void processCustomNodeLine(const std::string& line);
 
     /**
      * Load an icon from the given directory by name.
@@ -87,9 +88,9 @@ private:
     std::vector<Fl_PNG_Image*> _indicatorIcons;
 
     /**
-     * Token images
+     * Custom node images
      */
-    std::map<std::string, Fl_PNG_Image*> _tokenIcons;
+    std::map<NodeType, std::map<std::string, Fl_PNG_Image*>> _customNodeIcons;
 };
 
 #endif // ICONPACK_H
