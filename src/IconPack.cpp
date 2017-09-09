@@ -8,6 +8,7 @@
 
 IconPack::IconPack()
 {
+    load();
 }
 
 IconPack::~IconPack()
@@ -23,13 +24,6 @@ IconPack::~IconPack()
             delete icon.second;
         }
     }
-}
-
-void IconPack::load(const std::string& name)
-{
-    loadNodeIcons(name);
-    loadCustomNodeIcons(name);
-    loadIndicatorIcons(name);
 }
 
 Fl_PNG_Image* IconPack::getNodeImage(const Node& node) const
@@ -62,42 +56,45 @@ bool IconPack::isCustomNode(const Node &node) const
     }
 }
 
-void IconPack::loadNodeIcons(const std::string& name)
+void IconPack::load()
 {
-    std::stringstream directory;
-    directory << "/tmp/" << name << "/icons/nodes/";
+    loadNodeIcons();
+    loadCustomNodeIcons();
+    loadIndicatorIcons();
+}
+
+void IconPack::loadNodeIcons()
+{
     for (int i = 0; i < 14; ++i) {
         NodeType type = static_cast<NodeType>(i);
-        std::stringstream name;
-        name << type;
-        Fl_PNG_Image* image = loadIcon(directory.str(), name.str());
+        std::stringstream pathStream;
+        pathStream << "theme/icons/nodes/" << type << ".png";
+        Fl_PNG_Image* image = loadIcon(pathStream.str());
         _nodeIcons.push_back(image);
     }
 }
 
-void IconPack::loadCustomNodeIcons(const std::string& name)
+void IconPack::loadCustomNodeIcons()
 {
     // TODO: Check the format of the nodes.conf file!
-    std::stringstream stream;
-    stream << "/tmp/" << name << "/nodes.conf";
-    std::ifstream configFile(stream.str());
+    std::ifstream configFile("theme/nodes.conf");
     std::string line;
     while (std::getline(configFile, line)) {
         processCustomNodeLine(line);
     }
 }
 
-void IconPack::loadIndicatorIcons(const std::string& name)
+void IconPack::loadIndicatorIcons()
 {
-    std::stringstream stream;
-    stream << "/tmp/" << name << "/icons/indicators/";
-    std::string directory = stream.str();
-    _indicatorIcons.push_back(loadIcon(directory, "selection"));
-    _indicatorIcons.push_back(loadIcon(directory, "source"));
-    _indicatorIcons.push_back(loadIcon(directory, "target"));
-    _indicatorIcons.push_back(loadIcon(directory, "source_error"));
-    _indicatorIcons.push_back(loadIcon(directory, "target_error"));
-    _indicatorIcons.push_back(loadIcon(directory, "value_error"));
+    std::vector<std::string> indicators = {
+        "selection", "source", "target", "source_error", "target_error", "value_error"
+    };
+    for (const std::string& indicator : indicators) {
+        std::stringstream pathStream;
+        pathStream << "theme/icons/indicators/" << indicator << ".png";
+        Fl_PNG_Image* image = loadIcon(pathStream.str());
+        _indicatorIcons.push_back(image);
+    }
 }
 
 void IconPack::processCustomNodeLine(const std::string &line)
@@ -111,20 +108,17 @@ void IconPack::processCustomNodeLine(const std::string &line)
     stream >> fileName;
     if (type.empty() == false) {
         std::stringstream pathStream;
-        pathStream << "/tmp/default/icons/custom-nodes/" << fileName;
+        pathStream << "theme/icons/custom-nodes/" << fileName;
         NodeType nodeType = Parser::calcNodeType(type);
         Fl_PNG_Image* image = new Fl_PNG_Image(pathStream.str().c_str());
         _customNodeIcons[nodeType][value] = image;
     }
 }
 
-Fl_PNG_Image* IconPack::loadIcon(const std::string& directory, const std::string& name)
+Fl_PNG_Image* IconPack::loadIcon(const std::string& path)
 {
     Fl_PNG_Image* image;
-    std::stringstream path;
-    // TODO: Handle trailing slash in the directory path!
-    path << directory << name << ".png";
     // TODO: Check that the file exists!
-    image = new Fl_PNG_Image(path.str().c_str());
+    image = new Fl_PNG_Image(path.c_str());
     return image;
 }

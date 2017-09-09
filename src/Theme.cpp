@@ -6,14 +6,7 @@
 Theme::Theme()
 {
     setDefaultValues();
-}
-
-void Theme::load(const std::string& themeName)
-{
-    setDefaultValues();
-    std::stringstream stream;
-    stream << "/tmp/" << themeName << "/theme.conf";
-    loadThemeConfig(stream.str());
+    load();
 }
 
 void Theme::setDefaultValues()
@@ -63,6 +56,14 @@ const Color&Theme::nodeLabelColor() const
 const Color&Theme::errorMessageColor() const
 {
     return _errorMessageColor;
+}
+
+void Theme::load()
+{
+    setDefaultValues();
+    std::stringstream stream;
+    stream << "theme/theme.conf";
+    loadThemeConfig(stream.str());
 }
 
 void Theme::processConfigLine(const std::string& line)

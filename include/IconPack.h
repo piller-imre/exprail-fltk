@@ -29,11 +29,6 @@ public:
     ~IconPack();
 
     /**
-     * Use the icon pack given by name.
-     */
-    void load(const std::string& name);
-
-    /**
      * Get a node image from the icon pack.
      */
     Fl_PNG_Image* getNodeImage(const Node& node) const;
@@ -51,19 +46,24 @@ public:
 protected:
 
     /**
-     * Load the node icons of the given theme.
+     * Load the icon pack.
      */
-    void loadNodeIcons(const std::string& name);
+    void load();
 
     /**
-     * Load the token icons of the given theme.
+     * Load the node icons.
      */
-    void loadCustomNodeIcons(const std::string& name);
+    void loadNodeIcons();
 
     /**
-     * Load the indicator icons of the given theme.
+     * Load the token icons.
      */
-    void loadIndicatorIcons(const std::string& name);
+    void loadCustomNodeIcons();
+
+    /**
+     * Load the indicator icons.
+     */
+    void loadIndicatorIcons();
 
     /**
      * Process the line of the custom node config file.
@@ -71,9 +71,9 @@ protected:
     void processCustomNodeLine(const std::string& line);
 
     /**
-     * Load an icon from the given directory by name.
+     * Load an icon from the given path.
      */
-    Fl_PNG_Image* loadIcon(const std::string& directory, const std::string& name);
+    Fl_PNG_Image* loadIcon(const std::string& path);
 
 private:
 

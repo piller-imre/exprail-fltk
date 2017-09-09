@@ -18,11 +18,6 @@ public:
     Theme();
 
     /**
-     * Use the theme which given by name.
-     */
-    void load(const std::string& themeName);
-
-    /**
      * Set the values of the default theme.
      */
     void setDefaultValues();
@@ -63,6 +58,11 @@ public:
     const Color& errorMessageColor() const;
 
 protected:
+
+    /**
+     * Load the theme.
+     */
+    void load();
 
     /**
      * Read parameter from the line of the config file.

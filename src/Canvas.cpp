@@ -13,9 +13,6 @@ Canvas::Canvas(int width, int height, const char* title)
 
     _expression = nullptr;
     _operation = OperationFactory::create(OperationType::NONE, nullptr);
-
-    _theme.load("default");
-    _iconPack.load("default");
 }
 
 void Canvas::draw()
