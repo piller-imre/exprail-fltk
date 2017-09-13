@@ -216,7 +216,6 @@ void Expression::updateIndicators()
         }
         switch (node.getType()) {
         case NodeType::FINISH:
-        case NodeType::ERROR:
             if (hasTarget(nodeId) == true) {
                 indicator.enableTargetError();
             }
