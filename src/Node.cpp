@@ -63,6 +63,8 @@ bool Node::hasValueError() const
     case NodeType::STACK:
     case NodeType::CLEAN:
     case NodeType::GROUND:
+    case NodeType::DEFAULT_ROUTER:
+    case NodeType::DEFAULT_TOKEN:
         if (_value == "") {
             return false;
         }
@@ -112,11 +114,20 @@ std::ostream& operator<<(std::ostream& outputStream, NodeType nodeType)
     case NodeType::TOKEN:
         outputStream << "token";
         break;
+    case NodeType::EXCEPT_TOKEN:
+        outputStream << "except_token";
+        break;
+    case NodeType::DEFAULT_TOKEN:
+        outputStream << "default_token";
+        break;
     case NodeType::ROUTER:
         outputStream << "router";
         break;
-    case NodeType::AVOID:
-        outputStream << "avoid";
+    case NodeType::EXCEPT_ROUTER:
+        outputStream << "except_router";
+        break;
+    case NodeType::DEFAULT_ROUTER:
+        outputStream << "default_router";
         break;
     case NodeType::INFO:
         outputStream << "info";

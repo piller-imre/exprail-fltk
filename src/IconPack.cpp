@@ -65,7 +65,7 @@ void IconPack::load()
 
 void IconPack::loadNodeIcons()
 {
-    for (int i = 0; i < 14; ++i) {
+    for (int i = 0; i < 17; ++i) {
         NodeType type = static_cast<NodeType>(i);
         std::stringstream pathStream;
         pathStream << "theme/icons/nodes/" << type << ".png";

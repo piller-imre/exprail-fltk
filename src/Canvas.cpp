@@ -32,8 +32,8 @@ void Canvas::setExpression(Expression* expression)
 void Canvas::drawMenuBar() const
 {
     _drawer.setColor(_theme.toolbarColor());
-    _drawer.fillRectangle(Point(0, 0), 448, 32);
-    for (int i = 0; i < 14; ++i) {
+    _drawer.fillRectangle(Point(0, 0), 17 * 32, 32);
+    for (int i = 0; i < 17; ++i) {
         Node node(static_cast<NodeType>(i), "", Point(0, 0));
         Fl_PNG_Image* image = _iconPack.getNodeImage(node);
         _drawer.drawIcon(image, Point(i * 32, 0));
@@ -145,12 +145,14 @@ void Canvas::drawNode(const Node& node) const
 
 int Canvas::handle(int event)
 {
-    // TODO: Make proper deallocation when changing operation for avoiding memory leak!
-    _operation->handleEvent(event);
-    if (_operation->needChangeOperation()) {
-        OperationType operationType = _operation->getNextOperationType();
-        _operation = OperationFactory::create(operationType, _expression);
+    if (_expression != nullptr) {
+        // TODO: Make proper deallocation when changing operation for avoiding memory leak!
+        _operation->handleEvent(event);
+        if (_operation->needChangeOperation()) {
+            OperationType operationType = _operation->getNextOperationType();
+            _operation = OperationFactory::create(operationType, _expression);
+        }
+        redraw();
     }
-    redraw();
     return 1;
 }
