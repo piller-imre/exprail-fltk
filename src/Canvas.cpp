@@ -3,6 +3,8 @@
 #include "Point.h"
 #include "operations/OperationFactory.h"
 
+#include <FL/Fl.H>
+
 #include <cassert>
 
 Canvas::Canvas(int width, int height, const char* title)
@@ -13,6 +15,8 @@ Canvas::Canvas(int width, int height, const char* title)
 
     _expression = nullptr;
     _operation = OperationFactory::create(OperationType::NONE, nullptr);
+
+    _isNodeIdDisplayed = false;
 }
 
 void Canvas::draw()
@@ -130,6 +134,10 @@ void Canvas::drawNodes() const
     const std::map<int, Node>& nodes = _expression->getNodes();
     for (const auto& item : nodes) {
         drawNode(item.second);
+        if (_isNodeIdDisplayed) {
+            _drawer.setColor(80, 200, 100);
+            _drawer.drawText(std::to_string(item.first), item.second.getPosition() + Point(-5, -25));
+        }
     }
 }
 
@@ -145,6 +153,12 @@ void Canvas::drawNode(const Node& node) const
 
 int Canvas::handle(int event)
 {
+    if (event == FL_KEYDOWN) {
+        int key = Fl::event_key();
+        if (key == 'h') {
+            _isNodeIdDisplayed = !_isNodeIdDisplayed;
+        }
+    }
     if (_expression != nullptr) {
         // TODO: Make proper deallocation when changing operation for avoiding memory leak!
         _operation->handleEvent(event);

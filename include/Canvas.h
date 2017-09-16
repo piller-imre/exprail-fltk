@@ -118,6 +118,11 @@ private:
      * The current operation
      */
     Operation* _operation;
+
+    /**
+     * Is it necessary to display the node identifiers?
+     */
+    bool _isNodeIdDisplayed;
 };
 
 #endif /* CANVAS_H */
