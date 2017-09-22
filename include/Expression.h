@@ -5,6 +5,7 @@
 #include "Indicator.h"
 
 #include <cassert>
+#include <set>
 #include <vector>
 
 /**
@@ -170,6 +171,21 @@ private:
      * Update the node indicators.
      */
     void updateIndicators();
+
+    /**
+     * Count the default routes from the given node.
+     */
+    int countDefaultRoutes(int nodeId) const;
+
+    /**
+     * Check that the expression has a ground node.
+     */
+    bool hasGroundNode() const;
+
+    /**
+     * Collect the successor nodes.
+     */
+    void collectSuccessorNodes(int nodeId, std::set<int>& successorNodeIds) const;
 
     /**
      * Update the error messages.

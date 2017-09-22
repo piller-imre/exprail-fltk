@@ -87,6 +87,16 @@ public:
      */
     bool hasValueError() const;
 
+    /**
+     * Check that the node is a default type node.
+     */
+    bool isDefault() const;
+
+    /**
+     * Check that the node is a matchable type node.
+     */
+    bool isMatchable() const;
+
 private:
 
     /**

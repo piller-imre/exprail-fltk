@@ -1,7 +1,7 @@
 #include "Indicator.h"
 
 Indicator::Indicator()
-    : _sourceError(false), _targetError(false), _valueError(false)
+    : _sourceError(false), _targetError(false), _valueError(false), _defaultRouteError(false)
 {
 }
 
@@ -31,6 +31,11 @@ void Indicator::enableValueError()
     _valueError = true;
 }
 
+void Indicator::enableDefaultRouteError()
+{
+    _defaultRouteError = true;
+}
+
 bool Indicator::hasSourceError() const
 {
     return _sourceError;
@@ -44,4 +49,9 @@ bool Indicator::hasTargetError() const
 bool Indicator::hasValueError() const
 {
     return _valueError;
+}
+
+bool Indicator::hasDefaultRouteError() const
+{
+    return _defaultRouteError;
 }

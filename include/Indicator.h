@@ -13,7 +13,8 @@ enum class IndicatorType
     TARGET,
     SOURCE_ERROR,
     TARGET_ERROR,
-    VALUE_ERROR
+    VALUE_ERROR,
+    DEFAULT_ERROR
 };
 
 /**
@@ -54,6 +55,11 @@ public:
     void enableValueError();
 
     /**
+     * Enable the default route error flag of the indicator.
+     */
+    void enableDefaultRouteError();
+
+    /**
      * Returns with the source error flag.
      */
     bool hasSourceError() const;
@@ -67,6 +73,11 @@ public:
      * Returns with the value error flag.
      */
     bool hasValueError() const;
+
+    /**
+     * Returns with the default route error flag.
+     */
+    bool hasDefaultRouteError() const;
 
 private:
 
@@ -89,6 +100,11 @@ private:
      * Value error flag
      */
     bool _valueError;
+
+    /**
+     * Default route error flag
+     */
+    bool _defaultRouteError;
 };
 
 #endif /* INDICATOR_H */

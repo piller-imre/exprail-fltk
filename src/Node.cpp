@@ -78,6 +78,27 @@ bool Node::hasValueError() const
     return true;
 }
 
+bool Node::isDefault() const
+{
+    if (_type == NodeType::DEFAULT_ROUTER
+     || _type == NodeType::DEFAULT_TOKEN
+     || _type == NodeType::FINISH) {
+        return true;
+    }
+    return false;
+}
+
+bool Node::isMatchable() const
+{
+    if (_type == NodeType::ROUTER
+     || _type == NodeType::EXCEPT_ROUTER
+     || _type == NodeType::TOKEN
+     || _type == NodeType::EXCEPT_TOKEN) {
+        return true;
+    }
+    return false;
+}
+
 std::ostream& operator<<(std::ostream& outputStream, const Node& node)
 {
     outputStream << node.getType() << " \"";

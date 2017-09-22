@@ -77,6 +77,9 @@ void Canvas::drawIndicators() const
         if (indicator.hasValueError()) {
             _drawer.drawIndicator(_iconPack.getIndicatorImage(IndicatorType::VALUE_ERROR), indicator.getNode().getPosition());
         }
+        if (indicator.hasDefaultRouteError()) {
+            _drawer.drawIndicator(_iconPack.getIndicatorImage(IndicatorType::DEFAULT_ERROR), indicator.getNode().getPosition());
+        }
     }
 }
 

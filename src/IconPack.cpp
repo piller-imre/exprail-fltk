@@ -87,7 +87,13 @@ void IconPack::loadCustomNodeIcons()
 void IconPack::loadIndicatorIcons()
 {
     std::vector<std::string> indicators = {
-        "selection", "source", "target", "source_error", "target_error", "value_error"
+        "selection",
+        "source",
+        "target",
+        "source_error",
+        "target_error",
+        "value_error",
+        "default_error"
     };
     for (const std::string& indicator : indicators) {
         std::stringstream pathStream;

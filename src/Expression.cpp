@@ -229,11 +229,61 @@ void Expression::updateIndicators()
         if (node.hasValueError()) {
             indicator.enableValueError();
         }
-        if (indicator.hasSourceError() || indicator.hasTargetError() || indicator.hasValueError()) {
+        if (node.getType() != NodeType::FINISH) {
+            int nDefaultRoutes = countDefaultRoutes(nodeId);
+            if ((nDefaultRoutes == 0 && hasGroundNode() == false) || nDefaultRoutes > 1) {
+                indicator.enableDefaultRouteError();
+            }
+        }
+        if (indicator.hasSourceError()
+         || indicator.hasTargetError()
+         || indicator.hasValueError()
+         || indicator.hasDefaultRouteError()) {
             _indicators.push_back(indicator);
         }
     }
     updateErrorMessages();
+}
+
+int Expression::countDefaultRoutes(int nodeId) const
+{
+    int nDefaultRoutes = 0;
+    std::set<int> visitedNodeIds;
+    std::set<int> processableNodeIds;
+    collectSuccessorNodes(nodeId, processableNodeIds);
+    while (processableNodeIds.empty() == false) {
+        int id = *processableNodeIds.begin();
+        processableNodeIds.erase(processableNodeIds.begin());
+        if (visitedNodeIds.find(id) == visitedNodeIds.end()) {
+            if (_nodes.at(id).isDefault()) {
+                ++nDefaultRoutes;
+            }
+            else if (_nodes.at(id).isMatchable() == false){
+                collectSuccessorNodes(id, processableNodeIds);
+            }
+            visitedNodeIds.insert(id);
+        }
+    }
+    return nDefaultRoutes;
+}
+
+bool Expression::hasGroundNode() const
+{
+    for (const auto& item : _nodes) {
+        if (item.second.getType() == NodeType::GROUND) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Expression::collectSuccessorNodes(int nodeId, std::set<int>& successorNodeIds) const
+{
+    for (const Edge& edge : _edges) {
+        if (edge.getSourceId() == nodeId) {
+            successorNodeIds.insert(edge.getTargetId());
+        }
+    }
 }
 
 void Expression::updateErrorMessages()
