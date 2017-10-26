@@ -1,6 +1,7 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#include <ostream>
 #include <string>
 
 /**
@@ -54,5 +55,15 @@ private:
      */
     std::string _value;
 };
+
+/**
+ * Write the token type to the output stream.
+ */
+std::ostream& operator<<(std::ostream& outputStream, TokenType tokenType);
+
+/**
+ * Write the content of the token to the output stream.
+ */
+std::ostream& operator<<(std::ostream& outputStream, const Token& token);
 
 #endif /* TOKEN_H */

@@ -96,7 +96,9 @@ std::set<Edge> Parser::readEdges(std::istream& stream, Token& token)
 
     std::string keyword = readKeyword(stream, token);
     if (keyword != "edges") {
-        throw std::runtime_error("An 'edges' keyword has expected!");
+        std::stringstream message;
+        message << "An 'edges' keyword has expected instead of " << token << "!";
+        throw std::runtime_error(message.str());
     }
 
     skipEmptyLines(stream, token);
@@ -114,7 +116,9 @@ std::set<Edge> Parser::readEdges(std::istream& stream, Token& token)
 std::string Parser::readKeyword(std::istream& stream, Token& token)
 {
     if (token.getType() != TokenType::KEYWORD) {
-        throw std::runtime_error("Keyword token has expected!");
+        std::stringstream message;
+        message << "Keyword token has expected instead of " << token << "!";
+        throw std::runtime_error(message.str());
     }
 
     std::string keyword = token.getValue();
@@ -126,7 +130,9 @@ std::string Parser::readKeyword(std::istream& stream, Token& token)
 int Parser::readNumber(std::istream& stream, Token& token)
 {
     if (token.getType() != TokenType::NUMBER) {
-        throw std::runtime_error("Number token has expected!");
+        std::stringstream message;
+        message << "Number token has expected instead of " << token << "!";
+        throw std::runtime_error(message.str());
     }
 
     int number = std::stoi(token.getValue());
@@ -138,7 +144,9 @@ int Parser::readNumber(std::istream& stream, Token& token)
 std::string Parser::readText(std::istream& stream, Token& token)
 {
     if (token.getType() != TokenType::TEXT) {
-        throw std::runtime_error("Text token has expected!");
+        std::stringstream message;
+        message << "Text token has expected instead of " << token << "!";
+        throw std::runtime_error(message.str());
     }
 
     std::string text = token.getValue();

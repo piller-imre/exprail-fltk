@@ -39,7 +39,7 @@ std::string Tokenizer::readKeyword(std::istream& stream)
 
     stream.unget();
     while (stream.get(c)) {
-        if (std::isalnum(c)) {
+        if (std::isalnum(c) || c == '_') {
             keyword += c;
         }
         else {
